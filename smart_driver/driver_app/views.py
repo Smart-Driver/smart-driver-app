@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializers import RideSerializer, StatementSerializer, DriverSerializer
-from .models import Ride, Statement, Driver
+from .serializers import RideSerializer, WeekStatementSerializer, DriverSerializer
+from .models import Ride, WeekStatement, Driver
 
 
 class RideViewSet(viewsets.ModelViewSet):
@@ -9,9 +9,9 @@ class RideViewSet(viewsets.ModelViewSet):
      serializer_class = RideSerializer
 
 
-class StatementViewSet(viewsets.ModelViewSet):
-     queryset = Statement.objects.all()
-     serializer_class = StatementSerializer
+class WeekStatementViewSet(viewsets.ModelViewSet):
+     queryset = WeekStatement.objects.all()
+     serializer_class = WeekStatementSerializer
 
 
 class DriverViewSet(viewsets.ModelViewSet):

@@ -1,1 +1,0 @@
-web: gunicorn smart_driver.wsgi --log-file -

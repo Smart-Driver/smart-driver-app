@@ -6,7 +6,8 @@ from django.db import models
 
 class Ride(models.Model):
     driver = models.ForeignKey('Driver', on_delete=models.CASCADE)
-    statement = models.ForeignKey('Statement', on_delete=models.CASCADE)
+    week_statement = models.ForeignKey('WeekStatement', on_delete=models.CASCADE)
+    day_statement = models.ForeignKey('DayStatement', on_delete=models.CASCADE)
     trip_id = models.CharField(max_length=50, primary_key=True)
     status = models.CharField(max_length=15)
     fare = models.DecimalField(max_digits=8, decimal_places=2)
@@ -25,7 +26,20 @@ class Ride(models.Model):
     ride_type = models.CharField(max_length=25)
 
 
-class Statement(models.Model):
+class DayStatement(models.Model):
+    WEEKDAY_CHOICES = ((0, 'Monday'), (1, 'Tuesday'), (2, 'Wednesday'), (3, 'Thursday'),
+                        (4, 'Friday'), (5, 'Suturday'), (6, 'Sunday'))
+    total_rides = models.IntegerField(default=0)
+    total_earned = models.DecimalField(max_digits=8, decimal_places=2)
+    date = models.DateTimeField()
+    weekday = models.IntegerField(choices=WEEKDAY_CHOICES, default=0)
+    time_worked = models.DurationField()
+    rate_per_ride = models.DecimalField(max_digits=8, decimal_places=2)
+    rate_per_hour = models.DecimalField(max_digits=8, decimal_places=2)
+    week_statement = models.ForeignKey('WeekStatement', on_delete=models.CASCADE)
+
+
+class WeekStatement(models.Model):
     statement_id = models.CharField(max_length=50, primary_key=True)
     driver = models.ForeignKey('Driver', on_delete=models.CASCADE)
     starting_at = models.DateTimeField()

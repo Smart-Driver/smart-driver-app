@@ -6,7 +6,7 @@ from driver_app import views
 
 router = routers.DefaultRouter()
 router.register(r'rides', views.RideViewSet)
-router.register(r'statements', views.StatementViewSet)
+router.register(r'week_statements', views.WeekStatementViewSet)
 router.register(r'drivers', views.DriverViewSet)
 
 
