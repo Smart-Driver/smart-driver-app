@@ -1,10 +1,16 @@
 from rest_framework import serializers
-from .models import Ride, WeekStatement, Driver
+from .models import Ride, DayStatement, WeekStatement, Driver
 
 
 class RideSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = Ride
+        fields = '__all__'
+
+
+class DayStatementSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = DayStatement
         fields = '__all__'
 
 
