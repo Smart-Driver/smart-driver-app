@@ -1,3 +1,6 @@
 from django.contrib import admin
+from .models import Ride, Statement, Driver
 
-# Register your models here.
+admin.site.register(Ride)
+admin.site.register(Statement)
+admin.site.register(Driver)
