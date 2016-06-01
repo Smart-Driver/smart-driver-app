@@ -1,6 +1,7 @@
 import requests
 from django.shortcuts import render
 from rest_framework import viewsets
+from django.views.generic.base import TemplateView
 from .serializers import RideSerializer, DayStatementSerializer
 from .serializers import WeekStatementSerializer, DriverSerializer
 from .models import Ride, DayStatement, WeekStatement, Driver
@@ -26,6 +27,7 @@ class DriverViewSet(viewsets.ModelViewSet):
      serializer_class = DriverSerializer
 
 
+
 def login(request):
     if request.POST:
 
@@ -37,3 +39,6 @@ def login(request):
 
         # username = request.POST['email']
         # User.get_or_create(username=username)
+
+class HomeView(TemplateView):
+    template_name = "driver_app/home.html"
