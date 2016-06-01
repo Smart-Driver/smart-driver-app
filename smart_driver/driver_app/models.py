@@ -62,7 +62,7 @@ class Driver(models.Model):
 
     @staticmethod
     def login(session, request):
-        csrf_token = get_csrf_token(session)
+        csrf_token = Driver.get_csrf_token(session)
         data = {
             'email': request.POST['email'],
             'password': request.POST['password'],
@@ -84,3 +84,10 @@ class Driver(models.Model):
         statement_response = session.get(url)
         data = json.loads(statement_response.text)
         return data
+
+    def save_data(self, session, login_response):
+        ids = get_statement_ids(login_response)
+        for statement_id in ids:
+            data = get_statement(session, statement_id)
+            self.first_name = data['body']['driver']['first_name']
+            self.last_name = data['body']['driver']['last_name']
