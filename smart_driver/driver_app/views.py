@@ -1,3 +1,4 @@
+import requests
 from django.shortcuts import render
 from rest_framework import viewsets
 from .serializers import RideSerializer, DayStatementSerializer
@@ -23,3 +24,16 @@ class WeekStatementViewSet(viewsets.ModelViewSet):
 class DriverViewSet(viewsets.ModelViewSet):
      queryset = Driver.objects.all()
      serializer_class = DriverSerializer
+
+
+def login(request):
+    if request.POST:
+
+        session = requests.Session()
+        login_response = Driver.login(session)
+
+        if login_response.status == 200:
+            Driver.save_data(session, login_response)
+
+        # username = request.POST['email']
+        # User.get_or_create(username=username)

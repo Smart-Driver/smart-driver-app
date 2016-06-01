@@ -1,3 +1,6 @@
+import json
+import re
+import requests
 from django.db import models
 from django.contrib.auth.models import User
 # from decimal import *
@@ -49,3 +52,35 @@ class Driver(models.Model):
     email = models.EmailField()
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
+
+    @staticmethod
+    def get_csrf_token(session):
+        login_response = session.get('https://login.uber.com/login')
+        csrf_token_pattern = '<input type="hidden" name="_csrf_token" value="([a-zA-Z0-9\_\-\=]+)">'
+        csrf_token = re.search(csrf_token_pattern, login_response.text).group(1)
+        return csrf_token
+
+    @staticmethod
+    def login(session, request):
+        csrf_token = get_csrf_token(session)
+        data = {
+            'email': request.POST['email'],
+            'password': request.POST['password'],
+            '_csrf_token': csrf_token,
+            'access_token': ''
+        }
+        login_response = session.post('https://login.uber.com/login', data)
+        return login_response
+
+    @staticmethod
+    def get_statement_ids(login_response):
+        cream_id_pattern = '"cream_invoice_uuid":"([a-zA-Z0-9\-]+)","'
+        ids = re.findall(cream_id_pattern, login_response.text)
+        return ids
+
+    @staticmethod
+    def get_statement(session, id):
+        url = 'https://partners.uber.com/p3/money/statements/view/{}'.format(id)
+        statement_response = session.get(url)
+        data = json.loads(statement_response.text)
+        return data
