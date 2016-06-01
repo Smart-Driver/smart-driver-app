@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from rest_framework import viewsets
+from django.views.generic.base import TemplateView
 from .serializers import RideSerializer, DayStatementSerializer
 from .serializers import WeekStatementSerializer, DriverSerializer
 from .models import Ride, DayStatement, WeekStatement, Driver
@@ -23,3 +24,7 @@ class WeekStatementViewSet(viewsets.ModelViewSet):
 class DriverViewSet(viewsets.ModelViewSet):
      queryset = Driver.objects.all()
      serializer_class = DriverSerializer
+
+
+class HomeView(TemplateView):
+    template_name = "driver_app/home.html"
