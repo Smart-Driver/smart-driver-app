@@ -43,6 +43,7 @@ def home(request):
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
 
+            return render(request, "driver_app/profile.html")
 
     return render(request, "driver_app/home.html")
 
