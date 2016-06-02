@@ -45,3 +45,7 @@ def home(request):
 
 
     return render(request, "driver_app/home.html")
+
+
+def profile(request):
+    return render (request, "driver_app/profile.html")
