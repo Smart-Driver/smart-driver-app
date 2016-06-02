@@ -48,4 +48,4 @@ def home(request):
 
 
 def profile(request):
-    return render (request, "driver_app/profile.html")
+    return render(request, "driver_app/profile.html")
