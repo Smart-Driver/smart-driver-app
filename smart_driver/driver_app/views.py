@@ -48,4 +48,8 @@ def home(request):
 
 
 def profile(request):
-    return render(request, "driver_app/profile.html")
+    statements = DayStatement.objects.all().order_by('id')
+
+    context = {'statements': statements}
+
+    return render(request, "driver_app/profile.html", context)
