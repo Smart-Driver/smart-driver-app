@@ -43,8 +43,17 @@ def home(request):
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
 
-            return render(request, "driver_app/profile.html")
+            if created:
+                driver = Driver(user=user, email=username)
+                driver.get_u_user_id(login_response)
+                driver.get_first_name(login_response)
+                driver.get_last_name(login_response)
+                driver.save()
+                driver.save_data(session, login_response)
 
+            return render(request, "driver_app/profile.html")
+        else:
+            print('login_failed')
     return render(request, "driver_app/home.html")
 
 
