@@ -155,19 +155,26 @@
                     <table id="table_id" class="display">
                       <thead>
                           <tr>
+                              <th>Date</th>
+                              <th>Weekday</th>
+                              <th>Time Worked</th>
                               <th>Total Rides</th>
                               <th>Total Earned</th>
-                              <th>Date</th>
+                              <th>Rate/ride</th>
+                              <th>Rate/hr</th>
+
                           </tr>
                       </thead>
                       <tbody>
                           {% for statement in statements %}
                           <tr>
-                              <td>{{ statement.total_rides }}</td>
-                              <td>{{ statement.total_earned }}</td>
                               <td>{{ statement.date }}</td>
                               <td>{{ statement.weekday }}</td>
-
+                              <td>{{ statement.time_worked }}</td>
+                              <td>{{ statement.total_rides }}</td>
+                              <td>{{ statement.total_earned }}</td>
+                              <td>{{ statement.rate_per_ride }}</td>
+                              <td>{{ statement.rate_per_hour }}</td>
                           </tr>
                           {% endfor %}
                       </tbody>
