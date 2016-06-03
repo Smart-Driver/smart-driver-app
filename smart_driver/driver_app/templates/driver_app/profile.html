@@ -162,45 +162,45 @@
   <!-- *****************************************************************************************************************
   DYNAMIC USER TABLE
   ************************************************************************************************************** -->
-        <form class="form-login" method="post" action="#">
-            <div class="form-log-in-with-email">
-                <div class="form-white-background">
-                    </div>
+  <form class="form-login" method="post" action="#">
+      <div class="form-log-in-with-email">
+          <div class="form-white-background">
+              </div>
 
-                    <h1 style="color:black;">DYNAMIC USER TABLE GOES HERE</h1>
-                    <br>
+              <h1 style="color:black;">DYNAMIC USER TABLE GOES HERE</h1>
+              <br>
 
-                    <table id="table_id" class="display">
-                      <thead>
-                          <tr>
-                              <th>Column 1</th>
-                              <th>Column 2</th>
-                          </tr>
-                      </thead>
-                      <tbody>
-                          <tr>
-                              <td>Row 1 Data 1</td>
-                              <td>Row 1 Data 2</td>
-                          </tr>
-                          <tr>
-                              <td>Row 2 Data 1</td>
-                              <td>Row 2 Data 2</td>
-                          </tr>
-                      </tbody>
-                  </table>
+              <table id="table_id" class="display">
+                <thead>
+                    <tr>
+                        <th>Total Rides</th>
+                        <th>Total Earned</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for statement in statements %}
+                    <tr>
+                        <td>{{ statement.total_rides }}</td>
+                        <td>{{ statement.total_earned }}</td>
+                        <td>{{ statement.date }}</td>
+                        <td>{{ statement.weekday }}</td>
 
-                    </div>
-                </div>
-            </div>
-        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
 
-
-				<!-- <div class="col-lg-8 col-lg-offset-2 himg">
-					<!-- <img src="assets/img/browser.png" class="img-responsive"> -->
-				</div>
-			</div><!-- /row -->
-	    </div> <!-- /container -->
-	</div><!-- /headerwrap -->
+              </div>
+          </div>
+      </div>
+  </form>
+  <!-- <div class="col-lg-8 col-lg-offset-2 himg">
+          <img src="assets/img/browser.png" class="img-responsive">  -->
+  </div>
+</div><!-- /row -->
+</div> <!-- /container -->
+</div><!-- /headerwrap -->
 
 
 
