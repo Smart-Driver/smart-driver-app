@@ -13,6 +13,7 @@ class Ride(models.Model):
     driver = models.ForeignKey('Driver', on_delete=models.CASCADE)
     week_statement = models.ForeignKey('WeekStatement', on_delete=models.CASCADE)
     day_statement = models.ForeignKey('DayStatement', on_delete=models.CASCADE)
+    month_statement = models.ForeignKey('MonthStatement', on_delete=models.CASCADE, null=True)
     trip_id = models.CharField(max_length=50, primary_key=True)
     status = models.CharField(max_length=15)
     total_earned = models.DecimalField(max_digits=8, decimal_places=2)
@@ -37,12 +38,25 @@ class DayStatement(models.Model):
     rate_per_ride = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     rate_per_hour = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     week_statement = models.ForeignKey('WeekStatement', on_delete=models.CASCADE, null=True)
+    month_statement = models.ForeignKey('MonthStatement', on_delete=models.CASCADE, null=True)
 
 
 class WeekStatement(models.Model):
     driver = models.ForeignKey('Driver', on_delete=models.CASCADE)
     starting_at = models.DateField(null=True, unique=True)
     ending_at = models.DateField(null=True, unique=True)
+    total_earned = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    rate_per_ride = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    rate_per_hour = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    rate_per_day = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    total_rides = models.IntegerField(default=0, null=True)
+    statement_id = models.CharField(max_length=75, null=True, unique=True)
+    month_statement = models.ForeignKey('MonthStatement', on_delete=models.CASCADE, null=True)
+
+
+class MonthStatement(models.Model):
+    driver = models.ForeignKey('Driver', on_delete=models.CASCADE)
+    starting_at = models.DateField()
     total_earned = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     rate_per_ride = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     rate_per_hour = models.DecimalField(max_digits=8, decimal_places=2, null=True)
@@ -121,10 +135,17 @@ class Driver(models.Model):
                 starting_at=starting_at,
                 ending_at=starting_at + datetime.timedelta(days=6)
                 )
+            w.statement_id = statement_id
             w.save()
+
+            m, create = MonthStatement.objects.get_or_create(
+                driver=self,
+                starting_at=starting_at.replace(day=1)
+            )
 
             weeks_touched = [w]
             days_touched = []
+            months_touched = [starting_at.month]
 
             if not trip_earnings:
                 print('empty statement: ', statement_id)
@@ -172,6 +193,9 @@ class Driver(models.Model):
                 r.save()
 
             for day in days_touched:
+                if day.date.month not in months_touched:
+                    months_touched.append(day.date.month)
+
                 day.total_rides = day.ride_set.count()
                 aggs = day.ride_set.aggregate(Sum('total_earned'),
                                               Min('request_at'),

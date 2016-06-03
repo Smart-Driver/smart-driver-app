@@ -191,9 +191,9 @@
                               <td>{{ statement.get_weekday_display }}</td>
                               <td>{{ statement.time_worked }}</td>
                               <td>{{ statement.total_rides }}</td>
-                              <td>{{ statement.total_earned }}</td>
-                              <td>{{ statement.rate_per_ride }}</td>
-                              <td>{{ statement.rate_per_hour }}</td>
+                              <td>${{ statement.total_earned }}</td>
+                              <td>${{ statement.rate_per_ride }}</td>
+                              <td>${{ statement.rate_per_hour }}</td>
                           </tr>
                           {% endfor %}
                       </tbody>
@@ -245,7 +245,7 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
+    <script src="/static/driver_app/assets/js/jquery.dataTables.js"></script>
     <script src="/static/driver_app/assets/js/bootstrap.min.js"></script>
 	  <script src="/static/driver_app/assets/js/retina-1.1.0.js"></script>
 	  <script src="/static/driver_app/assets/js/jquery.hoverdir.js"></script>
