@@ -44,7 +44,6 @@ class WeekStatement(models.Model):
     starting_at = models.DateField(null=True, unique=True)
     ending_at = models.DateField(null=True, unique=True)
     total_earned = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-    trip_count = models.PositiveSmallIntegerField(null=True)
     rate_per_ride = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     rate_per_hour = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     rate_per_day = models.DecimalField(max_digits=8, decimal_places=2, null=True)
