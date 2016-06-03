@@ -18,7 +18,7 @@
     <link href="/static/driver_app/assets/css/font-awesome.min.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
-    <link href="/static/driver_app/assets/d3/nv.d3.css" rel="stylesheet" type="text/css">
+
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -30,6 +30,9 @@
 
     <!-- <script src="/static/driver_app/assets/js/modernizr.js"></script> -->
 
+    <link href="/static/driver_app/assets/d3/nv.d3.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+    <script src="/static/driver_app/assets/d3/nv.d3.js"></script>
   </head>
 
   <body>
@@ -73,9 +76,9 @@
   <!-- *****************************************************************************************************************
   ANNUAL GRAPH
   ************************************************************************************************************** -->
-        <form class="form-login" method="post" action="#">
-            <div class="form-log-in-with-email">
-                <div class="form-white-background">
+        <!-- <form class="graph-login" method="POST" action="#"> -->
+            <!-- <div class="graph-log-in-with-email"> -->
+                <!-- <div class="graph-white-background"> -->
                   <div id="chart1">
                       <svg></svg>
                   </div>
@@ -86,36 +89,52 @@
                               key: "Cumulative Return",
                               values: [
                                   {
-                                      "label" : "A" ,
-                                      "value" : 29.765957771107
+                                      "label" : "Jan" ,
+                                      "value" : 1500
                                   } ,
                                   {
-                                      "label" : "B" ,
-                                      "value" : 0
+                                      "label" : "Feb" ,
+                                      "value" : 1300
                                   } ,
                                   {
-                                      "label" : "C" ,
-                                      "value" : 32.807804682612
+                                      "label" : "March" ,
+                                      "value" : 1000
                                   } ,
                                   {
-                                      "label" : "D" ,
-                                      "value" : 196.45946739256
+                                      "label" : "April" ,
+                                      "value" : 2300
                                   } ,
                                   {
-                                      "label" : "E" ,
-                                      "value" : 0.19434030906893
+                                      "label" : "May" ,
+                                      "value" : 800
                                   } ,
                                   {
-                                      "label" : "F" ,
-                                      "value" : 98.079782601442
+                                      "label" : "June" ,
+                                      "value" : 950
                                   } ,
                                   {
-                                      "label" : "G" ,
-                                      "value" : 13.925743130903
+                                      "label" : "July" ,
+                                      "value" : 1200
                                   } ,
                                   {
-                                      "label" : "H" ,
-                                      "value" : 5.1387322875705
+                                      "label" : "August" ,
+                                      "value" : 1400
+                                  },
+                                  {
+                                      "label" : "Sept" ,
+                                      "value" : 1600
+                                  },
+                                  {
+                                      "label" : "Oct" ,
+                                      "value" : 1000
+                                  },
+                                  {
+                                      "label" : "Nov" ,
+                                      "value" : 2000
+                                  },
+                                  {
+                                      "label" : "Dec" ,
+                                      "value" : 1200
                                   }
                               ]
                           }
@@ -137,9 +156,9 @@
                       });
                   </script>
 
-                </div>
+                <!-- </div>
             </div>
-        </form>
+        </form> -->
 
   <!-- *****************************************************************************************************************
   DYNAMIC USER TABLE
@@ -191,8 +210,6 @@
 	    </div> <!-- /container -->
 	</div><!-- /headerwrap -->
 
-
-
 	<!-- *****************************************************************************************************************
 	 FOOTER
 	 ***************************************************************************************************************** -->
@@ -227,18 +244,20 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
     <script src="/static/driver_app/assets/js/bootstrap.min.js"></script>
-  	<script src="/static/driver_app/assets/js/retina-1.1.0.js"></script>
-  	<script src="/static/driver_app/assets/js/jquery.hoverdir.js"></script>
-  	<script src="/static/driver_app/assets/js/jquery.hoverex.min.js"></script>
-  	<script src="/static/driver_app/assets/js/jquery.prettyPhoto.js"></script>
+	  <script src="/static/driver_app/assets/js/retina-1.1.0.js"></script>
+	  <script src="/static/driver_app/assets/js/jquery.hoverdir.js"></script>
+	  <script src="/static/driver_app/assets/js/jquery.hoverex.min.js"></script>
+	  <script src="/static/driver_app/assets/js/jquery.prettyPhoto.js"></script>
   	<script src="/static/driver_app/assets/js/jquery.isotope.min.js"></script>
   	<script src="/static/driver_app/assets/js/custom.js"></script>
     <script src="/static/driver_app/data_table.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
     <script src="/static/driver_app/assets/d3/nv.d3.js"></script>
+
+
 
     <script>
 // Portfolio
