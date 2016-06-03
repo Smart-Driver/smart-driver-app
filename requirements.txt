@@ -6,8 +6,11 @@ gunicorn==19.6.0
 Jinja2==2.8
 MarkupSafe==0.23
 psycopg2==2.6.1
+python-dateutil==2.5.3
 python-nvd3==0.14.2
 python-slugify==1.1.4
 requests==2.10.0
+selenium==2.53.2
+six==1.10.0
 Unidecode==0.4.19
 whitenoise==3.2

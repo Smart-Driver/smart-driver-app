@@ -27,7 +27,7 @@ class Ride(models.Model):
 
 class DayStatement(models.Model):
     WEEKDAY_CHOICES = ((0, 'Monday'), (1, 'Tuesday'), (2, 'Wednesday'), (3, 'Thursday'),
-                        (4, 'Friday'), (5, 'Suturday'), (6, 'Sunday'))
+                        (4, 'Friday'), (5, 'Saturday'), (6, 'Sunday'))
     driver = models.ForeignKey('Driver', on_delete=models.CASCADE)
     total_rides = models.IntegerField(default=0, null=True)
     total_earned = models.DecimalField(max_digits=8, decimal_places=2, null=True)

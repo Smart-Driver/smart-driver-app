@@ -188,7 +188,7 @@
                           {% for statement in statements %}
                           <tr>
                               <td>{{ statement.date }}</td>
-                              <td>{{ statement.weekday }}</td>
+                              <td>{{ statement.get_weekday_display }}</td>
                               <td>{{ statement.time_worked }}</td>
                               <td>{{ statement.total_rides }}</td>
                               <td>{{ statement.total_earned }}</td>
