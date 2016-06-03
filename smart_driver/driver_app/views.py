@@ -60,7 +60,8 @@ def home(request):
 
 
 def profile(request):
-    statements = DayStatement.objects.all().order_by('id')
+    driver = Driver.objects.get(user=request.user)
+    statements = DayStatement.objects.filter(driver=driver).order_by('-date')
 
     context = {'statements': statements}
 
