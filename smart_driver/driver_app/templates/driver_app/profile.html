@@ -17,8 +17,7 @@
     <link href="/static/driver_app/assets/css/style.css" rel="stylesheet">
     <link href="/static/driver_app/assets/css/font-awesome.min.css" rel="stylesheet">
 
-    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
-    <link href="/static/driver_app/assets/d3/nv.d3.css" rel="stylesheet" type="text/css">
+
     <!-- Just for debugging purposes. Don't actually copy this line! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 
@@ -30,6 +29,9 @@
 
     <!-- <script src="/static/driver_app/assets/js/modernizr.js"></script> -->
 
+    <link href="/static/driver_app/assets/d3/nv.d3.css" rel="stylesheet" type="text/css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
+    <script src="/static/driver_app/assets/d3/nv.d3.js"></script>
   </head>
 
   <body>
@@ -73,9 +75,9 @@
   <!-- *****************************************************************************************************************
   ANNUAL GRAPH
   ************************************************************************************************************** -->
-        <form class="form-login" method="post" action="#">
-            <div class="form-log-in-with-email">
-                <div class="form-white-background">
+        <!-- <form class="graph-login" method="POST" action="#"> -->
+            <!-- <div class="graph-log-in-with-email"> -->
+                <!-- <div class="graph-white-background"> -->
                   <div id="chart1">
                       <svg></svg>
                   </div>
@@ -153,9 +155,9 @@
                       });
                   </script>
 
-                </div>
+                <!-- </div>
             </div>
-        </form>
+        </form> -->
 
   <!-- *****************************************************************************************************************
   DYNAMIC USER TABLE
@@ -171,21 +173,19 @@
                     <table id="table_id" class="display">
                       <thead>
                           <tr>
-                              <th>Total Rides</th>
-                              <th>Total Earned</th>
-                              <th>Date</th>
+                              <th>Column 1</th>
+                              <th>Column 2</th>
                           </tr>
                       </thead>
                       <tbody>
-                          {% for statement in statements %}
                           <tr>
-                              <td>{{ statement.total_rides }}</td>
-                              <td>{{ statement.total_earned }}</td>
-                              <td>{{ statement.date }}</td>
-                              <td>{{ statement.weekday }}</td>
-
+                              <td>Row 1 Data 1</td>
+                              <td>Row 1 Data 2</td>
                           </tr>
-                          {% endfor %}
+                          <tr>
+                              <td>Row 2 Data 1</td>
+                              <td>Row 2 Data 2</td>
+                          </tr>
                       </tbody>
                   </table>
 
@@ -193,8 +193,10 @@
                 </div>
             </div>
         </form>
-        <!-- <div class="col-lg-8 col-lg-offset-2 himg">
-				        <img src="assets/img/browser.png" class="img-responsive">  -->
+
+
+				<!-- <div class="col-lg-8 col-lg-offset-2 himg">
+					<!-- <img src="assets/img/browser.png" class="img-responsive"> -->
 				</div>
 			</div><!-- /row -->
 	    </div> <!-- /container -->
@@ -236,18 +238,15 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="/static/driver_app/assets/js/bootstrap.min.js"></script>
-  	<script src="/static/driver_app/assets/js/retina-1.1.0.js"></script>
-  	<script src="/static/driver_app/assets/js/jquery.hoverdir.js"></script>
-  	<script src="/static/driver_app/assets/js/jquery.hoverex.min.js"></script>
-  	<script src="/static/driver_app/assets/js/jquery.prettyPhoto.js"></script>
+	<script src="/static/driver_app/assets/js/retina-1.1.0.js"></script>
+	<script src="/static/driver_app/assets/js/jquery.hoverdir.js"></script>
+	<script src="/static/driver_app/assets/js/jquery.hoverex.min.js"></script>
+	<script src="/static/driver_app/assets/js/jquery.prettyPhoto.js"></script>
   	<script src="/static/driver_app/assets/js/jquery.isotope.min.js"></script>
   	<script src="/static/driver_app/assets/js/custom.js"></script>
-    <script src="/static/driver_app/data_table.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
-    <script src="/static/driver_app/assets/d3/nv.d3.js"></script>
+
 
     <script>
 // Portfolio
