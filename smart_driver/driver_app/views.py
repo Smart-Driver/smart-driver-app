@@ -1,6 +1,7 @@
 import requests
 from django.shortcuts import render
 from rest_framework import viewsets
+from django.http import HttpResponseRedirect
 from django.views.generic.base import TemplateView
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
@@ -43,7 +44,7 @@ def home(request):
             user.backend = 'django.contrib.auth.backends.ModelBackend'
             login(request, user)
 
-            return render(request, "driver_app/profile.html")
+            return HttpResponseRedirect("/profile/")
 
     return render(request, "driver_app/home.html")
 
