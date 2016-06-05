@@ -51,12 +51,13 @@ class WeekStatement(models.Model):
     rate_per_day = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     total_rides = models.IntegerField(default=0, null=True)
     statement_id = models.CharField(max_length=75, null=True, unique=True)
-    month_statement = models.ForeignKey('MonthStatement', on_delete=models.CASCADE, null=True)
+    month_statement = models.ManyToManyField('MonthStatement', null=True)
 
 
 class MonthStatement(models.Model):
     driver = models.ForeignKey('Driver', on_delete=models.CASCADE)
     starting_at = models.DateField()
+    ending_at = models.DateField()
     total_earned = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     rate_per_ride = models.DecimalField(max_digits=8, decimal_places=2, null=True)
     rate_per_hour = models.DecimalField(max_digits=8, decimal_places=2, null=True)
@@ -138,14 +139,17 @@ class Driver(models.Model):
             w.statement_id = statement_id
             w.save()
 
+            month_start = starting_at.replace(day=1)
             m, create = MonthStatement.objects.get_or_create(
                 driver=self,
-                starting_at=starting_at.replace(day=1)
+                starting_at=month_start,
+                ending_at=month_start.replace(month=month_start.month + 1) - datetime.timedelta(days=1)
             )
+            w.month_statement.add(m)
 
             weeks_touched = [w]
             days_touched = []
-            months_touched = [starting_at.month]
+            months_touched = [m]
 
             if not trip_earnings:
                 print('empty statement: ', statement_id)
@@ -168,6 +172,21 @@ class Driver(models.Model):
                 r.duration = datetime.timedelta(seconds=float(trip_data[trip]['duration']))
 
                 r.date = dateutil.parser.parse(trip_data[trip]['date']).date()
+
+                if r.date.month == m.starting_at.month:
+                    r.month_statement = m
+                else:
+                    new_month_start = r.date.replace(day=1)
+                    r.month_statement, c = MonthStatement.objects.get_or_create(
+                        driver=self,
+                        starting_at=new_month_start,
+                        ending_at=new_month_start.replace(
+                            month=new_month_start.month + 1
+                            ) - datetime.timedelta(days=1)
+                    )
+                    if r.month_statement not in months_touched:
+                        months_touched.append(r.month_statement)
+
                 if r.date <= w.ending_at:
                     r.week_statement = w
                 else:
@@ -184,7 +203,8 @@ class Driver(models.Model):
                     driver=self,
                     date=r.date,
                     weekday=r.date.weekday(),
-                    week_statement=r.week_statement
+                    week_statement=r.week_statement,
+                    month_statement=r.month_statement
                 )
                 r.day_statement.save()
                 if r.day_statement not in days_touched:
@@ -214,12 +234,26 @@ class Driver(models.Model):
                 day.save()
 
             for week in weeks_touched:
+                for month in months_touched:
+                    if month.starting_at < week.starting_at < month.ending_at:
+                        week.month_statement.add(month)
                 aggs = week.daystatement_set.aggregate(Sum('total_earned'),
-                                              Sum('total_rides'),
-                                              Avg('rate_per_hour'))
+                                                       Sum('total_rides'),
+                                                       Avg('rate_per_hour'))
                 week.total_earned = aggs['total_earned__sum']
                 week.total_rides = aggs['total_rides__sum']
                 week.rate_per_ride = week.total_earned / week.total_rides
                 week.rate_per_hour = aggs['rate_per_hour__avg']
                 week.rate_per_day = week.total_earned / week.daystatement_set.count()
                 week.save()
+
+            for month in months_touched:
+                aggs = month.daystatement_set.aggregate(Sum('total_earned'),
+                                                        Sum('total_rides'),
+                                                        Avg('rate_per_hour'))
+                days = month.daystatement_set.count()
+                month.total_earned = aggs['total_earned__sum']
+                month.total_rides = aggs['total_rides__sum']
+                month.rate_per_ride = month.total_earned / month.total_rides
+                month.rate_per_day = month.total_earned / days
+                month.rate_per_hour = aggs['rate_per_hour__avg']
