@@ -204,6 +204,9 @@ class Driver(models.Model):
     first_name = models.CharField(max_length=20)
     last_name = models.CharField(max_length=20)
 
+    def get_name(self):
+        return self.first_name.title() + ' ' + self.last_name.title()
+
     @staticmethod
     def get_csrf_token(session):
         login_response = session.get('https://login.uber.com/login')

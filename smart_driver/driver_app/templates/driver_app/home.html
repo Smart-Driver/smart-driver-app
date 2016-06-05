@@ -46,7 +46,7 @@
         </div>
         <div class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="index.html">HOME</a></li>
+            <li class="active"><a href="{% url 'driver_app:home' %}">HOME</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -59,13 +59,22 @@
 	    <div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
-          <h2>Welcome to <span style="color:white;">Smart Driver</span> - the only app that helps
-              Uber drivers maximize efficiency with state-of-the-art data analysis.
-          </h2>
-        </br>
-					<h3>Please log in below with your Uber creditionals.</h3>
-					<!-- <h3>Please log in below with your Uber creditionals.</h1> -->
+                    <h2>
+                        Welcome to <span style="color:white;">Smart Driver</span>
+                        - the only app that helps Uber drivers maximize efficiency
+                        with state-of-the-art data analysis.
+                    </h2>
+    {% if not user.is_authenticated %}
+                    </br>
+                    {% if fail %}
+                    <h3>
+                        Uber rejected your request. Make sure you are using the
+                        same email and password you use to log in to Uber.
+                    </h3>
+                    {% else %}
+					<h3>Please log in below with your Uber credentials.</h3>
 					<!-- <h5>(We never store passwords, so your data is safe. Probably!)</h5> -->
+                    {% endif %}
 				</div>
 
   <!-- *****************************************************************************************************************
@@ -94,7 +103,9 @@
                 </div>
             </div>
         </form>
-
+    {% else %}
+    <a href="{% url 'driver_app:profile' %}"><h3>Return to your profile</h3></a>
+    {% endif %}
 				<!-- <div class="col-lg-8 col-lg-offset-2 himg">
 					<!-- <img src="assets/img/browser.png" class="img-responsive"> -->
 				</div>

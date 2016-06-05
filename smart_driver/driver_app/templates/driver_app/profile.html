@@ -55,7 +55,7 @@
         </div>
         <div class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="home.html">HOME</a></li>
+            <li class="active"><a href="{% url 'driver_app:home' %}">HOME</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
@@ -68,7 +68,7 @@
 	    <div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
-          <h2>Welcome <span style="color:white;">Smart Driver</span>!</h2>
+          <h2>Welcome <span style="color:white;">{{ user.driver.get_name }}</span>!</h2>
 				</div>
 
   <!-- *****************************************************************************************************************
