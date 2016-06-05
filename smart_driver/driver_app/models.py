@@ -1,19 +1,22 @@
 import json
 import re
-import requests
 import datetime
 import dateutil.parser
 from dateutil.tz import *
+from dateutil.relativedelta import relativedelta
 from decimal import *
 from django.db import models
 from django.db.models import Min, Max, Sum, Avg
 from django.contrib.auth.models import User
 
+
 class Ride(models.Model):
     driver = models.ForeignKey('Driver', on_delete=models.CASCADE)
-    week_statement = models.ForeignKey('WeekStatement', on_delete=models.CASCADE)
+    week_statement = models.ForeignKey('WeekStatement',
+                                       on_delete=models.CASCADE)
     day_statement = models.ForeignKey('DayStatement', on_delete=models.CASCADE)
-    month_statement = models.ForeignKey('MonthStatement', on_delete=models.CASCADE, null=True)
+    month_statement = models.ForeignKey('MonthStatement',
+                                        on_delete=models.CASCADE, null=True)
     trip_id = models.CharField(max_length=50, primary_key=True)
     status = models.CharField(max_length=15)
     total_earned = models.DecimalField(max_digits=8, decimal_places=2)
@@ -27,28 +30,38 @@ class Ride(models.Model):
 
 
 class DayStatement(models.Model):
-    WEEKDAY_CHOICES = ((0, 'Monday'), (1, 'Tuesday'), (2, 'Wednesday'), (3, 'Thursday'),
-                        (4, 'Friday'), (5, 'Saturday'), (6, 'Sunday'))
+    WEEKDAY_CHOICES = ((0, 'Monday'), (1, 'Tuesday'), (2, 'Wednesday'),
+                       (3, 'Thursday'), (4, 'Friday'), (5, 'Saturday'),
+                       (6, 'Sunday'))
     driver = models.ForeignKey('Driver', on_delete=models.CASCADE)
     total_rides = models.IntegerField(default=0, null=True)
-    total_earned = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    total_earned = models.DecimalField(max_digits=8, decimal_places=2,
+                                       null=True)
     date = models.DateField()
     weekday = models.IntegerField(choices=WEEKDAY_CHOICES, default=0)
     time_worked = models.DurationField(null=True)
-    rate_per_ride = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-    rate_per_hour = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-    week_statement = models.ForeignKey('WeekStatement', on_delete=models.CASCADE, null=True)
-    month_statement = models.ForeignKey('MonthStatement', on_delete=models.CASCADE, null=True)
+    rate_per_ride = models.DecimalField(max_digits=8, decimal_places=2,
+                                        null=True)
+    rate_per_hour = models.DecimalField(max_digits=8, decimal_places=2,
+                                        null=True)
+    week_statement = models.ForeignKey('WeekStatement',
+                                       on_delete=models.CASCADE, null=True)
+    month_statement = models.ForeignKey('MonthStatement',
+                                        on_delete=models.CASCADE, null=True)
 
 
 class WeekStatement(models.Model):
     driver = models.ForeignKey('Driver', on_delete=models.CASCADE)
     starting_at = models.DateField(null=True, unique=True)
     ending_at = models.DateField(null=True, unique=True)
-    total_earned = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-    rate_per_ride = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-    rate_per_hour = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-    rate_per_day = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    total_earned = models.DecimalField(max_digits=8, decimal_places=2,
+                                       null=True)
+    rate_per_ride = models.DecimalField(max_digits=8, decimal_places=2,
+                                        null=True)
+    rate_per_hour = models.DecimalField(max_digits=8, decimal_places=2,
+                                        null=True)
+    rate_per_day = models.DecimalField(max_digits=8, decimal_places=2,
+                                       null=True)
     total_rides = models.IntegerField(default=0, null=True)
     statement_id = models.CharField(max_length=75, null=True, unique=True)
     month_statement = models.ManyToManyField('MonthStatement', null=True)
@@ -58,10 +71,14 @@ class MonthStatement(models.Model):
     driver = models.ForeignKey('Driver', on_delete=models.CASCADE)
     starting_at = models.DateField()
     ending_at = models.DateField()
-    total_earned = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-    rate_per_ride = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-    rate_per_hour = models.DecimalField(max_digits=8, decimal_places=2, null=True)
-    rate_per_day = models.DecimalField(max_digits=8, decimal_places=2, null=True)
+    total_earned = models.DecimalField(max_digits=8, decimal_places=2,
+                                       null=True)
+    rate_per_ride = models.DecimalField(max_digits=8, decimal_places=2,
+                                        null=True)
+    rate_per_hour = models.DecimalField(max_digits=8, decimal_places=2,
+                                        null=True)
+    rate_per_day = models.DecimalField(max_digits=8, decimal_places=2,
+                                       null=True)
     total_rides = models.IntegerField(default=0, null=True)
 
 
@@ -75,8 +92,10 @@ class Driver(models.Model):
     @staticmethod
     def get_csrf_token(session):
         login_response = session.get('https://login.uber.com/login')
-        csrf_token_pattern = '<input type="hidden" name="_csrf_token" value="([a-zA-Z0-9\_\-\=]+)">'
-        csrf_token = re.search(csrf_token_pattern, login_response.text).group(1)
+        csrf_token_pattern = (
+            'type="hidden" name="_csrf_token" value="([a-zA-Z0-9\_\-\=]+)">')
+        csrf_token = re.search(
+            csrf_token_pattern, login_response.text).group(1)
         return csrf_token
 
     @staticmethod
@@ -101,7 +120,8 @@ class Driver(models.Model):
 
     @staticmethod
     def get_statement(session, id):
-        url = 'https://partners.uber.com/p3/money/statements/view/{}'.format(id)
+        url = 'https://partners.uber.com/p3/money/statements/view/{}'.format(
+            id)
         statement_response = session.get(url)
         data = json.loads(statement_response.text)
         return data
@@ -113,7 +133,8 @@ class Driver(models.Model):
 
     def get_first_name(self, login_response):
         first_name_pattern = '"firstname":"([A-Z\s\-\.]+)","'
-        first_name = re.search(first_name_pattern, login_response.text).group(1)
+        first_name = re.search(
+            first_name_pattern, login_response.text).group(1)
         self.first_name = first_name
 
     def get_last_name(self, login_response):
@@ -130,7 +151,8 @@ class Driver(models.Model):
             time_zone = dateutil.tz.gettz(data['body']['city']['timezone'])
             trip_earnings = data['body']['driver'].get('trip_earnings', None)
 
-            starting_at = dateutil.parser.parse(data['body']['starting_at']).date()
+            starting_at = dateutil.parser.parse(
+                data['body']['starting_at']).date()
             w, create = WeekStatement.objects.get_or_create(
                 driver=self,
                 starting_at=starting_at,
@@ -143,9 +165,10 @@ class Driver(models.Model):
             m, create = MonthStatement.objects.get_or_create(
                 driver=self,
                 starting_at=month_start,
-                ending_at=month_start.replace(month=month_start.month + 1) - datetime.timedelta(days=1)
+                ending_at=month_start + relativedelta(day=31)
             )
             w.month_statement.add(m)
+            w.save()
 
             weeks_touched = [w]
             days_touched = []
@@ -180,9 +203,7 @@ class Driver(models.Model):
                     r.month_statement, c = MonthStatement.objects.get_or_create(
                         driver=self,
                         starting_at=new_month_start,
-                        ending_at=new_month_start.replace(
-                            month=new_month_start.month + 1
-                            ) - datetime.timedelta(days=1)
+                        ending_at=new_month_start + relativedelta(day=31)
                     )
                     if r.month_statement not in months_touched:
                         months_touched.append(r.month_statement)
@@ -213,9 +234,6 @@ class Driver(models.Model):
                 r.save()
 
             for day in days_touched:
-                if day.date.month not in months_touched:
-                    months_touched.append(day.date.month)
-
                 day.total_rides = day.ride_set.count()
                 aggs = day.ride_set.aggregate(Sum('total_earned'),
                                               Min('request_at'),
@@ -235,25 +253,29 @@ class Driver(models.Model):
 
             for week in weeks_touched:
                 for month in months_touched:
-                    if month.starting_at < week.starting_at < month.ending_at:
+                    if month.starting_at.month in [week.starting_at.month,
+                                                   week.ending_at.month]:
                         week.month_statement.add(month)
-                aggs = week.daystatement_set.aggregate(Sum('total_earned'),
-                                                       Sum('total_rides'),
-                                                       Avg('rate_per_hour'))
-                week.total_earned = aggs['total_earned__sum']
-                week.total_rides = aggs['total_rides__sum']
-                week.rate_per_ride = week.total_earned / week.total_rides
-                week.rate_per_hour = aggs['rate_per_hour__avg']
-                week.rate_per_day = week.total_earned / week.daystatement_set.count()
+                days = week.daystatement_set.count()
+                if days:
+                    aggs = week.daystatement_set.aggregate(Sum('total_earned'),
+                                                           Sum('total_rides'),
+                                                           Avg('rate_per_hour'))
+                    week.total_earned = aggs['total_earned__sum']
+                    week.total_rides = aggs['total_rides__sum']
+                    week.rate_per_ride = week.total_earned / week.total_rides
+                    week.rate_per_hour = aggs['rate_per_hour__avg']
+                    week.rate_per_day = week.total_earned / days
                 week.save()
 
             for month in months_touched:
-                aggs = month.daystatement_set.aggregate(Sum('total_earned'),
-                                                        Sum('total_rides'),
-                                                        Avg('rate_per_hour'))
                 days = month.daystatement_set.count()
-                month.total_earned = aggs['total_earned__sum']
-                month.total_rides = aggs['total_rides__sum']
-                month.rate_per_ride = month.total_earned / month.total_rides
-                month.rate_per_day = month.total_earned / days
-                month.rate_per_hour = aggs['rate_per_hour__avg']
+                if days:
+                    aggs = month.daystatement_set.aggregate(Sum('total_earned'),
+                                                            Sum('total_rides'),
+                                                            Avg('rate_per_hour'))
+                    month.total_earned = aggs['total_earned__sum']
+                    month.total_rides = aggs['total_rides__sum']
+                    month.rate_per_ride = month.total_earned / month.total_rides
+                    month.rate_per_day = month.total_earned / days
+                    month.rate_per_hour = aggs['rate_per_hour__avg']
