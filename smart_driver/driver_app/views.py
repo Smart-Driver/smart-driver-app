@@ -40,8 +40,9 @@ class DriverViewSet(viewsets.ModelViewSet):
 
 
 class MonthStatementViewSet(viewsets.ModelViewSet):
-    queryset = MonthStatement.objects.all()
+    queryset = MonthStatement.objects.all().order_by('-starting_at')
     serializer_class = MonthStatementSerializer
+
 
 def home(request):
     context = {}

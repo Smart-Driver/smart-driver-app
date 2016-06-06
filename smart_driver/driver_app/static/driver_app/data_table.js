@@ -1,7 +1,7 @@
-var driver_id = $('#driver_id').val()
+var driverID = $('#driver_id').val()
 
 $(document).ready(function(){
-    $.get('/api/day_statements/?driver=' + driver_id,
+    $.get('/api/day_statements/?driver=' + driverID,
         function(data) {
             $('#table_id').DataTable({
                 data: data,
@@ -19,8 +19,13 @@ $(document).ready(function(){
     )
 });
 
-
-
+var $timeWorkedHeader = $('#table_id').find('th[name="Time Worked"]');
+// $('#deltaDescription').hide()
+// $timeWorkedHeader.hover(function(){
+//     $('#deltaDescription').show();
+//     }, function(){
+//     $('#deltaDescription').hide();
+// });
 
 // sudo code for wiring up buttons to different views:
 // $(document).ready(function(){

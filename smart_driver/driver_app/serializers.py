@@ -1,3 +1,4 @@
+import datetime
 from rest_framework import serializers
 from .models import Ride, DayStatement, WeekStatement, Driver, MonthStatement
 
@@ -9,15 +10,31 @@ class RideSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class DayStatementSerializer(serializers.HyperlinkedModelSerializer):
+    date = serializers.SerializerMethodField()
     weekday = serializers.SerializerMethodField()
+    total_earned = serializers.SerializerMethodField()
+    rate_per_ride = serializers.SerializerMethodField()
+    rate_per_hour = serializers.SerializerMethodField()
 
     class Meta:
         model = DayStatement
         fields = ('date', 'weekday', 'total_earned', 'time_worked',
                   'rate_per_hour', 'total_rides', 'rate_per_ride')
 
+    def get_date(self, obj):
+        return obj.date.strftime('%b %d, %Y')
+
     def get_weekday(self, obj):
         return obj.get_weekday_display()
+
+    def get_total_earned(self, obj):
+        return "$" + str(obj.total_earned)
+
+    def get_rate_per_ride(self, obj):
+        return "$" + str(obj.rate_per_ride)
+
+    def get_rate_per_hour(self, obj):
+        return "$" + str(obj.rate_per_hour)
 
 
 class WeekStatementSerializer(serializers.HyperlinkedModelSerializer):
