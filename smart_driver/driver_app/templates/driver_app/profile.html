@@ -98,6 +98,10 @@
                                     //.staggerLabels(historicalBarChart[0].values.length > 8)
                                     .showValues(true)
                                     .duration(250)
+                                    chart.yAxis
+                                      .axisLabel("($) Income In Dollars")
+                                    chart.xAxis
+                                      .axisLabel("Month")
                                     ;
                                 d3.select('#chart1 svg')
                                     .datum(monthly_totals)
