@@ -21,7 +21,6 @@ class Ride(models.Model):
     trip_id = models.CharField(max_length=50, primary_key=True)
     status = models.CharField(max_length=15)
     total_earned = models.DecimalField(max_digits=8, decimal_places=2)
-    surge = models.DecimalField(max_digits=7, decimal_places=2, null=True)
     distance = models.DecimalField(max_digits=7, decimal_places=2)
     date = models.DateField()
     request_at = models.DateTimeField()
@@ -55,7 +54,8 @@ class Ride(models.Model):
             self.month_statement, c = MonthStatement.objects.get_or_create(
                 driver=self.driver,
                 starting_at=new_month_start,
-                ending_at=new_month_start + relativedelta(day=31)
+                ending_at=new_month_start + relativedelta(day=31),
+                month_name=new_month_start.strftime('%B \'%y')
             )
             months.append(self.month_statement)
         self.save()
@@ -173,6 +173,7 @@ class MonthStatement(models.Model):
     driver = models.ForeignKey('Driver', on_delete=models.CASCADE)
     starting_at = models.DateField()
     ending_at = models.DateField()
+    month_name = models.CharField(max_length=15)
     total_earned = models.DecimalField(max_digits=8, decimal_places=2,
                                        null=True)
     rate_per_ride = models.DecimalField(max_digits=8, decimal_places=2,
@@ -290,7 +291,8 @@ class Driver(models.Model):
             m, create = MonthStatement.objects.get_or_create(
                 driver=self,
                 starting_at=month_start,
-                ending_at=month_start + relativedelta(day=31)
+                ending_at=month_start + relativedelta(day=31),
+                month_name=month_start.strftime('%B \'%y')
             )
             w.month_statement.add(m)
             w.save()

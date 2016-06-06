@@ -30,5 +30,5 @@ class DriverSerializer(serializers.HyperlinkedModelSerializer):
 class MonthStatementSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = MonthStatement
-        fields = ('starting_at', 'total_earned', 'rate_per_day',
+        fields = ('month_name', 'total_earned', 'rate_per_day',
                   'rate_per_hour', 'total_rides','rate_per_ride')

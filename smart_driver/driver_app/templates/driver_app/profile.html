@@ -82,108 +82,31 @@
                   </div>
 
                   <script>
-                      historicalBarChart = [
-                          {
-                              key: "Cumulative Return",
-                              values: [
-                                {
-                                    "starting_at": "2016-01-01",
-                                    "total_earned": "1007.22",
-                                    "rate_per_day": "100.72",
-                                    "rate_per_hour": "9.88",
-                                    "total_rides": 102,
-                                    "rate_per_ride": "9.87"
-                                },
-                                {
-                                    "starting_at": "2016-04-01",
-                                    "total_earned": null,
-                                    "rate_per_day": null,
-                                    "rate_per_hour": null,
-                                    "total_rides": 0,
-                                    "rate_per_ride": null
-                                },
-                                {
-                                    "starting_at": "2016-03-01",
-                                    "total_earned": "2518.37",
-                                    "rate_per_day": "167.89",
-                                    "rate_per_hour": "20.30",
-                                    "total_rides": 227,
-                                    "rate_per_ride": "11.09"
-                                },
-                                {
-                                    "starting_at": "2015-12-01",
-                                    "total_earned": "1725.16",
-                                    "rate_per_day": "172.52",
-                                    "rate_per_hour": "15.21",
-                                    "total_rides": 132,
-                                    "rate_per_ride": "13.07"
-                                },
-                                {
-                                    "starting_at": "2015-06-01",
-                                    "total_earned": "437.36",
-                                    "rate_per_day": "72.89",
-                                    "rate_per_hour": "16.71",
-                                    "total_rides": 42,
-                                    "rate_per_ride": "10.41"
-                                },
-                                {
-                                    "starting_at": "2015-07-01",
-                                    "total_earned": "1038.47",
-                                    "rate_per_day": "173.08",
-                                    "rate_per_hour": "27.11",
-                                    "total_rides": 74,
-                                    "rate_per_ride": "14.03"
-                                },
-                                {
-                                    "starting_at": "2016-02-01",
-                                    "total_earned": "4104.10",
-                                    "rate_per_day": "228.01",
-                                    "rate_per_hour": "27.02",
-                                    "total_rides": 244,
-                                    "rate_per_ride": "16.82"
-                                },
-                                {
-                                    "starting_at": "2015-08-01",
-                                    "total_earned": "2495.08",
-                                    "rate_per_day": "108.48",
-                                    "rate_per_hour": "14.42",
-                                    "total_rides": 232,
-                                    "rate_per_ride": "10.75"
-                                },
-                                {
-                                    "starting_at": "2015-09-01",
-                                    "total_earned": "2906.22",
-                                    "rate_per_day": "138.39",
-                                    "rate_per_hour": "17.30",
-                                    "total_rides": 254,
-                                    "rate_per_ride": "11.44"
-                                },
-                                {
-                                    "starting_at": "2015-10-01",
-                                    "total_earned": "3463.14",
-                                    "rate_per_day": "150.57",
-                                    "rate_per_hour": "20.33",
-                                    "total_rides": 275,
-                                    "rate_per_ride": "12.59"
-                                }
-                            ]
-                          }
-                      ];
-                      nv.addGraph(function() {
-                          var chart = nv.models.discreteBarChart()
-                              .x(function(d) { return d.starting_at })
-                              .y(function(d) { return d.total_earned })
-                              .staggerLabels(true)
-                              //.staggerLabels(historicalBarChart[0].values.length > 8)
-                              .showValues(true)
-                              .duration(250)
-                              ;
-                          d3.select('#chart1 svg')
-                              .datum(historicalBarChart)
-                              .call(chart);
-                          nv.utils.windowResize(chart.update);
-                          return chart;
-                      });
+                      var monthly_totals = [{key:"Total Earned per Month", values:[]}];
+                      d3.json("/api/month_statements",
+                        function(error, data) {
+                            for(var i in data.results) {
+                                monthly_totals[0]["values"].push({"label":data.results[i]["month_name"],"value":data.results[i]["total_earned"]});
+                            }
+
+                            nv.addGraph(function() {
+                                var chart = nv.models.discreteBarChart()
+                                    .x(function(d) { return d.label })
+                                    .y(function(d) { return d.value })
+                                    .staggerLabels(true)
+                                    //.staggerLabels(historicalBarChart[0].values.length > 8)
+                                    .showValues(true)
+                                    .duration(250)
+                                    ;
+                                d3.select('#chart1 svg')
+                                    .datum(monthly_totals)
+                                    .call(chart);
+                                nv.utils.windowResize(chart.update);
+                                return chart;
+                            });
+                        }
+                    );
+
                   </script>
 
                 <!-- </div>
