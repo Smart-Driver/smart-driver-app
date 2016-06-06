@@ -18,9 +18,15 @@ class RideViewSet(viewsets.ModelViewSet):
 
 
 class DayStatementViewSet(viewsets.ModelViewSet):
-    #DayStatement.objects.filter(driver=driver).order_by('-date')
     queryset = DayStatement.objects.all()
     serializer_class = DayStatementSerializer
+
+    def get_queryset(self):
+        queryset = DayStatement.objects.all().order_by('-date')
+        driver_id = self.request.query_params.get('driver', None)
+        if driver_id is not None:
+            queryset = queryset.filter(driver=Driver.objects.get(id=driver_id))
+        return queryset
 
 
 class WeekStatementViewSet(viewsets.ModelViewSet):

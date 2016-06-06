@@ -1,6 +1,7 @@
-console.log('julio')
+var driver_id = $('#driver_id').val()
+
 $(document).ready(function(){
-    $.get('/api/day_statements',
+    $.get('/api/day_statements/?driver=' + driver_id,
         function(data) {
             $('#table_id').DataTable({
                 data: data,
@@ -17,6 +18,8 @@ $(document).ready(function(){
         }
     )
 });
+
+
 
 
 // sudo code for wiring up buttons to different views:

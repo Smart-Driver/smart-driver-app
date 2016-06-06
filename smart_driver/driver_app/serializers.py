@@ -9,10 +9,15 @@ class RideSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class DayStatementSerializer(serializers.HyperlinkedModelSerializer):
+    weekday = serializers.SerializerMethodField()
+
     class Meta:
         model = DayStatement
         fields = ('date', 'weekday', 'total_earned', 'time_worked',
                   'rate_per_hour', 'total_rides', 'rate_per_ride')
+
+    def get_weekday(self, obj):
+        return obj.get_weekday_display()
 
 
 class WeekStatementSerializer(serializers.HyperlinkedModelSerializer):
