@@ -19,26 +19,6 @@ $(document).ready(function(){
     )
 });
 
-function createWeeklyTable() {
-    $.get('/api/week_statements/?driver=' + driverID,
-        function(data) {
-            $('#table_id').DataTable().destroy();
-            $('#table_id').DataTable({
-                data: data,
-                columns: [
-                    {data: 'starting_at'},
-                    {data: 'ending_at'},
-                    {data: 'total_earned'},
-                    {data: 'rate_per_day'},
-                    {data: 'rate_per_hour'},
-                    {data: 'total_rides'},
-                    {data: 'rate_per_ride'}
-                ]
-            });
-        }
-    )
-}
-
 $('#createWeek').click(function() {
     $.get('/api/week_statements/?driver=' + driverID,
         function(data) {

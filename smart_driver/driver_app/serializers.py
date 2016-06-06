@@ -38,10 +38,35 @@ class DayStatementSerializer(serializers.HyperlinkedModelSerializer):
 
 
 class WeekStatementSerializer(serializers.HyperlinkedModelSerializer):
+    starting_at = serializers.SerializerMethodField()
+    ending_at = serializers.SerializerMethodField()
+    total_earned = serializers.SerializerMethodField()
+    rate_per_day = serializers.SerializerMethodField()
+    rate_per_hour = serializers.SerializerMethodField()
+    rate_per_ride = serializers.SerializerMethodField()
+
     class Meta:
         model = WeekStatement
         fields = ('starting_at', 'ending_at', 'total_earned', 'rate_per_day',
                   'rate_per_hour', 'total_rides', 'rate_per_ride')
+
+    def get_starting_at(self, obj):
+        return obj.starting_at.strftime('%m-%d-%y')
+
+    def get_ending_at(self, obj):
+        return obj.ending_at.strftime('%m-%d-%y')
+
+    def get_total_earned(self, obj):
+        return "$" + str(obj.total_earned)
+
+    def get_rate_per_day(self, obj):
+        return "$" + str(obj.rate_per_day)
+
+    def get_rate_per_hour(self, obj):
+        return "$" + str(obj.rate_per_hour)
+
+    def get_rate_per_ride(self, obj):
+        return "$" + str(obj.rate_per_ride)
 
 
 class DriverSerializer(serializers.HyperlinkedModelSerializer):
