@@ -86,61 +86,93 @@
                           {
                               key: "Cumulative Return",
                               values: [
-                                  {
-                                      "label" : "Jan" ,
-                                      "value" : 1500
-                                  } ,
-                                  {
-                                      "label" : "Feb" ,
-                                      "value" : 1300
-                                  } ,
-                                  {
-                                      "label" : "March" ,
-                                      "value" : 1000
-                                  } ,
-                                  {
-                                      "label" : "April" ,
-                                      "value" : 2300
-                                  } ,
-                                  {
-                                      "label" : "May" ,
-                                      "value" : 800
-                                  } ,
-                                  {
-                                      "label" : "June" ,
-                                      "value" : 950
-                                  } ,
-                                  {
-                                      "label" : "July" ,
-                                      "value" : 1200
-                                  } ,
-                                  {
-                                      "label" : "August" ,
-                                      "value" : 1400
-                                  },
-                                  {
-                                      "label" : "Sept" ,
-                                      "value" : 1600
-                                  },
-                                  {
-                                      "label" : "Oct" ,
-                                      "value" : 1000
-                                  },
-                                  {
-                                      "label" : "Nov" ,
-                                      "value" : 2000
-                                  },
-                                  {
-                                      "label" : "Dec" ,
-                                      "value" : 1200
-                                  }
-                              ]
+                                {
+                                    "starting_at": "2016-01-01",
+                                    "total_earned": "1007.22",
+                                    "rate_per_day": "100.72",
+                                    "rate_per_hour": "9.88",
+                                    "total_rides": 102,
+                                    "rate_per_ride": "9.87"
+                                },
+                                {
+                                    "starting_at": "2016-04-01",
+                                    "total_earned": null,
+                                    "rate_per_day": null,
+                                    "rate_per_hour": null,
+                                    "total_rides": 0,
+                                    "rate_per_ride": null
+                                },
+                                {
+                                    "starting_at": "2016-03-01",
+                                    "total_earned": "2518.37",
+                                    "rate_per_day": "167.89",
+                                    "rate_per_hour": "20.30",
+                                    "total_rides": 227,
+                                    "rate_per_ride": "11.09"
+                                },
+                                {
+                                    "starting_at": "2015-12-01",
+                                    "total_earned": "1725.16",
+                                    "rate_per_day": "172.52",
+                                    "rate_per_hour": "15.21",
+                                    "total_rides": 132,
+                                    "rate_per_ride": "13.07"
+                                },
+                                {
+                                    "starting_at": "2015-06-01",
+                                    "total_earned": "437.36",
+                                    "rate_per_day": "72.89",
+                                    "rate_per_hour": "16.71",
+                                    "total_rides": 42,
+                                    "rate_per_ride": "10.41"
+                                },
+                                {
+                                    "starting_at": "2015-07-01",
+                                    "total_earned": "1038.47",
+                                    "rate_per_day": "173.08",
+                                    "rate_per_hour": "27.11",
+                                    "total_rides": 74,
+                                    "rate_per_ride": "14.03"
+                                },
+                                {
+                                    "starting_at": "2016-02-01",
+                                    "total_earned": "4104.10",
+                                    "rate_per_day": "228.01",
+                                    "rate_per_hour": "27.02",
+                                    "total_rides": 244,
+                                    "rate_per_ride": "16.82"
+                                },
+                                {
+                                    "starting_at": "2015-08-01",
+                                    "total_earned": "2495.08",
+                                    "rate_per_day": "108.48",
+                                    "rate_per_hour": "14.42",
+                                    "total_rides": 232,
+                                    "rate_per_ride": "10.75"
+                                },
+                                {
+                                    "starting_at": "2015-09-01",
+                                    "total_earned": "2906.22",
+                                    "rate_per_day": "138.39",
+                                    "rate_per_hour": "17.30",
+                                    "total_rides": 254,
+                                    "rate_per_ride": "11.44"
+                                },
+                                {
+                                    "starting_at": "2015-10-01",
+                                    "total_earned": "3463.14",
+                                    "rate_per_day": "150.57",
+                                    "rate_per_hour": "20.33",
+                                    "total_rides": 275,
+                                    "rate_per_ride": "12.59"
+                                }
+                            ]
                           }
                       ];
                       nv.addGraph(function() {
                           var chart = nv.models.discreteBarChart()
-                              .x(function(d) { return d.label })
-                              .y(function(d) { return d.value })
+                              .x(function(d) { return d.starting_at })
+                              .y(function(d) { return d.total_earned })
                               .staggerLabels(true)
                               //.staggerLabels(historicalBarChart[0].values.length > 8)
                               .showValues(true)
@@ -178,7 +210,7 @@
                               <th>Total Rides</th>
                               <th>Total Earned</th>
                               <th>Rate/ride</th>
-                              <th>RateJ/hr</th>
+                              <th>Rate/hr</th>
 
                           </tr>
                       </thead>

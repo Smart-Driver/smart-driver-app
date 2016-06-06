@@ -1,4 +1,5 @@
 import requests
+import datetime
 from django.shortcuts import render
 from rest_framework import viewsets
 from django.http import HttpResponseRedirect
@@ -6,8 +7,9 @@ from django.views.generic.base import TemplateView
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.models import User
 from .serializers import RideSerializer, DayStatementSerializer
-from .serializers import WeekStatementSerializer, DriverSerializer
-from .models import Ride, DayStatement, WeekStatement, Driver
+from .serializers import WeekStatementSerializer, MonthStatementSerializer
+from .serializers import DriverSerializer
+from .models import Ride, DayStatement, WeekStatement, MonthStatement, Driver
 
 
 class RideViewSet(viewsets.ModelViewSet):
@@ -30,6 +32,10 @@ class DriverViewSet(viewsets.ModelViewSet):
     queryset = Driver.objects.all()
     serializer_class = DriverSerializer
 
+
+class MonthStatementViewSet(viewsets.ModelViewSet):
+    queryset = MonthStatement.objects.all()
+    serializer_class = MonthStatementSerializer
 
 def home(request):
     context = {}
@@ -73,6 +79,13 @@ def profile(request):
     driver = Driver.objects.get(user=request.user)
     statements = DayStatement.objects.filter(driver=driver).order_by('date')
 
-    context = {'statements': statements}
+    monthly_values = []
+    today = datetime.date.today()
+    for month in MonthStatement.objects.all():
+        if month.starting_at > today.replace(year=today.year - 1):
+            monthly_values.append((month.starting_at.strftime('%B \'%y'), month.total_earned))
 
+    monthly_values = [{"label": m, "value": float(val)} for m, val in monthly_values if val]
+    context = {'monthly_values': monthly_values}
+    context['statements'] = statements
     return render(request, "driver_app/profile.html", context)

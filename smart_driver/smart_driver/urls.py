@@ -9,6 +9,7 @@ router.register(r'rides', views.RideViewSet)
 router.register(r'week_statements', views.WeekStatementViewSet)
 router.register(r'day_statements', views.DayStatementViewSet)
 router.register(r'drivers', views.DriverViewSet)
+router.register(r'month_statements', views.MonthStatementViewSet)
 
 
 urlpatterns = [
