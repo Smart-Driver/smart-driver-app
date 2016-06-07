@@ -1,8 +1,7 @@
-var a = document.getElementById('data_type').selectedIndex
 var table_header = $('#table_id').find('tr')
 var driverID = $('#driver_id').val()
 
-function createDayTable() {
+function drawDayTable() {
     table_header.append(
         $('<th>').text('Date'),
         $('<th>').text('Weekday'),
@@ -32,8 +31,8 @@ function createDayTable() {
 }
 
 function destroyTable() {
+    $('#table_id').DataTable().destroy();
     table_header.find('th').remove();
-    $('#table_id').DataTable.destroy();
 }
 
 function drawWeekTable() {
@@ -65,19 +64,21 @@ function drawWeekTable() {
     );
 }
 
-$(document).ready(function() {
-    createDayTable();
+var a = document.getElementById('data_type').selectedIndex
 
-// $('#table_id').change(function() {
-//     var a = selected
-//     if a == 1
-//       destroy table
-//       table_header.remove()
-//       $('#table_id').DataTable.destroy()
-//       draw week table
-//     if a == 0
-//       draw day table
-//
-//     });
+$(document).ready(function() {
+    drawDayTable();
+
+    $('#data_type').change(function() {
+        a = document.getElementById('data_type').selectedIndex;
+        if (a == 0) {
+            destroyTable();
+            drawDayTable();
+        }
+        else {
+            destroyTable();
+            drawWeekTable();
+        }
+    });
 
 });
