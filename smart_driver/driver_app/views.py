@@ -19,11 +19,11 @@ class RideViewSet(viewsets.ModelViewSet):
 
 
 class DayStatementViewSet(viewsets.ModelViewSet):
-    queryset = DayStatement.objects.filter(total_earned__gt=0)
+    queryset = DayStatement.objects.all()
     serializer_class = DayStatementSerializer
 
     def get_queryset(self):
-        queryset = DayStatement.objects.filter(total_earned__gt=0).order_by('-date')
+        queryset = DayStatement.objects.all().order_by('-date')
         driver_id = self.request.query_params.get('driver', None)
         if driver_id is not None:
             queryset = queryset.filter(driver=Driver.objects.get(id=driver_id))
@@ -31,11 +31,11 @@ class DayStatementViewSet(viewsets.ModelViewSet):
 
 
 class WeekStatementViewSet(viewsets.ModelViewSet):
-    queryset = WeekStatement.objects.filter(total_earned__gt=0)
+    queryset = WeekStatement.objects.all()
     serializer_class = WeekStatementSerializer
 
     def get_queryset(self):
-        queryset = WeekStatement.objects.filter(total_earned__gt=0).order_by('-starting_at')
+        queryset = WeekStatement.objects.all().order_by('-starting_at')
         driver_id = self.request.query_params.get('driver', None)
         if driver_id is not None:
             queryset = queryset.filter(driver=Driver.objects.get(id=driver_id))
@@ -48,7 +48,7 @@ class DriverViewSet(viewsets.ModelViewSet):
 
 
 class MonthStatementViewSet(viewsets.ModelViewSet):
-    queryset = MonthStatement.objects.filter(total_earned__gt=0).order_by('-starting_at')
+    queryset = MonthStatement.objects.all().order_by('-starting_at')
     serializer_class = MonthStatementSerializer
 
 
@@ -108,4 +108,4 @@ def profile(request):
 
 def logout_view(request):
     logout(request)
-    return redirect("/")
+    return HttpResponseRedirect("/")

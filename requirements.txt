@@ -2,10 +2,14 @@ dj-database-url==0.4.1
 Django==1.9.6
 django-nvd3==0.9.7
 djangorestframework==3.3.3
+flake8==2.5.4
 gunicorn==19.6.0
 Jinja2==2.8
 MarkupSafe==0.23
+mccabe==0.4.0
+pep8==1.7.0
 psycopg2==2.6.1
+pyflakes==1.0.0
 python-dateutil==2.5.3
 python-nvd3==0.14.2
 python-slugify==1.1.4
