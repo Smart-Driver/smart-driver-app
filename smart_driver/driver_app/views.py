@@ -4,8 +4,9 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from django.http import HttpResponseRedirect
 from django.views.generic.base import TemplateView
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
+from django.shortcuts import redirect
 from .serializers import RideSerializer, DayStatementSerializer
 from .serializers import WeekStatementSerializer, MonthStatementSerializer
 from .serializers import DriverSerializer
@@ -103,3 +104,8 @@ def profile(request):
     context = {'monthly_values': monthly_values}
     context['statements'] = statements
     return render(request, "driver_app/profile.html", context)
+
+
+def logout_view(request):
+    logout(request)
+    return redirect("/")
