@@ -18,7 +18,6 @@ class RideViewSet(viewsets.ModelViewSet):
 
 
 class DayStatementViewSet(viewsets.ModelViewSet):
-    #DayStatement.objects.filter(driver=driver).order_by('-date')
     queryset = DayStatement.objects.all()
     serializer_class = DayStatementSerializer
 

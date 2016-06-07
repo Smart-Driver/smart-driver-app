@@ -124,20 +124,25 @@
                     <h1 style="color:black;">DYNAMIC USER TABLE GOES HERE</h1>
                     <br>
 
+                    <label>Data:
+                      <select id="data_type">
+
+                        <option selected=0 value=0>Daily</option>
+                        <option value=1>Weekly</option>
+
+                      </select>
+                     </label>
+
                     <table id="table_id" class="display">
+
+
+
                       <thead>
                           <tr>
-                              <th>Id</th>
-                              <th>Date</th>
-                              <th>Weekday</th>
-                              <th>Time Worked</th>
-                              <th>Total Rides</th>
-                              <th>Total Earned</th>
-                              <th>Rate/ride</th>
-                              <th>Rate/hr</th>
-
                           </tr>
                       </thead>
+
+
                       <!-- <tbody>
                           {% for statement in statements %}
                           <tr>

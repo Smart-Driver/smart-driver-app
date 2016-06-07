@@ -1,5 +1,19 @@
-console.log('julio')
+
+
 $(document).ready(function(){
+
+  var a = document.getElementById('data_type').selectedIndex
+  var table_header = $('#table_id').find('tr')
+  if (a == 0){
+    table_header.append(
+      $('<th>').text('Date'),
+      $('<th>').text('Weekday'),
+      $('<th>').text('Total Earned'),
+      $('<th>').text('Time Worked'),
+      $('<th>').text('Rate/Hr'),
+      $('<th>').text('Total Rides'),
+      $('<th>').text('Rate/Ride')
+    );
     $.get('/api/day_statements',
         function(data) {
             $('#table_id').DataTable({
@@ -15,18 +29,8 @@ $(document).ready(function(){
                 ]
             });
         }
-    )
+    );
+
+  }
+
 });
-
-
-// sudo code for wiring up buttons to different views:
-// $(document).ready(function(){
-//     $('#table_id').DataTable({
-//         ajax: 'url'
-//     });
-// });
-//
-// button.click(function() {
-//     deleteOldDataTable();
-//     createNewDataTable();
-// })
