@@ -34,16 +34,16 @@ $(document).ready(function(){
 
   };
 
-$('#table_id').change(function() {
-    var a = selected
-    if a == 1
-      destroy table
-      table_header.remove()
-      $('#table_id').DataTable.destroy()
-      draw week table
-    if a == 0
-      draw day table
-
-    });
+// $('#table_id').change(function() {
+//     var a = selected
+//     if a == 1
+//       destroy table
+//       table_header.remove()
+//       $('#table_id').DataTable.destroy()
+//       draw week table
+//     if a == 0
+//       draw day table
+//
+//     });
 
 });
