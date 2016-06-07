@@ -55,7 +55,10 @@
         </div>
         <div class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="{% url 'driver_app:home' %}">HOME</a></li>
+            {% if user.is_authenticated %}
+            <li class="logout"><a href="{% url 'driver_app:logout' %}">Logout</a></li>
+            {% else %}
+            {% endif %}
           </ul>
         </div><!--/.nav-collapse -->
       </div>
