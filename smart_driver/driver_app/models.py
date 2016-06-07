@@ -265,9 +265,7 @@ class Driver(models.Model):
     def get_new_statement_ids(self, ids):
         stored_ids = {ws.statement_id for ws in self.weekstatement_set.all()}
         new = set(ids) - stored_ids
-        if new:
-            ids = list(new)
-        return ids
+        return list(new)
 
     def grab_data(self, session, ids):
         for statement_id in ids:
