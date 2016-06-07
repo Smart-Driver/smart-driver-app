@@ -103,3 +103,8 @@ def profile(request):
     context = {'monthly_values': monthly_values}
     context['statements'] = statements
     return render(request, "driver_app/profile.html", context)
+
+
+def logout_view(request):
+    logout(request)
+    return HttpResponseRedirect("/")
