@@ -1,9 +1,10 @@
 
+var a = document.getElementById('data_type').selectedIndex
+var table_header = $('#table_id').find('tr')
+
 
 $(document).ready(function(){
 
-  var a = document.getElementById('data_type').selectedIndex
-  var table_header = $('#table_id').find('tr')
   if (a == 0){
     table_header.append(
       $('<th>').text('Date'),
@@ -31,6 +32,18 @@ $(document).ready(function(){
         }
     );
 
-  }
+  };
+
+$('#table_id').change(function() {
+    var a = selected
+    if a == 1
+      destroy table
+      table_header.remove()
+      $('#table_id').DataTable.destroy()
+      draw week table
+    if a == 0
+      draw day table
+
+    });
 
 });
