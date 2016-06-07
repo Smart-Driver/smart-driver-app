@@ -14,6 +14,8 @@ function drawDayTable() {
     $.get('/api/day_statements/?driver=' + driverID,
         function(data) {
             $('#table_id').DataTable({
+              "pageLength": 21,
+               "lengthMenu": [[21, -1], [31, "All"]],
                 data: data,
                 columns: [
                     {data: 'date'},
