@@ -4,7 +4,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from django.http import HttpResponseRedirect
 from django.views.generic.base import TemplateView
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from .serializers import RideSerializer, DayStatementSerializer
 from .serializers import WeekStatementSerializer, MonthStatementSerializer
