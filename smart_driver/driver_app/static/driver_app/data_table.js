@@ -13,7 +13,8 @@ $(document).ready(function(){
                     {data: 'rate_per_hour'},
                     {data: 'total_rides'},
                     {data: 'rate_per_ride'}
-                ]
+                ],
+                aaSorting: [[0, 'desc']]
             });
         }
     )
