@@ -338,10 +338,10 @@ csmall2 {
 
 .form-log-in-with-email .form-white-background{
     width: 540px;
-		/*height: 350px;*/
+		height: 350px;
     box-sizing: border-box;
-    background-color: #00b3fe;
-    /*box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);*/
+    background-color: #ffffff;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
     padding: 1px 60px;
     margin-bottom: 32px;
 }
