@@ -26,8 +26,11 @@ class DayStatementViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = DayStatement.objects.filter(total_earned__gt=0).order_by('-date')
         driver_id = self.request.query_params.get('driver', None)
-        if driver_id is not None:
+        month = self.request.query_params.get('month', None)
+        if driver_id:
             queryset = queryset.filter(driver=Driver.objects.get(id=driver_id))
+        if month:
+            queryset = queryset.filter(month_statement=MonthStatement.objects.get(month_name=month))
         return queryset
 
 
@@ -38,8 +41,11 @@ class WeekStatementViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         queryset = WeekStatement.objects.filter(total_earned__gt=0).order_by('-starting_at')
         driver_id = self.request.query_params.get('driver', None)
-        if driver_id is not None:
+        month = self.request.query_params.get('month', None)
+        if driver_id:
             queryset = queryset.filter(driver=Driver.objects.get(id=driver_id))
+        if month:
+            queryset = queryset.filter(month_statement=MonthStatement.objects.get(month_name=month))
         return queryset
 
 
