@@ -69,7 +69,12 @@ WEEKDAY GRAPH
           <!-- <div class="graph-log-in-with-email"> -->
               <!-- <div class="graph-white-background"> -->
               <!-- <div><h1>TEST</h1></div> -->
+              <br>
                 <div id="chart1">
+                  <br>
+                  <br>
+                  <br>
+                <h2>Average Hourly Rate ($)</h2>
                     <svg></svg>
                 </div>
 
@@ -88,8 +93,6 @@ WEEKDAY GRAPH
                             .forceY([0, hourly_max + 5 - (hourly_max % 5)])
                             chart.yAxis
                               .axisLabel("Avg Hourly Rate in Dollars")
-                            chart.xAxis
-                              .axisLabel("Day")
                             ;
                         d3.select('#chart1 svg')
                             .datum(weekday_graph_data)
@@ -111,6 +114,7 @@ WEEKDAY GRAPH
             <!-- <div class="graph-log-in-with-email"> -->
                 <!-- <div class="graph-white-background"> -->
                   <div id="chart2">
+                  <h2>Monthly Income ($)</h2>
                       <svg></svg>
                   </div>
 
@@ -136,9 +140,6 @@ WEEKDAY GRAPH
                                     .forceY([0, max + 500 - (max % 500)])
                                     chart.yAxis
                                       .axisLabel("Monthly Income In Dollars")
-                                    chart.xAxis
-                                      .axisLabel("Month")
-                                    ;
                                 d3.select('#chart2 svg')
                                     .datum(monthly_totals)
                                     .call(chart);

@@ -1,11 +1,6 @@
 import unittest
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
-import os
-
-USER_EMAIL = os.environ.get('SMART_DRIVER_USER_EMAIL')
-USER_PASSWORD = os.environ.get('SMART_DRIVER_USER_PASSWORD')
-USER_NAME = os.environ.get('SMART_DRIVER_USER_NAME')
 
 
 class NewVisitorTest(unittest.TestCase):
@@ -22,19 +17,19 @@ class NewVisitorTest(unittest.TestCase):
         self.browser.get('http://127.0.0.1:8000')
 
         email = self.browser.find_element_by_name('email')
-        email.send_keys(USER_EMAIL)
+        email.send_keys('julio_jr3@hotmail.com')
 
         password = self.browser.find_element_by_name('password')
-        password.send_keys(USER_PASSWORD)
+        password.send_keys('juliojr77julio7')
 
-        # log-in
         password.send_keys(Keys.ENTER)
 
         self.browser.implicitly_wait(10)
 
-        # test if
-        self.assertIn(USER_NAME, self.browser.page_source)
+        # test if user's name is at top of page
+        self.assertIn('Julio', self.browser.page_source)
 
+        # test if table loads properly
         self.assertTrue(self.browser.find_element_by_id('table_id'))
 
 
