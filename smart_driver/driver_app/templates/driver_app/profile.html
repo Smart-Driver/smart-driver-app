@@ -110,18 +110,6 @@ WEEKDAY GRAPH
                         nv.utils.windowResize(chart.update);
                         return chart;
                     });
-
-                //     d3.json("/api/month_statements",
-                //       function(error, data) {
-                //           for(var i in data) {
-                //               monthly_totals[0]["values"].push({"label":data[i]["month_name"],"value":data[i]["total_earned"]});
-                //               if (parseInt(data[i]["total_earned"]) > max) {
-                //                   max = parseInt(data[i]["total_earned"])
-                //               }
-                //           }
-                  //
-                //       }
-                //   );
                 </script>
 
               <!-- </div>
@@ -167,6 +155,9 @@ WEEKDAY GRAPH
                                 d3.select('#chart2 svg')
                                     .datum(monthly_totals)
                                     .call(chart);
+
+                                onChart2Created();
+
                                 nv.utils.windowResize(chart.update);
                                 return chart;
                             });
