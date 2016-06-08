@@ -27,10 +27,15 @@ class DayStatementViewSet(viewsets.ModelViewSet):
         queryset = DayStatement.objects.filter(total_earned__gt=0).order_by('-date')
         driver_id = self.request.query_params.get('driver', None)
         month = self.request.query_params.get('month', None)
+        weekday = self.request.query_params.get('weekday', None)
         if driver_id:
             queryset = queryset.filter(driver=Driver.objects.get(id=driver_id))
         if month:
             queryset = queryset.filter(month_statement=MonthStatement.objects.get(month_name=month))
+        if weekday:
+            for tup in DayStatement.WEEKDAY_CHOICES:
+                if tup[1] == weekday:
+                    queryset = queryset.filter(weekday=tup[0])
         return queryset
 
 
