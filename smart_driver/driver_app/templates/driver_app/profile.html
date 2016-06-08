@@ -18,19 +18,8 @@
     <link href="/static/driver_app/assets/css/font-awesome.min.css" rel="stylesheet">
 
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
-
-    <!-- Just for debugging purposes. Don't actually copy this line! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-
-    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-
-    <!-- <script src="/static/driver_app/assets/js/modernizr.js"></script> -->
-
     <link href="/static/driver_app/assets/d3/nv.d3.css" rel="stylesheet" type="text/css">
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
     <script src="/static/driver_app/assets/d3/nv.d3.js"></script>
   </head>
@@ -41,7 +30,6 @@
   HEADERWRAP
  ***************************************************************************************************************** -->
 
-    <!-- Fixed navbar -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -60,21 +48,20 @@
             {% else %}
             {% endif %}
           </ul>
-        </div><!--/.nav-collapse -->
+        </div>
       </div>
     </div>
 
-	<!-- *****************************************************************************************************************
+<!--*****************************************************************************************************************
 	 MAIN BODY
-	 ***************************************************************************************************************** -->
+***************************************************************************************************************** -->
 	<div id="headerwrap">
 	    <div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
- <input id="driver_id" type="hidden" value={{user.driver.id}}>
+          <input id="driver_id" type="hidden" value={{user.driver.id}}>
           <h2>Welcome <span style="color:white;">{{ user.driver.get_name }}</span>!</h2>
 				</div>
-
 <!-- *****************************************************************************************************************
 WEEKDAY GRAPH
 ************************************************************************************************************** -->
@@ -174,10 +161,28 @@ WEEKDAY GRAPH
                     );
                   </script>
 
+
+
                 <!-- </div>
             </div>
         </form> -->
 
+        <br>
+        <br>
+        <br>
+        <br>
+
+  <!-- *****************************************************************************************************************
+  DYNAMIC USER TABLE
+  ********************************************************************************** -->
+    <div id="cwrap">
+      <div class="container">
+       <div class="row centered">
+         <h1 style="color:black;">Avg Data</h1>
+
+       </div><! --/row -->
+ 		 </div><! --/container -->
+ 	 </div><! --/cwrap -->
 
   <!-- *****************************************************************************************************************
   DYNAMIC USER TABLE
@@ -187,7 +192,6 @@ WEEKDAY GRAPH
                 <div class="form-white-background">
                     </div>
 
-                    <h1 style="color:black;">DYNAMIC USER TABLE GOES HERE</h1>
                     <br>
 
                     <label>Data:
@@ -235,77 +239,6 @@ WEEKDAY GRAPH
 			</div><!-- /row -->
 	    </div> <!-- /container -->
 	</div><!-- /headerwrap -->
-
-  <!-- *****************************************************************************************************************
-	 POTENTIAL PIE CHART
-	 ***************************************************************************************************************** -->
-
-   <svg id="test2" class="mypiechart"></svg>
-   <br>
-   <br>
-
-
-
-
-    <script>
-        var values = [1, 2, 3, 4, 5, 6, 7]
-        var testdata = [
-            {key: "Monday", y: values[0]},
-            {key: "Tuesday", y: values[1]},
-            {key: "Wednesday", y: values[2]},
-            {key: "Thursday", y: values[3]},
-            {key: "Friday", y: values[4]},
-            {key: "Saturday", y: values[5]},
-            {key: "Sunday", y: values[6]},
-        ];
-        var height = 550;
-        var width = 550;
-        var chart1;
-        nv.addGraph(function() {
-            var chart1 = nv.models.pieChart()
-                .x(function(d) { return d.key })
-                .y(function(d) { return d.y })
-                .donut(true)
-                .width(width)
-                .height(height)
-                .padAngle(.08)
-                .cornerRadius(5)
-                .id('donut1'); // allow custom CSS for this one svg
-            chart1.title("100%");
-            chart1.pie.donutLabelsOutside(true).donut(true);
-            d3.select("#test1")
-                .datum(testdata)
-                .transition().duration(1200)
-                .call(chart1);
-            //nv.utils.windowResize(chart1.update);
-            return chart1;
-        });
-        var chart2;
-        nv.addGraph(function() {
-            var chart2 = nv.models.pieChart()
-                .x(function(d) { return d.key })
-                .y(function(d) { return d.y })
-                //.labelThreshold(.08)
-                //.showLabels(false)
-                .color(d3.scale.category20().range().slice(10))
-                .width(width)
-                .height(height)
-                .donut(true)
-                .id('donut2')
-                .titleOffset(-30)
-                .title("Daily");
-            // MAKES IT HALF CIRCLE
-            chart2.pie
-                .startAngle(function(d) { return d.startAngle/2 -Math.PI/2 })
-                .endAngle(function(d) { return d.endAngle/2 -Math.PI/2 });
-            d3.select("#test2")
-                //.datum(historicalBarChart)
-                .datum(testdata)
-                .transition().duration(1200)
-                .call(chart2);
-            return chart2;
-        });
-    </script>
 
 	<!-- *****************************************************************************************************************
 	 FOOTER
