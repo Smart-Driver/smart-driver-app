@@ -119,7 +119,7 @@ def profile(request):
 
 
     context = {'weekday_graph_data': json.dumps(hourly_rate_by_weekday),
-               'houly_max': round(max_avg)}
+               'hourly_max': round(max_avg)}
     return render(request, "driver_app/profile.html", context)
 
 
