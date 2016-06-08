@@ -87,8 +87,41 @@ WEEKDAY GRAPH
                 </div>
 
                 <script>
-                    var monthly_totals = [{key:"Total Earned per Month", values:[]}];
-                    var max = 0
+                    var values = {{weekday_rate_avgs}}
+                    var weekday_avgs = [{key:"Total Earned per Month", values:[]}];
+                    var max_val = Math.max(...values)
+                    weekday_avgs[0]["values"].push(
+                          {"label": "Monday", "value": values[0]},
+                          {"label": "Tuesday", "value": values[1]},
+                          {"label": "Wednesday", "value": values[2]},
+                          {"label": "Thursday", "value": values[3]},
+                          {"label": "Friday", "value": values[4]},
+                          {"label": "Saturday", "value": values[5]},
+                          {"label": "Sunday", "value": values[6]}
+                      );
+                      console.log(weekday_avgs)
+
+                    nv.addGraph(function() {
+                        var chart = nv.models.discreteBarChart()
+                            .x(function(d) { return d.label })
+                            .y(function(d) { return d.value })
+                            .staggerLabels(true)
+                            //.staggerLabels(historicalBarChart[0].values.length > 8)
+                            .showValues(true)
+                            .duration(250)
+                            .forceY([0, max_val + 3 - (max_val % 3)])
+                            chart.yAxis
+                              .axisLabel("Avg Hourly Rate in Dollars")
+                            chart.xAxis
+                              .axisLabel("Day")
+                            ;
+                        d3.select('#chart1 svg')
+                            .datum(weekday_avgs)
+                            .call(chart);
+                        nv.utils.windowResize(chart.update);
+                        return chart;
+                    });
+
                     d3.json("/api/month_statements",
                       function(error, data) {
                           for(var i in data) {
@@ -97,26 +130,7 @@ WEEKDAY GRAPH
                                   max = parseInt(data[i]["total_earned"])
                               }
                           }
-                          nv.addGraph(function() {
-                              var chart = nv.models.discreteBarChart()
-                                  .x(function(d) { return d.label })
-                                  .y(function(d) { return d.value })
-                                  .staggerLabels(true)
-                                  //.staggerLabels(historicalBarChart[0].values.length > 8)
-                                  .showValues(true)
-                                  .duration(250)
-                                  .forceY([0, max + 500 - (max % 500)])
-                                  chart.yAxis
-                                    .axisLabel("Monthly Income In Dollars")
-                                  chart.xAxis
-                                    .axisLabel("Month")
-                                  ;
-                              d3.select('#chart1 svg')
-                                  .datum(monthly_totals)
-                                  .call(chart);
-                              nv.utils.windowResize(chart.update);
-                              return chart;
-                          });
+
                       }
                   );
                 </script>
@@ -245,14 +259,15 @@ WEEKDAY GRAPH
 
 
     <script>
+        var values = {{weekday_rate_avgs}}
         var testdata = [
-            {key: "Monday", y: 5},
-            {key: "Tuesday", y: 2},
-            {key: "Wednesday", y: 9},
-            {key: "Thursday", y: 7},
-            {key: "Friday", y: 4},
-            {key: "Saturday", y: 3},
-            {key: "Sunday", y: 2},
+            {key: "Monday", y: values[0]},
+            {key: "Tuesday", y: values[1]},
+            {key: "Wednesday", y: values[2]},
+            {key: "Thursday", y: values[3]},
+            {key: "Friday", y: values[4]},
+            {key: "Saturday", y: values[5]},
+            {key: "Sunday", y: values[6]},
         ];
         var height = 550;
         var width = 550;
