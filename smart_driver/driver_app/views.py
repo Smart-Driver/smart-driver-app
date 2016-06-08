@@ -3,6 +3,7 @@ import datetime
 from django.shortcuts import render
 from rest_framework import viewsets
 from django.http import HttpResponseRedirect
+from django.db.models import Avg
 from django.views.generic.base import TemplateView
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
@@ -91,17 +92,13 @@ def home(request):
 
 def profile(request):
     driver = Driver.objects.get(user=request.user)
-    statements = DayStatement.objects.filter(driver=driver).order_by('date')
+    day_statements = DayStatement.objects.filter(
+        driver=driver).filter(total_earned__gt=0)
 
-    monthly_values = []
-    today = datetime.date.today()
-    for month in MonthStatement.objects.all():
-        if month.starting_at > today.replace(year=today.year - 1):
-            monthly_values.append((month.starting_at.strftime('%B \'%y'), month.total_earned))
-
-    monthly_values = [{"label": m, "value": float(val)} for m, val in monthly_values if val]
-    context = {'monthly_values': monthly_values}
-    context['statements'] = statements
+    rate_avgs = day_statements.values('weekday').annotate(avg=Avg('rate_per_hour'))
+    rate_avgs = sorted([tuple(avg_dict.values()) for avg_dict in rate_avgs])
+    rate_avgs = [round(avg, 2) for (day, avg) in rate_avgs]
+    context = {'weekday_rate_avgs': rate_avgs}
     return render(request, "driver_app/profile.html", context)
 
 
