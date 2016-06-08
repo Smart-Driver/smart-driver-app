@@ -24,7 +24,7 @@ function drawDayTable(month = m, weekday = w) {
     );
     $.get(url,
         function(data) {
-            $('#table_id').DataTable({
+        window.dataTable = $('#table_id').DataTable({
                 "pageLength": 30,
                 "bLengthChange": false,
                 data: data,
@@ -39,9 +39,37 @@ function drawDayTable(month = m, weekday = w) {
                 ],
                 aaSorting: [[0, 'desc']]
             });
-        }
-    );
+            console.log(getTotalEarned(dataTable.data()))
+
+            // console.log(getTotalEarned(getPageData()))
+        });
 }
+
+// GET DATA FOR THE WHOLE TABLE
+function getTotalEarned(data) {
+  var total_earned = 0;
+  for (var i = 0; i < data.length; i++) {
+    var row = data[i];
+    total_earned += parseFloat(row.total_earned.substr(1))
+  }
+  return total_earned;
+}
+
+// GET DATA FOR CURRENT ENTRIES SHOWN IN TABLE
+// function getPageData() {
+//   var pageData = [];
+//   var data = dataTable.data();
+//   var rows = dataTable.rows()[0];
+//   var pageInfo = dataTable.page.info();
+//   for (var i = pageInfo.start; i < pageInfo.end; i++) {
+//     pageData.push(data[rows[i]]);
+//   }
+//   return pageData;
+// }
+
+
+
+// --------------------------------------------------------------------------
 
 function destroyTable() {
     $('#table_id').DataTable().destroy();
@@ -63,9 +91,8 @@ function drawWeekTable(month = m) {
         $('<th>').text('Total Rides'),
         $('<th>').text('Rate/Ride')
     );
-    $.get(url,
-       function(data) {
-           $('#table_id').DataTable({
+    $.get(url,function(data) {
+         $('#table_id').DataTable({
                "pageLength": 30,
                "bLengthChange": false,
                data: data,
