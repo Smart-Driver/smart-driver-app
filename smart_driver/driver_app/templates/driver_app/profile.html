@@ -75,13 +75,64 @@
           <h2>Welcome <span style="color:white;">{{ user.driver.get_name }}</span>!</h2>
 				</div>
 
+<!-- *****************************************************************************************************************
+WEEKDAY GRAPH
+************************************************************************************************************** -->
+      <!-- <form class="graph-login" method="POST" action="#"> -->
+          <!-- <div class="graph-log-in-with-email"> -->
+              <!-- <div class="graph-white-background"> -->
+              <!-- <div><h1>TEST</h1></div> -->
+                <div id="chart1">
+                    <svg></svg>
+                </div>
+
+                <script>
+                    var monthly_totals = [{key:"Total Earned per Month", values:[]}];
+                    var max = 0
+                    d3.json("/api/month_statements",
+                      function(error, data) {
+                          for(var i in data) {
+                              monthly_totals[0]["values"].push({"label":data[i]["month_name"],"value":data[i]["total_earned"]});
+                              if (parseInt(data[i]["total_earned"]) > max) {
+                                  max = parseInt(data[i]["total_earned"])
+                              }
+                          }
+                          nv.addGraph(function() {
+                              var chart = nv.models.discreteBarChart()
+                                  .x(function(d) { return d.label })
+                                  .y(function(d) { return d.value })
+                                  .staggerLabels(true)
+                                  //.staggerLabels(historicalBarChart[0].values.length > 8)
+                                  .showValues(true)
+                                  .duration(250)
+                                  .forceY([0, max + 500 - (max % 500)])
+                                  chart.yAxis
+                                    .axisLabel("Monthly Income In Dollars")
+                                  chart.xAxis
+                                    .axisLabel("Month")
+                                  ;
+                              d3.select('#chart1 svg')
+                                  .datum(monthly_totals)
+                                  .call(chart);
+                              nv.utils.windowResize(chart.update);
+                              return chart;
+                          });
+                      }
+                  );
+                </script>
+
+              <!-- </div>
+          </div>
+      </form> -->
+
+
   <!-- *****************************************************************************************************************
   ANNUAL GRAPH
   ************************************************************************************************************** -->
         <!-- <form class="graph-login" method="POST" action="#"> -->
             <!-- <div class="graph-log-in-with-email"> -->
                 <!-- <div class="graph-white-background"> -->
-                  <div id="chart1">
+                  <div id="chart2">
                       <svg></svg>
                   </div>
 
@@ -110,7 +161,7 @@
                                     chart.xAxis
                                       .axisLabel("Month")
                                     ;
-                                d3.select('#chart1 svg')
+                                d3.select('#chart2 svg')
                                     .datum(monthly_totals)
                                     .call(chart);
                                 nv.utils.windowResize(chart.update);
@@ -123,6 +174,7 @@
                 <!-- </div>
             </div>
         </form> -->
+
 
   <!-- *****************************************************************************************************************
   DYNAMIC USER TABLE
@@ -180,6 +232,76 @@
 			</div><!-- /row -->
 	    </div> <!-- /container -->
 	</div><!-- /headerwrap -->
+
+  <!-- *****************************************************************************************************************
+	 POTENTIAL PIE CHART
+	 ***************************************************************************************************************** -->
+
+
+   <br>
+   <br>
+   <svg id="test2" class="mypiechart"></svg>
+
+
+
+    <script>
+        var testdata = [
+            {key: "Monday", y: 5},
+            {key: "Tuesday", y: 2},
+            {key: "Wednesday", y: 9},
+            {key: "Thursday", y: 7},
+            {key: "Friday", y: 4},
+            {key: "Saturday", y: 3},
+            {key: "Sunday", y: 2},
+        ];
+        var height = 550;
+        var width = 550;
+        var chart1;
+        nv.addGraph(function() {
+            var chart1 = nv.models.pieChart()
+                .x(function(d) { return d.key })
+                .y(function(d) { return d.y })
+                .donut(true)
+                .width(width)
+                .height(height)
+                .padAngle(.08)
+                .cornerRadius(5)
+                .id('donut1'); // allow custom CSS for this one svg
+            chart1.title("100%");
+            chart1.pie.donutLabelsOutside(true).donut(true);
+            d3.select("#test1")
+                .datum(testdata)
+                .transition().duration(1200)
+                .call(chart1);
+            //nv.utils.windowResize(chart1.update);
+            return chart1;
+        });
+        var chart2;
+        nv.addGraph(function() {
+            var chart2 = nv.models.pieChart()
+                .x(function(d) { return d.key })
+                .y(function(d) { return d.y })
+                //.labelThreshold(.08)
+                //.showLabels(false)
+                .color(d3.scale.category20().range().slice(10))
+                .width(width)
+                .height(height)
+                .donut(true)
+                .id('donut2')
+                .titleOffset(-30)
+                .title("Daily");
+            // MAKES IT HALF CIRCLE
+            chart2.pie
+                .startAngle(function(d) { return d.startAngle/2 -Math.PI/2 })
+                .endAngle(function(d) { return d.endAngle/2 -Math.PI/2 });
+            d3.select("#test2")
+                //.datum(historicalBarChart)
+                .datum(testdata)
+                .transition().duration(1200)
+                .call(chart2);
+            return chart2;
+        });
+    </script>
 
 	<!-- *****************************************************************************************************************
 	 FOOTER
