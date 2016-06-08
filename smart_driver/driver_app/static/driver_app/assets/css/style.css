@@ -56,6 +56,13 @@ a:focus {
   text-decoration: none;
   color:#01b2fe;
 }
+.box {
+    background-color: lightgrey;
+    width: 800px;
+    border: 3px solid navy;
+		margin: auto;
+		padding: 10px;
+}
 
 ::-moz-selection  {
 	color: #fff;
