@@ -1,3 +1,4 @@
+import json
 import requests
 import datetime
 from django.shortcuts import render
@@ -95,10 +96,19 @@ def profile(request):
     day_statements = DayStatement.objects.filter(
         driver=driver).filter(total_earned__gt=0)
 
+    hourly_rate_by_weekday = {'key':"Hourly Rate By Weekday", 'values':[]}
+
     rate_avgs = day_statements.values('weekday').annotate(avg=Avg('rate_per_hour'))
-    rate_avgs = sorted([tuple(avg_dict.values()) for avg_dict in rate_avgs])
-    rate_avgs = [round(avg, 2) for (day, avg) in rate_avgs]
-    context = {'weekday_rate_avgs': rate_avgs}
+    rate_avgs = sorted(rate_avgs, key=lambda lil_dict: lil_dict['weekday'])
+    max_avg = max(rate_avgs, key=lambda lil_dict: lil_dict['avg'])['avg']
+    hourly_rate_by_weekday['values'] = [{
+        "label": dict(DayStatement.WEEKDAY_CHOICES)[day_dict['weekday']],
+        "value": round(day_dict['avg'], 2)
+        } for day_dict in rate_avgs]
+
+
+    context = {'weekday_graph_data': json.dumps(hourly_rate_by_weekday),
+               'houly_max': round(max_avg)}
     return render(request, "driver_app/profile.html", context)
 
 
