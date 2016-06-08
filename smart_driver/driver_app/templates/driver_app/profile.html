@@ -94,6 +94,9 @@ WEEKDAY GRAPH
                         d3.select('#chart1 svg')
                             .datum(weekday_graph_data)
                             .call(chart);
+
+                        onChart1Created();
+
                         nv.utils.windowResize(chart.update);
                         return chart;
                     });
