@@ -39,20 +39,24 @@ function drawDayTable(month = m, weekday = w) {
                 ],
                 aaSorting: [[0, 'desc']]
             });
-            console.log(getTotalEarned(dataTable.data()))
+          //  console.log(getTotalEarned(dataTable.data()))
+            var tot_earned = getTotalEarned(dataTable.data());
+            document.getElementById('total_earned').innerHTML = tot_earned
 
-            // console.log(getTotalEarned(getPageData()))
         });
 }
 
 // GET DATA FOR THE WHOLE TABLE
 function getTotalEarned(data) {
-  var total_earned = 0;
+  var sum_total_earned = 0;
+  var avg_total_earned = 0;
   for (var i = 0; i < data.length; i++) {
     var row = data[i];
-    total_earned += parseFloat(row.total_earned.substr(1))
+    sum_total_earned += parseFloat(row.total_earned.substr(1));
   }
-  return total_earned;
+  console.log(avg_total_earned);
+  avg_total_earned = sum_total_earned / (--i);
+  return avg_total_earned;
 }
 
 // GET DATA FOR CURRENT ENTRIES SHOWN IN TABLE

@@ -57,11 +57,10 @@ a:focus {
   color:#01b2fe;
 }
 .box {
-    background-color: lightgrey;
-    width: 800px;
+    width: 700px;
     border: 3px solid navy;
 		margin: auto;
-		padding: 10px;
+		padding: 1px;
 }
 
 ::-moz-selection  {
