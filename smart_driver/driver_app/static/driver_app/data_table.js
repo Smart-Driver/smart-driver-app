@@ -24,7 +24,7 @@ function drawDayTable(month = m, weekday = w) {
     );
     $.get(url,
         function(data) {
-        window.dataTable = $('#table_id').DataTable({
+            window.dataTable = $('#table_id').DataTable({
                 "pageLength": 30,
                 "bLengthChange": false,
                 data: data,
@@ -40,24 +40,24 @@ function drawDayTable(month = m, weekday = w) {
                 aaSorting: [[0, 'desc']]
             });
           //  console.log(getTotalEarned(dataTable.data()))
-            var tot_earned = getTotalEarned(dataTable.data());
-            document.getElementById('total_earned').innerHTML = tot_earned
+            var total_earned = getAvgTotalEarned(dataTable.data());
+            document.getElementById('total_earned').innerHTML = total_earned
 
-        });
+        }
+    );
 }
 
 // GET DATA FOR THE WHOLE TABLE
-function getTotalEarned(data) {
-  var sum_total_earned = 0;
-  var avg_total_earned = 0;
-  for (var i = 0; i < data.length; i++) {
-    var row = data[i];
-    sum_total_earned += parseFloat(row.total_earned.substr(1));
-  }
-  console.log(avg_total_earned);
-  avg_total_earned = sum_total_earned / (--i);
-  return avg_total_earned;
-}
+function getAvgTotalEarned(data) {
+    var sum_total_earned = 0;
+    for (var i = 0; i < data.length; i++) {
+        var row = data[i];
+        sum_total_earned += parseFloat(row.total_earned.substr(1));
+    };
+    var avg_total_earned = sum_total_earned / (--i);
+    avg_total_earned = avg_total_earned.toFixed(2);
+    return '$' + avg_total_earned.toLocaleString();
+};
 
 // GET DATA FOR CURRENT ENTRIES SHOWN IN TABLE
 // function getPageData() {
@@ -145,7 +145,8 @@ function onChart1Created() {
                 document.getElementById('data_type').selectedIndex = 0
                 filterSelection = 0
                 filterTable(m, d['label'])
-            });
+            }
+        );
 }
 
 function onChart2Created() {
@@ -154,5 +155,6 @@ function onChart2Created() {
         .on('click',
             function (d) {
                 filterTable(d['label'])
-            });
+            }
+        );
 }
