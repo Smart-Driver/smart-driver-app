@@ -1,3 +1,5 @@
+
+
 var table_header = $('#table_id').find('tr')
 var driverID = $('#driver_id').val()
 var m = null
@@ -17,7 +19,7 @@ function drawDayTable(month = m, weekday = w) {
         $('<th>').text('Date'),
         $('<th>').text('Weekday'),
         $('<th>').text('Total Earned'),
-        $('<th>').text('Time Worked'),
+        $('<th id="time_worked" title="Time elapsed from first ride request to last dropoff">').text('Time Worked'),
         $('<th>').text('Rate/Hr'),
         $('<th>').text('Total Rides'),
         $('<th>').text('Rate/Ride')
@@ -43,6 +45,7 @@ function drawDayTable(month = m, weekday = w) {
 
             // console.log(getTotalEarned(getPageData()))
         });
+        $("#time_worked").qtip();
 }
 
 // GET DATA FOR THE WHOLE TABLE
