@@ -497,14 +497,34 @@ csmall2 {
 
 
 #cwrap {
-	background: #f7f7f7;
 	margin-top: 0px;
-	padding-top: 50px;
-	padding-bottom: 50px;
+	padding-top: 25px;
+	padding-bottom: 25px;
 }
 
 #cwrap h3 {
+    color:  #4c565e;
 	margin-bottom: 60px;
+    font-size: 17.5px;
+}
+
+.info_box {
+    display: inline-block;
+    margin: 20px;
+    padding: 5px;
+    float: none;
+}
+
+#avg_per_hour{
+    /*float: left;*/
+}
+
+#avg_per_unit{
+
+}
+
+#total_earned{
+
 }
 
 /*	################################################################

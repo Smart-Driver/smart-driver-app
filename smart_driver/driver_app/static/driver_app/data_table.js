@@ -39,13 +39,14 @@ function drawDayTable(month = m, weekday = w) {
                 ],
                 aaSorting: [[0, 'desc']]
             });
-          //  console.log(getTotalEarned(dataTable.data()))
             var total_earned = getAvgTotalEarned(dataTable.data());
-            document.getElementById('total_earned').innerHTML = total_earned
-
+            $('#avg_per_unit h3').html('Avg Daily Rate');
+            $('#avg_per_unit p').html(total_earned);
         }
     );
 }
+
+var avg_hourly_rate = 0
 
 // GET DATA FOR THE WHOLE TABLE
 function getAvgTotalEarned(data) {
@@ -95,22 +96,26 @@ function drawWeekTable(month = m) {
         $('<th>').text('Total Rides'),
         $('<th>').text('Rate/Ride')
     );
-    $.get(url,function(data) {
-         $('#table_id').DataTable({
-               "pageLength": 30,
-               "bLengthChange": false,
-               data: data,
-               columns: [
-                   {data: 'starting_at'},
-                   {data: 'ending_at'},
-                   {data: 'total_earned'},
-                   {data: 'rate_per_day'},
-                   {data: 'rate_per_hour'},
-                   {data: 'total_rides'},
-                   {data: 'rate_per_ride'}
-               ],
+    $.get(url,
+        function(data) {
+            window.dataTable = $('#table_id').DataTable({
+                "pageLength": 30,
+                "bLengthChange": false,
+                data: data,
+                columns: [
+                    {data: 'starting_at'},
+                    {data: 'ending_at'},
+                    {data: 'total_earned'},
+                    {data: 'rate_per_day'},
+                    {data: 'rate_per_hour'},
+                    {data: 'total_rides'},
+                    {data: 'rate_per_ride'}
+                ],
                 aaSorting: [[0, 'desc']]
             });
+            var total_earned = getAvgTotalEarned(dataTable.data());
+            $('#avg_per_unit h3').html('Avg Weekly Rate');
+            $('#avg_per_unit p').html(total_earned);
         }
     );
 }
