@@ -40,24 +40,15 @@ function drawDayTable(month = m, weekday = w) {
                 aaSorting: [[0, 'desc']]
             });
           //  console.log(getTotalEarned(dataTable.data()))
-            var total_earned = getAvgTotalEarned(dataTable.data());
-            document.getElementById('total_earned').innerHTML = total_earned
-
+            // var total_earned = getAvgTotalEarned(dataTable.data());
+            // document.getElementById('total_earned').innerHTML = total_earned
+            avg_per_unit = getAvg(dataTable.data())
+            document.getElementById('total_earned').innerHTML = sum_total_earned
+            document.getElementById('avg_per_unit').innerHTML = avg_per_unit
+            document.getElementById('avg_per_hour').innerHTML = avg_per_hour
         }
     );
 }
-
-// GET DATA FOR THE WHOLE TABLE
-function getAvgTotalEarned(data) {
-    var sum_total_earned = 0;
-    for (var i = 0; i < data.length; i++) {
-        var row = data[i];
-        sum_total_earned += parseFloat(row.total_earned.substr(1));
-    };
-    var avg_total_earned = sum_total_earned / (--i);
-    avg_total_earned = avg_total_earned.toFixed(2);
-    return '$' + avg_total_earned.toLocaleString();
-};
 
 // GET DATA FOR CURRENT ENTRIES SHOWN IN TABLE
 // function getPageData() {
@@ -111,6 +102,12 @@ function drawWeekTable(month = m) {
                ],
                 aaSorting: [[0, 'desc']]
             });
+
+            avg_per_unit = getAvg(dataTable.data())
+            document.getElementById('total_earned').innerHTML = sum_total_earned
+            document.getElementById('avg_per_unit').innerHTML = avg_per_unit
+            document.getElementById('avg_per_hour').innerHTML = avg_per_hour
+
         }
     );
 }
@@ -158,3 +155,29 @@ function onChart2Created() {
             }
         );
 }
+
+// GET AVERAGES FOR total_earned,rate_per_hour,  ... COLLUMNS USING DATA FOR THE WHOLE TABLE
+var sum_total_earned = 0;
+var avg_per_unit = 0;
+var avg_per_hour = 0;
+
+function getAvg(data) {
+    var sum_total = 0
+    var sum_rate_per_unit = 0;
+    var sum_rate_per_hour = 0;
+
+    for (var i = 0; i < data.length; i++) {
+        var row = data[i];
+        sum_total += parseFloat(row.total_earned.substr(1));
+        sum_rate_per_hour += parseFloat(row.total_earned.substr(1));
+    };
+
+    sum_total_earned = sum_total.toFixed(2);
+    avg_per_unit = sum_total_earned / (--i);
+    sum_total_earned = "$" + sum_total_earned.toLocaleString();
+
+    avg_per_hour = sum_rate_per_hour / (--i);
+    avg_per_hour = "$" + avg_per_hour.toLocaleString();
+
+    return '$' + avg_per_unit.toLocaleString();
+};
