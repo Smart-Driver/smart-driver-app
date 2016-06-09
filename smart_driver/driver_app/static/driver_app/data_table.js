@@ -4,7 +4,31 @@ var table_header = $('#table_id').find('tr')
 var driverID = $('#driver_id').val()
 var m = null
 var w = null
+var sum_total_earned = 0;
+var avg_per_unit = 0;
+var avg_per_hour = 0;
 
+// GET AVERAGES FOR COLUMNS IN DATATABLE
+function getStats(data) {
+    var sum_total = 0
+    var sum_rate_per_hour = 0;
+
+    for (var i = 0; i < data.length; i++) {
+        var row = data[i];
+        sum_total += parseFloat(row.total_earned.substr(1));
+        sum_rate_per_hour += parseFloat(row.rate_per_hour.substr(1));
+    };
+
+    sum_total_earned = "$" + sum_total.toFixed(2);
+
+    avg_per_unit = sum_total / (i);
+    avg_per_unit =  '$' + avg_per_unit.toFixed(2);
+
+    avg_per_hour = sum_rate_per_hour / (i);
+    avg_per_hour = "$" + avg_per_hour.toFixed(2);
+};
+
+// CREATE DATATABLE USING API CALL TO GET DAYSTATEMENTS
 function drawDayTable(month = m, weekday = w) {
     m = month
     w = weekday
@@ -29,6 +53,7 @@ function drawDayTable(month = m, weekday = w) {
             window.dataTable = $('#table_id').DataTable({
                 "pageLength": 30,
                 "bLengthChange": false,
+                "bFilter": false,
                 data: data,
                 columns: [
                     {data: 'date'},
@@ -41,64 +66,21 @@ function drawDayTable(month = m, weekday = w) {
                 ],
                 aaSorting: [[0, 'desc']]
             });
-
-            avg_per_unit = getAvg(dataTable.data())
-            document.getElementById('total_earned').innerHTML = sum_total_earned
-            document.getElementById('avg_per_unit').innerHTML = avg_per_unit
-            document.getElementById('avg_per_hour').innerHTML = avg_per_hour
-
-            // console.log(getTotalEarned(getPageData()))
+            getStats(dataTable.data());
+            $('#avg_per_hour p').html(avg_per_hour);
+            $('#avg_per_unit h3').html('Avg Daily Rate');
+            $('#avg_per_unit p').html(avg_per_unit);
+            $('#total_earned p').html(sum_total_earned);
         });
         $("#time_worked").qtip();
 }
-
-// GET AVERAGES FOR total_earned,rate_per_hour,  ... COLLUMNS USING DATA FOR THE WHOLE TABLE
-var sum_total_earned = 0;
-var avg_per_unit = 0;
-var avg_per_hour = 0;
-
-function getAvg(data) {
-    var sum_total = 0
-    var sum_rate_per_unit = 0;
-    var sum_rate_per_hour = 0;
-
-    for (var i = 0; i < data.length; i++) {
-        var row = data[i];
-        sum_total += parseFloat(row.total_earned.substr(1));
-        sum_rate_per_hour += parseFloat(row.total_earned.substr(1));
-    };
-
-    sum_total_earned = sum_total.toFixed(2);
-    avg_per_unit = sum_total_earned / (--i);
-    sum_total_earned = "$" + sum_total_earned.toLocaleString();
-
-    avg_per_hour = sum_rate_per_hour / (--i);
-    avg_per_hour = "$" + avg_per_hour.toLocaleString();
-
-    return '$' + avg_per_unit.toLocaleString();
-};
-
-// GET DATA FOR CURRENT ENTRIES SHOWN IN TABLE
-// function getPageData() {
-//   var pageData = [];
-//   var data = dataTable.data();
-//   var rows = dataTable.rows()[0];
-//   var pageInfo = dataTable.page.info();
-//   for (var i = pageInfo.start; i < pageInfo.end; i++) {
-//     pageData.push(data[rows[i]]);
-//   }
-//   return pageData;
-// }
-
-
-
-// --------------------------------------------------------------------------
 
 function destroyTable() {
     $('#table_id').DataTable().destroy();
     table_header.find('th').remove();
 }
 
+// CREATE DATATABLE USING API CALL TO GET WEEKSTATEMENTS
 function drawWeekTable(month = m) {
     m = month
     var url = '/api/week_statements/?driver=' + driverID
@@ -114,30 +96,36 @@ function drawWeekTable(month = m) {
         $('<th>').text('Total Rides'),
         $('<th>').text('Rate/Ride')
     );
-    $.get(url,function(data) {
-         $('#table_id').DataTable({
-               "pageLength": 30,
-               "bLengthChange": false,
-               data: data,
-               columns: [
-                   {data: 'starting_at'},
-                   {data: 'ending_at'},
-                   {data: 'total_earned'},
-                   {data: 'rate_per_day'},
-                   {data: 'rate_per_hour'},
-                   {data: 'total_rides'},
-                   {data: 'rate_per_ride'}
-               ],
+    $.get(url,
+        function(data) {
+            window.dataTable = $('#table_id').DataTable({
+                "pageLength": 30,
+                "bLengthChange": false,
+                data: data,
+                columns: [
+                    {data: 'starting_at'},
+                    {data: 'ending_at'},
+                    {data: 'total_earned'},
+                    {data: 'rate_per_day'},
+                    {data: 'rate_per_hour'},
+                    {data: 'total_rides'},
+                    {data: 'rate_per_ride'}
+                ],
                 aaSorting: [[0, 'desc']]
             });
-
-
+            getStats(dataTable.data());
+            $('#avg_per_hour p').html(avg_per_hour);
+            $('#avg_per_unit h3').html('Avg Weekly Rate');
+            $('#avg_per_unit p').html(avg_per_unit);
+            $('#total_earned p').html(sum_total_earned);
         }
     );
 }
 
+// FIND DAILY/WEEKLY OPTION SELECTED IN DROPDOWN (0=DAILY, 1=WEEKLY)
 var filterSelection = document.getElementById('data_type').selectedIndex
 
+// DETERMINE DAILY/WEEKLY OPTION SELECTED AND REDRAW FILTERED TABLE
 function filterTable(m, w) {
     destroyTable();
     if (filterSelection == 0) {
@@ -148,6 +136,7 @@ function filterTable(m, w) {
     }
 }
 
+// CREATE INITIAL TABLE OF ALL DAYSTATEMENT, HOOK-UP DAILY/WEEKLY DROPDOWN
 $(document).ready(function() {
     drawDayTable();
 
@@ -158,6 +147,7 @@ $(document).ready(function() {
 
 });
 
+// LINK WEEKDAY CHART (ONCE IT'S LOADED) TO REDRAWING FILTERED TABLE
 function onChart1Created() {
     d3.select('#chart1 svg')
         .selectAll('.discreteBar')
@@ -170,6 +160,7 @@ function onChart1Created() {
         );
 }
 
+// LINK MONTH CHART (ONCE IT'S LOADED) TO REDRAWING FILTERED TABLE
 function onChart2Created() {
     d3.select('#chart2 svg')
         .selectAll('.discreteBar')
