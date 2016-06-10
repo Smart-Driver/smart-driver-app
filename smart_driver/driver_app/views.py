@@ -84,8 +84,6 @@ def home(request):
 
         context['login_request'] = pretty_print_POST(login_response.request)
 
-        print('STATUS', login_response.status_code)
-
         if login_response.status_code == 200:
             user, created = User.objects.get_or_create(username=username)
 

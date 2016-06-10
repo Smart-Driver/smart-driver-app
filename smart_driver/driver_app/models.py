@@ -226,7 +226,7 @@ class Driver(models.Model):
             '_csrf_token': csrf_token,
             'access_token': ''
         }
-        login_response = session.post('https://login.uber.com/login', data)
+        login_response = session.post('https://login.uber.com/login', data, allow_redirects=False)
         return login_response
 
     @staticmethod
