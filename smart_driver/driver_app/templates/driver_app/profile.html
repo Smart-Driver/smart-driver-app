@@ -100,17 +100,17 @@ INFO BOXES
 <!-- *****************************************************************************************************************
 DYNAMIC USER TABLE
 ************************************************************************************************************** -->
-          <form class="form-login" method="post" action="#">
-            <div class="form-log-in-with-email">
-              <button id="reset" type="button" class="table_decorator">
-                Show All
-              </button>
+          <div class="form-login" method="post" action="#">
+            <div class="table">
+              <!-- <label>Data:</label> -->
+              <select id="data-type" class="table-decorator btn btn-theme">
+                <option selected=0 value="daily">Daily</option>
+                <option value="weekly">Weekly</option>
+              </select>
 
-              <label>Data:</label>
-                <select id="data_type" class="table_decorator">
-                  <option selected=0 value="daily">Daily</option>
-                  <option value="weekly">Weekly</option>
-                </select>
+              <button id="reset" type="button" class="table-decorator btn btn-theme">
+                Show all
+              </button>
 
               <table id="table_id" class="display">
                 <thead>
@@ -119,7 +119,7 @@ DYNAMIC USER TABLE
               </table>
 
             </div><!-- /form-log-in-with-email -->
-          </form><!-- /form-login -->
+          </div><!-- /form-login -->
         </div><!-- /row -->
       </div> <!-- /container -->
     </div><!-- /headerwrap -->

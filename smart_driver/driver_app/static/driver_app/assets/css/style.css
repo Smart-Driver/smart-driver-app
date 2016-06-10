@@ -576,3 +576,29 @@ csmall2 {
 #logout {
 	font-size: 150%;
 }
+
+.table-decorator {
+    padding: 2px 6px 2px 6px;
+    font-weight: normal;
+    border-radius: 4px;
+    height: 25px;
+}
+
+.table-decorator:hover,
+.table-decorator:active,
+.table-decorator:focus {
+    background-color: #536579;
+    border-color: #536579;
+}
+
+.table label {
+    float: left;
+}
+
+#data-type {
+    float: left;
+}
+
+#reset {
+    float: right;
+}
