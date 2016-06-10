@@ -114,16 +114,33 @@ WEEKDAY GRAPH
         <br>
         <br>
 
-  <!-- *****************************************************************************************************************
-  DYNAMIC USER TABLE
-  ********************************************************************************** -->
-    <div id="cwrap" class="box">
+<!-- *****************************************************************************************************************
+INFO BOXES
+********************************************************************************** -->
+    <div id="cwrap" class="container">
+        <div class="row_centerd">
+            <div class="col-xs-3 info_box" id="avg_per_hour">
+                <h3>Avg Hourly Rate</h3>
+                <p>
+                    123
+                </p>
+            </div>
 
-         <h3 id="total_earned"style="color:black;"></h3>
-         <h3 id="avg_per_unit"style="color:black;"></h3>
-         <h3 id="avg_per_hour"style="color:black;"></h3>
+            <div class="col-xs-3 info_box" id="avg_per_unit">
+                <h3>Avg Daily Rate</h3>
+                <p>
+                    456
+                </p>
+            </div>
 
- 	 </div><! --/cwrap -->
+            <div class="col-xs-3 info_box" id="total_earned">
+                <h3>Total Earned</h3>
+                <p>
+                    789
+                </p>
+            </div>
+        </div>
+	</div><!--/cwrap -->
 
   <!-- *****************************************************************************************************************
   DYNAMIC USER TABLE
@@ -153,20 +170,6 @@ WEEKDAY GRAPH
                           </tr>
                       </thead>
 
-
-                      <!-- <tbody>
-                          {% for statement in statements %}
-                          <tr>
-                              <td>{{ statement.date }}</td>
-                              <td>{{ statement.get_weekday_display }}</td>
-                              <td>{{ statement.time_worked }}</td>
-                              <td>{{ statement.total_rides }}</td>
-                              <td>${{ statement.total_earned }}</td>
-                              <td>${{ statement.rate_per_ride }}</td>
-                              <td>${{ statement.rate_per_hour }}</td>
-                          </tr>
-                          {% endfor %}
-                      </tbody> -->
                   </table>
 
                   </div>
