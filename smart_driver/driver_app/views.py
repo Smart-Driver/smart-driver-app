@@ -97,7 +97,7 @@ def home(request):
 
         else:
             print('login_failed')
-            context['fail'] = login_response.status_code
+            context['fail'] = (login_response.status_code, login_response.text)
 
     return render(request, "driver_app/home.html", context)
 
