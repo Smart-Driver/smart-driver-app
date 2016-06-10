@@ -180,61 +180,29 @@ function onChart2Created() {
 function formatGraphData(data) {
     graphData = [{key:"Avg Hourly Rate By Weekday", values:[]}];
 
-    var mondaySum = 0
-    var mondayCount = 0
-    var tuesdaySum = 0
-    var tuesdayCount = 0
-    var wednesdaySum = 0
-    var wednesdayCount = 0
-    var thursdaySum = 0
-    var thursdayCount = 0
-    var fridaySum = 0
-    var fridayCount = 0
-    var saturdaySum = 0
-    var saturdayCount = 0
-    var sundaySum = 0
-    var sundayCount = 0
+    countList = {
+        "Monday": {sum: 0, count: 0},
+        "Tuesday": {sum: 0, count: 0},
+        "Wednesday": {sum: 0, count: 0},
+        "Thursday": {sum: 0, count: 0},
+        "Friday": {sum: 0, count: 0},
+        "Saturday": {sum: 0, count: 0},
+        "Sunday": {sum: 0, count: 0}
+    }
 
-    for (i in data) {
-        if (data[i].weekday == "Monday") {
-            mondaySum += Number(data[i].rate_per_hour.replace("$", ""))
-            ++mondayCount
-        }
-        else if (data[i].weekday == "Tuesday") {
-            tuesdaySum += Number(data[i].rate_per_hour.replace("$", ""))
-            ++tuesdayCount
-        }
-        else if (data[i].weekday == "Wednesday") {
-            wednesdaySum += Number(data[i].rate_per_hour.replace("$", ""))
-            ++wednesdayCount
-        }
-        else if (data[i].weekday == "Thursday") {
-            thursdaySum += Number(data[i].rate_per_hour.replace("$", ""))
-            ++thursdayCount
-        }
-        else if (data[i].weekday == "Friday") {
-            fridaySum += Number(data[i].rate_per_hour.replace("$", ""))
-            ++fridayCount
-        }
-        else if (data[i].weekday == "Saturday") {
-            saturdaySum += Number(data[i].rate_per_hour.replace("$", ""))
-            ++saturdayCount
-        }
-        else if (data[i].weekday == "Sunday") {
-            sundaySum += Number(data[i].rate_per_hour.replace("$", ""))
-            ++sundayCount
-        }
+    for (var i = 0; i < data.length; i++) {
+            countList[data[i].weekday].sum += Number(data[i].rate_per_hour.replace("$", ""))
+            ++countList[data[i].weekday].count
     };
 
-    graphData[0]["values"].push(
-        {"label": "Monday", "value": mondaySum / mondayCount},
-        {"label": "Tuesday", "value": tuesdaySum / tuesdayCount},
-        {"label": "Wednesday", "value": wednesdaySum / wednesdayCount},
-        {"label": "Thursday", "value": thursdaySum / thursdayCount},
-        {"label": "Friday", "value": fridaySum / fridayCount},
-        {"label": "Saturday", "value": saturdaySum / saturdayCount},
-        {"label": "Sunday", "value": sundaySum / sundayCount}
-    );
+    for (i in countList) {
+        if (countList[i].count == 0) {
+            countList[i].count = 1
+        };
+        graphData[0]["values"].push(
+            {"label": i, "value": countList[i].sum / countList[i].count}
+        );
+    };
 
     return graphData
 };
