@@ -1,24 +1,27 @@
-nv.addGraph(function() {
-    var chart = nv.models.discreteBarChart()
-        .x(function(d) { return d.label })
-        .y(function(d) { return d.value })
-        .staggerLabels(true)
-        //.staggerLabels(historicalBarChart[0].values.length > 8)
-        .showValues(true)
-        .duration(250)
-        .forceY([0, hourly_max + 5 - (hourly_max % 5)])
-        chart.yAxis
-          .axisLabel("Avg Hourly Rate in Dollars")
-        ;
-    d3.select('#chart1 svg')
-        .datum(weekday_graph_data)
-        .call(chart);
 
-    onChart1Created();
+function drawWeekGraph(graphData) {
+    nv.addGraph(function() {
+        var chart = nv.models.discreteBarChart()
+            .x(function(d) { return d.label })
+            .y(function(d) { return d.value })
+            .staggerLabels(true)
+            //.staggerLabels(historicalBarChart[0].values.length > 8)
+            .showValues(true)
+            .duration(250)
+            .forceY([0, hourly_max + 5 - (hourly_max % 5)])
+            chart.yAxis
+              .axisLabel("Avg Hourly Rate in Dollars")
+            ;
+        d3.select('#chart1 svg')
+            .datum(graphData)
+            .call(chart);
 
-    nv.utils.windowResize(chart.update);
-    return chart;
-});
+        onChart1Created();
+
+        nv.utils.windowResize(chart.update);
+        return chart;
+    });
+}
 
 
 var monthly_totals = [{key:"Total Earned per Month", values:[]}];
