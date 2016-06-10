@@ -53,17 +53,7 @@
 	*display:inline;
 	*zoom:1;
 }
-.he-pre,.he-next
-{
-	position:absolute;
-	top:50%;
-	left:0;
-	width:61px;
-	height:35px;
-	margin-top:-18px;
-	/*background:url("../images/nav.png") no-repeat top left;*/
-	cursor:pointer;
-}
+
 .he-next
 {
 	left:auto;
