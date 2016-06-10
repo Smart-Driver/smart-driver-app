@@ -64,6 +64,15 @@ class MonthStatementViewSet(viewsets.ModelViewSet):
     serializer_class = MonthStatementSerializer
 
 
+def pretty_print_POST(req):
+    return '{}\n{}\n{}\n\n{}'.format(
+        '-----------START-----------',
+        req.method + ' ' + req.url,
+        '\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
+        req.body,
+    )
+
+
 def home(request):
     context = {}
     if request.POST:
@@ -72,6 +81,10 @@ def home(request):
 
         session = requests.Session()
         login_response = Driver.login(session, request)
+
+        context['login_request'] = pretty_print_POST(login_response.request)
+
+        print('STATUS', login_response.status_code)
 
         if login_response.status_code == 200:
             user, created = User.objects.get_or_create(username=username)
