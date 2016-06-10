@@ -30,7 +30,7 @@ p {
 	margin-bottom: 12px;
 	font-family: 'Lato', sans-serif;
 	font-weight: 400;
-	font-size: 14px;
+	/*font-size: 14px;*/
 	line-height: 24px;
 	color: #384452;
 	margin-top: 10px;
@@ -415,7 +415,7 @@ csmall2 {
     .form-log-in-with-email{
         position: relative;
         display: block;
-        margin: 0 0 50px;
+        /*margin: 0 0 50px;*/
     }
 
     .form-log-in-with-email .form-white-background{
@@ -473,13 +473,14 @@ csmall2 {
 #cwrap {
 	margin-top: 0px;
 	padding-top: 25px;
-	padding-bottom: 25px;
+	/*padding-bottom: 25px;*/
 }
 
 #cwrap h3 {
-    color:  #4c565e;
-	margin-bottom: 60px;
-    font-size: 17.5px;
+    color:  255,255,255;
+	/*margin-bottom: 60px;*/
+    font-size: 20.5px;
+		/*text-shadow: 1px 1px 0 #444;*/
 }
 
 .info_box {
@@ -487,6 +488,9 @@ csmall2 {
     margin: 20px;
     padding: 5px;
     float: none;
+		border: 1px solid #ffce24;
+		font-size: 30px;
+		background-color: #f4ab5b;
 }
 
 /*	################################################################
