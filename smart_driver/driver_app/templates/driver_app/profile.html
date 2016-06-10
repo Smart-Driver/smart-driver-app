@@ -14,25 +14,18 @@
     <link href="/static/driver_app/assets/css/bootstrap.css" rel="stylesheet">
     <link href="/static/driver_app/assets/css/qtip.min.css" rel="stylesheet">
 
-
     <!-- Custom styles for this template -->
     <link href="/static/driver_app/assets/css/style.css" rel="stylesheet">
     <link href="/static/driver_app/assets/css/font-awesome.min.css" rel="stylesheet">
-
     <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.css">
     <link href="/static/driver_app/assets/d3/nv.d3.css" rel="stylesheet" type="text/css">
-
-
-
-
   </head>
 
   <body>
 
 <!-- *****************************************************************************************************************
   HEADERWRAP
- ***************************************************************************************************************** -->
-
+***************************************************************************************************************** -->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -48,189 +41,137 @@
           <ul class="nav navbar-nav">
             {% if user.is_authenticated %}
             <li class="logout"><a href="{% url 'driver_app:logout' %}">Logout</a></li>
-            {% else %}
             {% endif %}
           </ul>
         </div>
       </div>
     </div>
-
 <!--*****************************************************************************************************************
-	 MAIN BODY
+     MAIN BODY
 ***************************************************************************************************************** -->
-	<div id="headerwrap">
-	    <div class="container">
-			<div class="row">
-				<div class="col-lg-8 col-lg-offset-2">
-          <input id="driver_id" type="hidden" value={{user.driver.id}}>
-          <h2>Welcome <span style="color:white;">{{ user.driver.get_name }}</span>!</h2>
-				</div>
+    <div id="headerwrap">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-lg-offset-2">
+            <input id="driver_id" type="hidden" value={{user.driver.id}}>
+            <h2>Welcome <span style="color:white;">{{ user.driver.get_name }}</span>!</h2>
+          </div><!-- /col-lg-8 col-lg-offset-2 -->
 <!-- *****************************************************************************************************************
 WEEKDAY GRAPH
 ************************************************************************************************************** -->
-      <!-- <form class="graph-login" method="POST" action="#"> -->
-          <!-- <div class="graph-log-in-with-email"> -->
-              <!-- <div class="graph-white-background"> -->
-              <!-- <div><h1>TEST</h1></div> -->
-              <br>
-                <div id="chart1">
-                  <br>
-                  <br>
-                  <br>
-                <h2>Average Hourly Rate ($)</h2>
-                    <svg></svg>
-                </div>
-
-                <script>
-                    var weekday_graph_data = [{{weekday_graph_data|safe}}]
-                    var hourly_max = {{hourly_max}}
-                </script>
-
-              <!-- </div>
-          </div>
-      </form> -->
-
-
-  <!-- *****************************************************************************************************************
-  ANNUAL GRAPH
-  ************************************************************************************************************** -->
-        <!-- <form class="graph-login" method="POST" action="#"> -->
-            <!-- <div class="graph-log-in-with-email"> -->
-                <!-- <div class="graph-white-background"> -->
-                  <div id="chart2">
-                  <h2>Monthly Income ($)</h2>
-                      <svg></svg>
-                  </div>
-
-
-
-
-                <!-- </div>
-            </div>
-        </form> -->
-
-        <br>
-        <br>
-        <br>
-        <br>
-
+          <div id="chart1">
+            <br>
+            <br>
+            <br>
+            <h2>Average Hourly Rate ($)</h2>
+            <svg></svg>
+          </div><!-- /chart1 -->
+<!-- *****************************************************************************************************************
+ANNUAL GRAPH
+************************************************************************************************************** -->
+          <div id="chart2">
+            <h2>Monthly Income ($)</h2>
+            <svg></svg>
+          </div><!-- /chart2 -->
 <!-- *****************************************************************************************************************
 INFO BOXES
 ********************************************************************************** -->
-    <div id="cwrap" class="container">
-        <div class="row_centerd">
-            <div class="col-xs-3 info_box" id="avg_per_hour">
+          <div id="cwrap" class="container">
+            <div class="row centerd">
+
+              <div class="col-xs-3 info_box" id="avg_per_hour">
                 <h3>Avg Hourly Rate</h3>
-                <p>
-                    123
-                </p>
-            </div>
+                <p>123</p>
+              </div><!-- /col-xs-3 info_box -->
 
-            <div class="col-xs-3 info_box" id="avg_per_unit">
+              <div class="col-xs-3 info_box" id="avg_per_unit">
                 <h3>Avg Daily Rate</h3>
-                <p>
-                    456
-                </p>
-            </div>
+                <p>456</p>
+              </div><!-- /col-xs-3 info_box -->
 
-            <div class="col-xs-3 info_box" id="total_earned">
+              <div class="col-xs-3 info_box" id="total_earned">
                 <h3>Total Earned</h3>
-                <p>
-                    789
-                </p>
-            </div>
-        </div>
-	</div><!--/cwrap -->
+                <p>789</p>
+              </div><!-- /col-xs-3 info_box -->
 
-  <!-- *****************************************************************************************************************
-  DYNAMIC USER TABLE
-  ************************************************************************************************************** -->
-        <form class="form-login" method="post" action="#">
+            </div><!-- /row centered -->
+          </div><!--/cwrap -->
+<!-- *****************************************************************************************************************
+DYNAMIC USER TABLE
+************************************************************************************************************** -->
+          <form class="form-login" method="post" action="#">
             <div class="form-log-in-with-email">
-                    </div>
+              <button id="reset" type="button" class="table_decorator">
+                Show All
+              </button>
 
-                    <br>
+              <label>Data:</label>
+                <select id="data_type" class="table_decorator">
+                  <option selected=0 value="daily">Daily</option>
+                  <option value="weekly">Weekly</option>
+                </select>
 
-                    <label>Data:
-                      <select id="data_type">
+              <table id="table_id" class="display">
+                <thead>
+                  <tr></tr>
+                </thead>
+              </table>
 
-                        <option selected=0 value="daily">Daily</option>
-                        <option value="weekly">Weekly</option>
+            </div><!-- /form-log-in-with-email -->
+          </form><!-- /form-login -->
+        </div><!-- /row -->
+      </div> <!-- /container -->
+    </div><!-- /headerwrap -->
+<!-- *****************************************************************************************************************
+FOOTER
+***************************************************************************************************************** -->
+    <div id="footerwrap">
+      <div class="container">
+        <div class="row">
 
-                      </select>
-                     </label>
+          <div class="col-lg-4">
+            <h4>About</h4>
+            <div class="hline-w"></div>
+            <p>Smart Driver is a dynamic app that helps Uber drivers maximize effiency via cutting-edge data analysis.</p>
+          </div><!-- /col-lg-4 -->
 
-                    <table id="table_id" class="display">
+          <div class="col-lg-4">
+            <h4>Project GitHub</h4>
+            <div class="hline-w"></div>
+            <p>
+              <a target="_blank" href="https://github.com/Smart-Driver/smart-driver-app"><i class="fa fa-github"></i></a>
+            </p>
+          </div><!-- /col-lg-4 -->
 
+          <div class="col-lg-4">
+            <h4>Basement Paradise</h4>
+            <div class="hline-w"></div>
+            <p>
+              The Iron Yard<br>
+              Durham, NC<br>
+            </p>
+          </div><!-- /col-lg-4 -->
 
+        </div><!-- /row -->
+      </div> <!-- /container -->
+    </div><!-- /footerwrap -->
 
-                      <thead>
-                          <tr>
-
-                          </tr>
-                      </thead>
-
-                  </table>
-
-                  </div>
-            </div>
-        </form>
-        <!-- <div class="col-lg-8 col-lg-offset-2 himg">
-				        <img src="assets/img/browser.png" class="img-responsive">  -->
-				</div>
-			</div><!-- /row -->
-	    </div> <!-- /container -->
-	</div><!-- /headerwrap -->
-
-	<!-- *****************************************************************************************************************
-	 FOOTER
-	 ***************************************************************************************************************** -->
-	 <div id="footerwrap">
-	 	<div class="container">
-		 	<div class="row">
-		 		<div class="col-lg-4">
-		 			<h4>About</h4>
-		 			<div class="hline-w"></div>
-		 			<p>Smart Driver is a dynamic app that helps Uber drivers maximize effiency via cutting-edge data analysis.</p>
-		 		</div>
-		 		<div class="col-lg-4">
-		 			<h4>Project GitHub</h4>
-		 			<div class="hline-w"></div>
-		 			<p>
-		 				<a target="_blank" href="https://github.com/Smart-Driver/smart-driver-app"><i class="fa fa-github"></i></a>
-		 			</p>
-		 		</div>
-		 		<div class="col-lg-4">
-		 			<h4>Basement Paradise</h4>
-		 			<div class="hline-w"></div>
-		 			<p>
-		 				The Iron Yard<br/>
-		 				Durham, NC<br/>
-		 			</p>
-		 		</div>
-
-            </div><!-- /row -->
-	    </div> <!-- /container -->
-	</div><!-- /footerwrap -->
-
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.2/d3.min.js" charset="utf-8"></script>
     <script src="/static/driver_app/assets/d3/nv.d3.js"></script>
     <script type="text/javascript" src="/static/driver_app/qtip.min.js"></script>
     <script src="/static/driver_app/assets/js/jquery.dataTables.js"></script>
     <script src="/static/driver_app/assets/js/bootstrap.min.js"></script>
-	  <script src="/static/driver_app/assets/js/retina-1.1.0.js"></script>
-	  <script src="/static/driver_app/assets/js/jquery.hoverdir.js"></script>
-	  <script src="/static/driver_app/assets/js/jquery.hoverex.min.js"></script>
-	  <script src="/static/driver_app/assets/js/jquery.prettyPhoto.js"></script>
-  	<!-- <script src="/static/driver_app/assets/js/jquery.isotope.min.js"></script> -->
-  	<script src="/static/driver_app/assets/js/custom.js"></script>
+    <script src="/static/driver_app/assets/js/retina-1.1.0.js"></script>
+    <script src="/static/driver_app/assets/js/jquery.hoverdir.js"></script>
+    <script src="/static/driver_app/assets/js/jquery.hoverex.min.js"></script>
+    <script src="/static/driver_app/assets/js/jquery.prettyPhoto.js"></script>
+    <script src="/static/driver_app/assets/js/custom.js"></script>
     <script src="/static/driver_app/data_table.js"></script>
     <script src="/static/driver_app/assets/d3/nv.d3.js"></script>
     <script src="/static/driver_app/graphs.js"></script>
-
   </body>
 </html>

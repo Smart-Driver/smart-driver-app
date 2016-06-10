@@ -148,7 +148,7 @@ $(document).ready(function() {
 
     $('#data_type').change(function() {
         filterSelection = document.getElementById('data_type').selectedIndex;
-        filterTable(m, w);
+        filterTable(m);
     });
 
 });
@@ -206,3 +206,9 @@ function formatGraphData(data) {
 
     return graphData
 };
+
+$("#reset").click(function() {
+    console.log('clickedit')
+    m = null
+    filterTable(m);
+})
