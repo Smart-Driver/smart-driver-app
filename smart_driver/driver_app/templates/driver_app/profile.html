@@ -41,7 +41,6 @@
           <ul class="nav navbar-nav">
             {% if user.is_authenticated %}
               <li ><a id="logout" href="{% url 'driver_app:logout' %}">Logout</a></li>
-              <li class="logout"><a href="{% url 'driver_app:logout' %}">Logout</a></li>
             {% endif %}
           </ul>
         </div>
