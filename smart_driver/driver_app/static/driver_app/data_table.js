@@ -49,7 +49,11 @@ function drawDayTable(month = m, weekday = w) {
 
             // console.log(getTotalEarned(getPageData()))
         });
-        $("#time_worked").qtip();
+        $("#time_worked").qtip({
+          position: {
+            at: 'bottom center',
+          }
+        });
 }
 
 // GET AVERAGES FOR total_earned,rate_per_hour,  ... COLLUMNS USING DATA FOR THE WHOLE TABLE
