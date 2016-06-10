@@ -90,6 +90,7 @@ a:focus {
 .navbar-header .navbar-brand {
 	color: white;
 	text-align: center;
+	font-size: 180%;
 }
 
 .navbar-default .navbar-nav > li > a {
@@ -566,4 +567,8 @@ csmall2 {
     border: 0;
     margin: 55px auto 0;
     cursor: pointer;
+}
+
+#logout {
+	font-size: 150%;
 }
