@@ -61,7 +61,7 @@
 	width:61px;
 	height:35px;
 	margin-top:-18px;
-	background:url("../images/nav.png") no-repeat top left;
+	/*background:url("../images/nav.png") no-repeat top left;*/
 	cursor:pointer;
 }
 .he-next
@@ -2795,36 +2795,36 @@
 }
 @-webkit-keyframes pendulum
 {
-	10% { -webkit-transform: rotate(15deg); }	
+	10% { -webkit-transform: rotate(15deg); }
 	30% { -webkit-transform: rotate(-10deg); }
-	50% { -webkit-transform: rotate(5deg); }	
+	50% { -webkit-transform: rotate(5deg); }
 	70% { -webkit-transform: rotate(-5deg); }
 	90%{ -webkit-transform: rotate(2deg);}
 	100% { -webkit-transform: rotate(0deg); }
 }
 @-moz-keyframes pendulum
 {
-	10% { -moz-transform: rotate(15deg); }	
+	10% { -moz-transform: rotate(15deg); }
 	30% { -moz-transform: rotate(-10deg); }
-	50% { -moz-transform: rotate(5deg); }	
+	50% { -moz-transform: rotate(5deg); }
 	70% { -moz-transform: rotate(-5deg); }
 	90%{ -moz-transform: rotate(2deg);}
 	100% { -moz-transform: rotate(0deg); }
 }
 @-o-keyframes pendulum
 {
-	10% { -o-transform: rotate(15deg); }	
+	10% { -o-transform: rotate(15deg); }
 	30% { -o-transform: rotate(-10deg); }
-	50% { -o-transform: rotate(5deg); }	
+	50% { -o-transform: rotate(5deg); }
 	70% { -o-transform: rotate(-5deg); }
 	90%{ -o-transform: rotate(2deg);}
 	100% { -o-transform: rotate(0deg); }
 }
 @keyframes pendulum
 {
-	10% { transform: rotate(15deg); }	
+	10% { transform: rotate(15deg); }
 	30% { transform: rotate(-10deg); }
-	50% { transform: rotate(5deg); }	
+	50% { transform: rotate(5deg); }
 	70% { transform: rotate(-5deg); }
 	90%{ transform: rotate(2deg);}
 	100% { transform: rotate(0deg); }
