@@ -8,7 +8,7 @@ function drawWeekGraph(graphData) {
             //.staggerLabels(historicalBarChart[0].values.length > 8)
             .showValues(true)
             .duration(250)
-            .forceY([0, hourly_max + 5 - (hourly_max % 5)])
+            // .forceY([0, hourly_max + 5 - (hourly_max % 5)])
             chart.yAxis
               .axisLabel("Avg Hourly Rate in Dollars")
             ;
