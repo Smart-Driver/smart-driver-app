@@ -107,6 +107,7 @@ function drawWeekTable(month = m) {
             window.dataTable = $('#table_id').DataTable({
                 "pageLength": 30,
                 "bLengthChange": false,
+                "bFilter": false,
                 data: data,
                 columns: [
                     {data: 'starting_at'},
@@ -129,12 +130,12 @@ function drawWeekTable(month = m) {
 };
 
 // FIND DAILY/WEEKLY OPTION SELECTED IN DROPDOWN (0=DAILY, 1=WEEKLY)
-var filterSelection = document.getElementById('data_type').selectedIndex;
+var filterSelection = $('#data-type option:selected').val();
 
 // DETERMINE DAILY/WEEKLY OPTION SELECTED AND REDRAW FILTERED TABLE
 function filterTable(m, w) {
     destroyTable();
-    if (filterSelection == 0) {
+    if (filterSelection == 'daily') {
         drawDayTable(m, w);
     }
     else {
@@ -146,8 +147,8 @@ function filterTable(m, w) {
 $(document).ready(function() {
     drawDayTable();
 
-    $('#data_type').change(function() {
-        filterSelection = document.getElementById('data_type').selectedIndex;
+    $('#data-type').change(function() {
+        filterSelection = $('#data-type option:selected').val();
         filterTable(m);
     });
 
@@ -159,8 +160,8 @@ function onChart1Created() {
         .selectAll('.discreteBar')
         .on('click',
             function (d) {
-                document.getElementById('data_type').selectedIndex = 0
-                filterSelection = 0
+                $('#data-type option:selected').val() = 'daily'
+                filterSelection = 'daily'
                 filterTable(m, d['label'])
             }
         );
