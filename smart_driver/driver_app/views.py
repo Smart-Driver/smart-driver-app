@@ -64,19 +64,14 @@ class MonthStatementViewSet(viewsets.ModelViewSet):
     serializer_class = MonthStatementSerializer
 
 
-def pretty_print_request(req):
-    return '{}\n{}\n\n{}'.format(
+def pretty_print_POST(req):
+    return '{}\n{}\n{}\n\n{}'.format(
+        '-----------START-----------',
         req.method + ' ' + req.url,
         '\n'.join('{}: {}'.format(k, v) for k, v in req.headers.items()),
         req.body,
     )
 
-def pretty_print_response(response):
-    return '{}\n{}\n\n{}\n'.format(
-        response.status_code,
-        '\n'.join('{}: {}'.format(k, v) for k, v in response.headers.items()),
-        response.text
-    )
 
 def home(request):
     context = {}
@@ -87,8 +82,7 @@ def home(request):
         session = requests.Session()
         login_response = Driver.login(session, request)
 
-        context['login_request'] = pretty_print_request(login_response.request)
-        context['login_response'] = pretty_print_response(login_response)
+        context['login_request'] = pretty_print_POST(login_response.request)
         context['login_cookies'] = session.cookies
 
         return render(request, "driver_app/home.html", context)
