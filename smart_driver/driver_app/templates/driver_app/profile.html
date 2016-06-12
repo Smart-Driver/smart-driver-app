@@ -24,9 +24,9 @@
 
   <body>
 
-<!-- *****************************************************************************************************************
+<!-- ***************************************************************************
   HEADERWRAP
-***************************************************************************************************************** -->
+*****************************************************************************-->
     <div class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
         <div class="navbar-header">
@@ -47,94 +47,88 @@
         </div>
       </div>
     </div>
-<!--*****************************************************************************************************************
-     MAIN BODY
+<!-- ***************************************************************************
+MAIN BODY
 ***************************************************************************************************************** -->
     <div id="headerwrap">
       <div class="container">
+        <div class="col-lg-8 col-lg-offset-2">
+          <input id="driver_id" type="hidden" value={{user.driver.id}}>
+          <h2>Welcome <span style="color:white;">{{ user.driver.get_name }}</span>!</h2>
+          <br>
+          <br>
+        </div><!-- /col-lg-8 col-lg-offset-2 -->
+<!-- ***************************************************************************
+CHARTS
+***************************************************************************************************************** -->
         <div class="row">
-          <div class="col-lg-8 col-lg-offset-2">
-            <input id="driver_id" type="hidden" value={{user.driver.id}}>
-            <h2>Welcome <span style="color:white;">{{ user.driver.get_name }}</span>!</h2>
-            <br>
-            <br>
-            <br>
-            <br>
-          </div><!-- /col-lg-8 col-lg-offset-2 -->
-<!-- *****************************************************************************************************************
-WEEKDAY GRAPH julio
-************************************************************************************************************** -->
-        <div class="row">
-          <div class="col-xs-6">
+<!-- ***************************************************************************
+WEEKDAY GRAPH
+***************************************************************************************************************** -->
+          <div class="graph">
             <div id="chart2">
               <h2>Monthly Income ($)</h2>
               <svg></svg>
             </div><!-- /chart1 -->
           </div><!-- col-xs-6" -->
-
-<!-- *****************************************************************************************************************
+<!-- ***************************************************************************
 ANNUAL GRAPH
-************************************************************************************************************** -->
-          <div class="col-xs-6">
+***************************************************************************************************************** -->
+          <div class="graph">
             <div id="chart1">
               <h2>Average Hourly Rate ($)</h2>
               <svg></svg>
             </div><!-- /chart1 -->
-            </div><!-- col-xs-6" -->
-          </div><!--row -->
-<!-- *****************************************************************************************************************
+          </div><!-- col-xs-6" -->
+        </div><!--row -->
+<!-- ***************************************************************************
 INFO BOXES
-********************************************************************************** -->
-          <div id="cwrap" class="container">
-            <div class="row centerd">
+***************************************************************************************************************** -->
+        <div id="cwrap" class="container">
+          <div class="row centerd">
 
-              <div class="col-xs-3 info_box" id="avg_per_hour">
-                <h3>Avg Hourly Rate</h3>
-                <p>123</p>
-              </div><!-- /col-xs-3 info_box -->
+            <div class="col-xs-3 info_box" id="avg_per_hour">
+              <h3>Avg Hourly Rate</h3>
+              <p>123</p>
+            </div><!-- /col-xs-3 info_box -->
 
-              <div class="col-xs-3 info_box" id="avg_per_unit">
-                <h3>Avg Daily Rate</h3>
-                <p>456</p>
-              </div><!-- /col-xs-3 info_box -->
+            <div class="col-xs-3 info_box" id="avg_per_unit">
+              <h3>Avg Daily Rate</h3>
+              <p>456</p>
+            </div><!-- /col-xs-3 info_box -->
 
-              <div class="col-xs-3 info_box" id="total_earned">
-                <h3>Total Earned</h3>
-                <p>789</p>
-              </div><!-- /col-xs-3 info_box -->
+            <div class="col-xs-3 info_box" id="total_earned">
+              <h3>Total Earned</h3>
+              <p>789</p>
+            </div><!-- /col-xs-3 info_box -->
 
-            </div><!-- /row centered -->
-          </div><!--/cwrap -->
-
-
-
+          </div><!-- /row centered -->
+        </div><!--/cwrap -->
 <!-- *****************************************************************************************************************
 DYNAMIC USER TABLE
-************************************************************************************************************** -->
-          <div class="form-login" method="post" action="#">
-            <div class="table">
-              <!-- <label>Data:</label> -->
-              <select id="data-type" class="table-decorator btn btn-theme">
-                <option selected=0 value="daily">Daily</option>
-                <option value="weekly">Weekly</option>
-              </select>
+***************************************************************************************************************** -->
+        <div class="form-login" method="post" action="#">
+          <div class="table">
+            <select id="data-type" class="table-decorator btn btn-theme">
+              <option selected=0 value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+            </select>
 
-              <button id="reset" type="button" class="table-decorator btn btn-theme">
-                Show all
-              </button>
+            <button id="reset" type="button" class="table-decorator btn btn-theme">
+              Show all
+            </button>
 
-              <table id="table_id" class="display">
-                <thead>
-                  <tr></tr>
-                </thead>
-              </table>
+            <table id="table_id" class="display" width="100%">
+              <thead>
+                <tr></tr>
+              </thead>
+            </table>
 
-            </div><!-- /form-log-in-with-email -->
-          </div><!-- /form-login -->
-        </div><!-- /row -->
+          </div><!-- /table -->
+        </div><!-- /form-login -->
       </div> <!-- /container -->
     </div><!-- /headerwrap -->
-<!-- *****************************************************************************************************************
+<!-- ***************************************************************************
 FOOTER
 ***************************************************************************************************************** -->
     <div id="footerwrap">

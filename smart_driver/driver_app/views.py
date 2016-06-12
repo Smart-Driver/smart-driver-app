@@ -85,8 +85,6 @@ def home(request):
         context['login_request'] = pretty_print_POST(login_response.request)
         context['login_cookies'] = session.cookies
 
-        return render(request, "driver_app/home.html", context)
-
         if login_response.status_code == 200:
             user, created = User.objects.get_or_create(username=username)
 
