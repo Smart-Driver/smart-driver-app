@@ -160,7 +160,7 @@ function onChart1Created() {
         .selectAll('.discreteBar')
         .on('click',
             function (d) {
-                $('#data-type option:selected').val() = 'daily'
+                document.getElementById('data-type').selectedIndex = 'daily'
                 filterSelection = 'daily'
                 filterTable(m, d['label'])
             }
