@@ -1,29 +1,28 @@
-var table_header = $('#table_id').find('tr')
+var tableHeader = $('#table_id').find('tr')
 var driverID = $('#driver_id').val()
 var m = null
-var sum_total_earned = 0;
-var avg_per_unit = 0;
-var avg_per_hour = 0;
-
+var sumTotalEarned = 0;
+var avgPerUnit = 0;
+var avgPerHour = 0;
 
 // GET AVERAGES FOR COLUMNS IN DATATABLE
 function getStats(data) {
-    var sum_total = 0
-    var sum_rate_per_hour = 0;
+    var sumTotal = 0
+    var sumRatePerHour = 0;
 
     for (var i = 0; i < data.length; i++) {
         var row = data[i];
-        sum_total += parseFloat(row.total_earned.substr(1));
-        sum_rate_per_hour += parseFloat(row.rate_per_hour.substr(1));
+        sumTotal += parseFloat(row.total_earned.substr(1));
+        sumRatePerHour += parseFloat(row.rate_per_hour.substr(1));
     };
 
-    sum_total_earned = "$" + sum_total.toFixed(2);
+    sumTotalEarned = "$" + sumTotal.toFixed(2);
 
-    avg_per_unit = sum_total / (i);
-    avg_per_unit =  '$' + avg_per_unit.toFixed(2);
+    avgPerUnit = sumTotal / (i);
+    avgPerUnit =  '$' + avgPerUnit.toFixed(2);
 
-    avg_per_hour = sum_rate_per_hour / (i);
-    avg_per_hour = "$" + avg_per_hour.toFixed(2);
+    avgPerHour = sumRatePerHour / (i);
+    avgPerHour = "$" + avgPerHour.toFixed(2);
 };
 
 // CREATE DATATABLE USING API CALL TO GET DAYSTATEMENTS
@@ -37,7 +36,7 @@ function drawDayTable(month = m, weekday) {
     if (weekday) {
         url += '&weekday=' + weekday
     }
-    table_header.append(
+    tableHeader.append(
         $('<th>').text('Date'),
         $('<th>').text('Weekday'),
         $('<th>').text('Total Earned'),
@@ -46,44 +45,43 @@ function drawDayTable(month = m, weekday) {
         $('<th>').text('Total Rides'),
         $('<th>').text('Rate/Ride')
     );
-    $.get(url,
-        function(data) {
-            window.dataTable = $('#table_id').DataTable({
-                "pageLength": 30,
-                "bLengthChange": false,
-                "bFilter": false,
-                data: data,
-                columns: [
-                    {data: 'date'},
-                    {data: 'weekday'},
-                    {data: 'total_earned'},
-                    {data: 'time_worked'},
-                    {data: 'rate_per_hour'},
-                    {data: 'total_rides'},
-                    {data: 'rate_per_ride'}
-                ],
-                aaSorting: [[0, 'desc']]
-            });
-            getStats(dataTable.data());
-            $('#avg_per_hour p').html(avg_per_hour);
-            $('#avg_per_unit h3').html('Avg Daily Rate');
-            $('#avg_per_unit p').html(avg_per_unit);
-            $('#total_earned p').html(sum_total_earned);
+    $.get(url, function(data) {
+        window.dataTable = $('#table_id').DataTable({
+            "pageLength": 30,
+            "bLengthChange": false,
+            "bFilter": false,
+            data: data,
+            columns: [
+                {data: 'date'},
+                {data: 'weekday'},
+                {data: 'total_earned'},
+                {data: 'time_worked'},
+                {data: 'rate_per_hour'},
+                {data: 'total_rides'},
+                {data: 'rate_per_ride'}
+            ],
+            aaSorting: [[0, 'desc']]
+        });
+        getStats(dataTable.data());
+        $('#avg_per_hour p').html(avgPerHour);
+        $('#avg_per_unit h3').html('Avg Daily Rate');
+        $('#avg_per_unit p').html(avgPerUnit);
+        $('#total_earned p').html(sumTotalEarned);
 
-            if (weekday == null) {
-                drawWeekGraph(formatGraphData(dataTable.data()));
-            };
-        });
-        $("#time_worked").qtip({
-            position: {
-                at: 'bottom center',
-            }
-        });
+        if (weekday == null) {
+            drawWeekGraph(formatGraphData(dataTable.data()));
+        };
+    });
+    $("#time_worked").qtip({
+        position: {
+            at: 'bottom center',
+        }
+    });
 };
 
 function destroyTable() {
     $('#table_id').DataTable().destroy();
-    table_header.find('th').remove();
+    tableHeader.find('th').remove();
 }
 
 // CREATE DATATABLE USING API CALL TO GET WEEKSTATEMENTS
@@ -93,7 +91,7 @@ function drawWeekTable(month = m) {
     if (month) {
         url += '&month=' + month
     }
-    table_header.append(
+    tableHeader.append(
         $('<th>').text('Starting'),
         $('<th>').text('Ending'),
         $('<th>').text('Total Earned'),
@@ -102,31 +100,29 @@ function drawWeekTable(month = m) {
         $('<th>').text('Total Rides'),
         $('<th>').text('Rate/Ride')
     );
-    $.get(url,
-        function(data) {
-            window.dataTable = $('#table_id').DataTable({
-                "pageLength": 30,
-                "bLengthChange": false,
-                "bFilter": false,
-                data: data,
-                columns: [
-                    {data: 'starting_at'},
-                    {data: 'ending_at'},
-                    {data: 'total_earned'},
-                    {data: 'rate_per_day'},
-                    {data: 'rate_per_hour'},
-                    {data: 'total_rides'},
-                    {data: 'rate_per_ride'}
-                ],
-                aaSorting: [[0, 'desc']]
+    $.get(url, function(data) {
+        window.dataTable = $('#table_id').DataTable({
+            "pageLength": 30,
+            "bLengthChange": false,
+            "bFilter": false,
+            data: data,
+            columns: [
+                {data: 'starting_at'},
+                {data: 'ending_at'},
+                {data: 'total_earned'},
+                {data: 'rate_per_day'},
+                {data: 'rate_per_hour'},
+                {data: 'total_rides'},
+                {data: 'rate_per_ride'}
+            ],
+            aaSorting: [[0, 'desc']]
         });
-            getStats(dataTable.data());
-            $('#avg_per_hour p').html(avg_per_hour);
-            $('#avg_per_unit h3').html('Avg Weekly Rate');
-            $('#avg_per_unit p').html(avg_per_unit);
-            $('#total_earned p').html(sum_total_earned);
-        }
-    );
+        getStats(dataTable.data());
+        $('#avg_per_hour p').html(avgPerHour);
+        $('#avg_per_unit h3').html('Avg Weekly Rate');
+        $('#avg_per_unit p').html(avgPerUnit);
+        $('#total_earned p').html(sumTotalEarned);
+    });
 };
 
 // FIND DAILY/WEEKLY OPTION SELECTED IN DROPDOWN (0=DAILY, 1=WEEKLY)
@@ -158,26 +154,23 @@ $(document).ready(function() {
 function onChart1Created() {
     d3.select('#chart1 svg')
         .selectAll('.discreteBar')
-        .on('click',
-            function (d) {
-                document.getElementById('data-type').selectedIndex = 'daily'
-                filterSelection = 'daily'
-                filterTable(m, d['label'])
-            }
-        );
+        .on('click', function (d) {
+            document.getElementById('data-type').selectedIndex = 'daily'
+            filterSelection = 'daily'
+            filterTable(m, d['label'])
+        });
 };
 
 // LINK MONTH CHART (ONCE IT'S LOADED) TO REDRAWING FILTERED TABLE
 function onChart2Created() {
     d3.select('#chart2 svg')
         .selectAll('.discreteBar')
-        .on('click',
-            function (d) {
-                filterTable(d['label'])
-            }
-        );
+        .on('click', function (d) {
+            filterTable(d['label'])
+        });
 };
 
+// FORMAT API RESPONSE DATA FOR REDRAWING WEEKDAY GRAPH PER MONTH
 function formatGraphData(data) {
     graphData = [{key:"Avg Hourly Rate By Weekday", values:[]}];
 
@@ -208,6 +201,7 @@ function formatGraphData(data) {
     return graphData
 };
 
+// SHOW ALL BUTTON RESETS FILTERS, REDRAWS TABLE OF ALL DAY DATA
 $("#reset").click(function() {
     console.log('clickedit')
     m = null
