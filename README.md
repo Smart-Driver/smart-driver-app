@@ -55,6 +55,8 @@ print s
 ***
 
 ### API
+Our REST API supports `GET` requests and is accessible by any driver who signs in with valid Uber credentials. Our goal is to give drivers the most control over their data without compromising its accuracy or revealing sensitive information.
+
 
 Example Ride Response:
 ```json
