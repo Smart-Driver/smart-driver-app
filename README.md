@@ -9,12 +9,15 @@
 ***
 
 ##### Table of Contents  
-[Features](#features)  
-[Setup](#setup)
-[Usage](#usage)
-[Setup](#setup)   
-[Developers](#developers)
+* [Features](#features)  
+* [Setup](#setup)
+* [Usage](#usage)
+* [Developers](#developers)
 <a name="headers"/>
+
+***
+
+###Features
 
 ***
 
@@ -28,12 +31,12 @@
 
 ***
 
-
 ###Developers
-1. Julio Cordoza
-2. Kathryn Jackson
-3. Ryan Oakes
+* Julio Cordoza
+* Kathryn Jackson
+* [Ryan Oakes](http://ryanoakes.github.io./)
 
+***
 
 
 License
