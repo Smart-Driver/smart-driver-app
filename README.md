@@ -6,20 +6,28 @@
 
 ![logo](smart_driver/driver_app/static/driver_app/assets/img/readme_screen.png)
 
+***
 
 ##### Table of Contents  
-[Features](#Features)  
-[Setup](#Setup)
-[Usage](#Usage)
-[Setup](#Setup)   
-[Developers](#Developers)
+[Features](#features)  
+[Setup](#setup)
+[Usage](#usage)
+[Setup](#setup)   
+[Developers](#developers)
 <a name="headers"/>
 
+***
+
 ###Setup
+
+***
 
 ###Usage
 
 ![logo](smart_driver/driver_app/static/driver_app/assets/img/logout.png)
+
+***
+
 
 ###Developers
 1. Julio Cordoza
