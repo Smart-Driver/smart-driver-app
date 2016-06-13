@@ -61,9 +61,9 @@ print s
 ***
 
 ###Developers
-##### * [Julio Cordoza](https://github.com/juliojr77)
-##### * [Kathryn Jackson](https://github.com/katjackson)
-##### * [Ryan Oakes](http://ryanoakes.github.io./)
+#####  [Julio Cordoza](https://github.com/juliojr77)
+#####  [Kathryn Jackson](https://github.com/katjackson)
+#####  [Ryan Oakes](http://ryanoakes.github.io./)
 
 ***
 
