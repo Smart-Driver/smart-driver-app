@@ -8,12 +8,12 @@
 
 
 ##### Table of Contents  
-[Features](#Setup)  
-[Emphasis](#emphasis)  
-...snip...    
+[Features](#Features)  
+[Setup](#Setup)
+[Usage](#Usage)
+[Setup](#Setup)   
+[Developers](#Developers)
 <a name="headers"/>
-
-## Headers
 
 ###Setup
 
@@ -21,7 +21,12 @@
 
 ![logo](smart_driver/driver_app/static/driver_app/assets/img/logout.png)
 
-###Features
+###Developers
+1. Julio Cordoza
+2. Kathryn Jackson
+3. Ryan Oakes
+
+
 
 License
 
