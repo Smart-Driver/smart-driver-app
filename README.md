@@ -8,7 +8,7 @@
 
 ***
 
-##### Table of Contents  
+## Table of Contents  
 * [Features](#features)  
 * [Setup](#setup)
 * [Usage](#usage)
@@ -17,11 +17,20 @@
 
 ***
 
-###Features
+## Features
+##### * Ease of use - simply log in using your Uber Driver creditionals and let Smart Driver do the rest 
+##### * SOMETHING
+##### * SOMETHING
+##### * SOMETHING
 
 ***
 
 ###Setup
+
+```python
+s = "Python syntax highlighting"
+print s
+```
 
 ***
 
@@ -32,13 +41,13 @@
 ***
 
 ###Developers
-* Julio Cordoza
-* Kathryn Jackson
+* [Julio Cordoza](https://github.com/juliojr77)
+* [Kathryn Jackson](https://github.com/katjackson)
 * [Ryan Oakes](http://ryanoakes.github.io./)
 
 ***
 
 
-License
+###License
 
 Copyright (c) 2016 Julio Cardoza, Kathryn Jackson, and Ryan Oakes
