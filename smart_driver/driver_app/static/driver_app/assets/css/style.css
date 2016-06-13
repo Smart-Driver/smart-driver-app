@@ -566,6 +566,10 @@ csmall2 {
     width: 100%;
 }
 
+.dataTables_wrapper .dataTables_paginate .paginate_button.disabled {
+    color: #384452 !important;
+}
+
 .table-decorator {
     padding: 2px 6px 2px 6px;
     font-weight: normal;
