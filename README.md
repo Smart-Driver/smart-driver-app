@@ -36,13 +36,27 @@ print s
 
 ### Usage
 
+##### Use your _Uber Driver_ log-in credentials (email and password) to initiate _Smart Driver_
+
 ![logo](smart_driver/driver_app/static/driver_app/assets/img/logout.png)
 
-##### * Use your _Uber Driver_ log-in credentials (email and password) to initiate _Smart Driver_ 
+##### The two graphs at the top of the page showcase your monthly income and average hourly wage, respectively By clicking on different columns, you can adjust the info presented.  For example, if you wish to see ride info for every Tuesday in January, you would simply click on the January column in the monthly graph and Tuesday column in the average hourly rate graph.
+
+![logo](smart_driver/driver_app/static/driver_app/assets/img/months.png)
+
+##### The info box provides a quick summary of the relevant ride data - the average hourly rate, average daily rate, and total money earned. The info presented is based upon the graph data above, so the power to analyze different parameters is completely in your hands.
+
+![logo](smart_driver/driver_app/static/driver_app/assets/img/info_graph.png)
+
+##### The final data analysis tool is the dynamic table. It is also wired up to the graph and allows total autonomy. The column headers are clickable and allow you to order the data by data, weekday, total earned, rides, and other fields.
+
+![logo](smart_driver/driver_app/static/driver_app/assets/img/table.png)
 
 ***
 
 ### API
+
+##### We have one.
 
 ***
 
