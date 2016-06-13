@@ -4,6 +4,9 @@
 
 ### **Smart Driver** is a dynamic web app that provides Uber Drivers the crucial data analysis they need to succeed.
 
+![logo](smart_driver/driver_app/static/driver_app/assets/img/readme_screen.png)
+
+
 INSTALLATION/SETUP
 
 USAGE
