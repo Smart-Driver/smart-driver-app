@@ -1,4 +1,8 @@
 /* nvd3 version 1.8.3-dev (https://github.com/novus/nvd3) 2016-04-26 */
+svg text {
+    fill: #e5e5e5;
+}
+
 .nvd3 .nv-axis {
     pointer-events:none;
     opacity: 1;
@@ -12,6 +16,7 @@
 }
 
 .nvd3 .nv-axis path.domain {
+    stroke: #e5e5e5;
     stroke-opacity: .75;
 }
 
@@ -88,8 +93,10 @@
 .nvd3 .nv-discretebar .nv-groups text,
 .nvd3 .nv-multibarHorizontal .nv-groups text {
     font-weight: bold;
-    fill: rgba(0,0,0,1);
-    stroke: rgba(0,0,0,0);
+    fill: #333;
+    fill-opacity: 1;
+    stroke: #333;
+    stroke-width: 0.25px;
 }
 
 /* boxplot CSS */
@@ -221,7 +228,7 @@
 }
 
 .nvd3.nv-scatter.nv-single-point .nv-groups .nv-point {
-    fill-opacity: .5 !important;
+    fill-opacity: .5;
     stroke-opacity: .5 !important;
 }
 
@@ -487,6 +494,7 @@ svg.nvd3-svg {
 
 .nvd3.nv-sparklineplus .nv-xValue,
 .nvd3.nv-sparklineplus .nv-yValue {
+    stroke-opacity: .75;
     stroke-width: 0;
     font-size: .9em;
     font-weight: normal;

@@ -508,6 +508,10 @@ csmall2 {
     float: none;
 }
 
+.graph h2 {
+    color: #e5e5e5;
+}
+
 @media (min-width: 768px) {
     .graph {
         width: 50%;
