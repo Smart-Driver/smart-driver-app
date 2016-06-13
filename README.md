@@ -7,11 +7,21 @@
 ![logo](smart_driver/driver_app/static/driver_app/assets/img/readme_screen.png)
 
 
-INSTALLATION/SETUP
+##### Table of Contents  
+[Features](#Setup)  
+[Emphasis](#emphasis)  
+...snip...    
+<a name="headers"/>
 
-USAGE
+## Headers
 
-FEATURES
+###Setup
+
+###Usage
+
+![logo](smart_driver/driver_app/static/driver_app/assets/img/logout.png)
+
+###Features
 
 License
 
