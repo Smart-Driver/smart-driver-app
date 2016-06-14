@@ -1,6 +1,6 @@
 /* nvd3 version 1.8.3-dev (https://github.com/novus/nvd3) 2016-04-26 */
 svg text {
-    fill: #e5e5e5;
+    fill: #f5f5f5;
 }
 
 .nvd3 .nv-axis {
@@ -16,7 +16,7 @@ svg text {
 }
 
 .nvd3 .nv-axis path.domain {
-    stroke: #e5e5e5;
+    stroke: #f5f5f5;
     stroke-opacity: .75;
 }
 
@@ -26,7 +26,7 @@ svg text {
 
 .nvd3 .nv-axis line {
     fill: none;
-    stroke: #e5e5e5;
+    stroke: #f5f5f5;
     shape-rendering: crispEdges;
 }
 
