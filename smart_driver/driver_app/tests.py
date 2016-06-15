@@ -1,5 +1,7 @@
 import json
 import datetime
+import requests
+from unittest.mock import patch
 from django.test import TestCase, Client, RequestFactory
 from rest_framework.test import force_authenticate
 from django.contrib.auth.models import User
@@ -12,6 +14,7 @@ class DriverTestCase(TestCase):
     def setUp(self):
         self.client = Client()
         self.factory = RequestFactory()
+        self.session = requests.Session()
         Driver.objects.create(
             u_user_id='123abc',
             user=User.objects.create(username='wr@g.com'),
@@ -19,10 +22,16 @@ class DriverTestCase(TestCase):
             first_name='WINONA',
             last_name='RYDER'
             )
-        self.statement_file_path = '/Users/kathrynjackson/Code/smart_driver_notes/54d1a166-8755-f64f-3e37-a3f4b53a08f4.json'
 
         with open(
-                '/Users/kathrynjackson/Code/smart_driver_notes/54d1a166-8755-f64f-3e37-a3f4b53a08f4.json', 'r'
+            '/Users/kathrynjackson/Code/smart_driver_notes/login_response.txt',
+                'r'
+                ) as f:
+            self.login_response_text = f.read()
+
+        with open(
+            '/Users/kathrynjackson/Code/smart_driver_notes/54d1a166-8755-f64f-3e37-a3f4b53a08f4.json',
+                'r'
                 ) as f:
             self.data = json.loads(f.read())
 
@@ -30,7 +39,31 @@ class DriverTestCase(TestCase):
         winona = Driver.objects.get(email='wr@g.com')
         self.assertEqual(winona.get_name(), 'Winona Ryder')
 
-    def test_
+    def test_get_csrf_token(self):
+        token = Driver.get_csrf_token(self.session)
+        self.assertIs(type(token), str)
+
+    def test_get_u_user_id(self):
+        sample_response = self.client.get('/')
+        sample_response.text = self.login_response_text
+        winona = Driver.objects.get(email='wr@g.com')
+        winona.get_u_user_id(sample_response)
+        self.assertEqual(winona.u_user_id, 'x1x2x3x4x5')
+
+    def test_get_statement_ids(self):
+        sample_response = self.client.get('/')
+        sample_response.text = self.login_response_text
+        ids = Driver.get_statement_ids(sample_response)
+        self.assertIs(len(ids), 41)
+
+    def test_grab_data(self):
+        ids = ['54d1a166-8755-f64f-3e37-a3f4b53a08f4']
+        winona = Driver.objects.get(email='wr@g.com')
+        with patch(
+                'driver_app.models.Driver.get_statement',
+                return_value=self.data):
+            winona.grab_data(self.session, ids)
+            assert (winona.ride_set.count() > 0)
 
 
 class APITestCase(TestCase):
