@@ -144,7 +144,7 @@ class WeekStatement(models.Model):
                                        null=True)
     total_rides = models.IntegerField(default=0, null=True)
     statement_id = models.CharField(max_length=75, null=True, unique=True)
-    month_statement = models.ManyToManyField('MonthStatement', null=True)
+    month_statement = models.ManyToManyField('MonthStatement')
 
     def associate_months(self, months):
         for month in months:
