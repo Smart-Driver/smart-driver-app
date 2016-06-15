@@ -22,8 +22,8 @@
     <link href="/static/driver_app/assets/css/style.css" rel="stylesheet">
 
   </head>
+  
   <body>
-
 <!-- ***************************************************************************
   HEADERWRAP
 *****************************************************************************-->
@@ -37,16 +37,16 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href="../">Smart Driver</a>
-        </div>
+        </div><!-- /navbar-collapse collapse navbar-right-->
         <div class="navbar-collapse collapse navbar-right">
           <ul class="nav navbar-nav">
             {% if user.is_authenticated %}
               <li ><a id="logout" href="{% url 'driver_app:logout' %}">Logout</a></li>
             {% endif %}
           </ul>
-        </div>
-      </div>
-    </div>
+        </div><!-- /navbar-collapse collapse navbar-right-->
+      </div><!-- /container -->
+    </div><!-- /navbar navbar-default navbar-fixed-top -->
 <!-- ***************************************************************************
 MAIN BODY
 ***************************************************************************************************************** -->
@@ -151,10 +151,10 @@ FOOTER
 
           <div class="col-lg-4">
             <h4>Smart Driver Team</h4>
-			<div class="hline-w"></div>
-			<p>
-			  Julio Cardoza<br/>
-			  Kathryn Jackson<br/>
+    			  <div class="hline-w"></div>
+			      <p>
+			        Julio Cardoza<br/>
+			        Kathryn Jackson<br/>
               Ryan Oakes<br/>
             </p>
           </div><!-- /col-lg-4 -->

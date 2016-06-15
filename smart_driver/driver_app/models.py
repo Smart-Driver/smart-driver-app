@@ -2,9 +2,9 @@ import json
 import re
 import datetime
 import dateutil.parser
-from dateutil.tz import *
+from dateutil.tz import gettz
 from dateutil.relativedelta import relativedelta
-from decimal import *
+from decimal import Decimal
 from django.db import models
 from django.db.models import Min, Max, Sum, Avg
 from django.contrib.auth.models import User
@@ -115,8 +115,8 @@ class DayStatement(models.Model):
     def calculate_day_stats(self):
         self.total_rides = self.ride_set.count()
         aggs = self.ride_set.aggregate(Sum('total_earned'),
-                                      Min('request_at'),
-                                      Max('dropoff_at'))
+                                       Min('request_at'),
+                                       Max('dropoff_at'))
 
         self.total_earned = aggs['total_earned__sum']
         self.rate_per_ride = self.total_earned / self.total_rides
@@ -153,7 +153,6 @@ class WeekStatement(models.Model):
                 self.month_statement.add(month)
                 self.save()
 
-
     def calculate_week_stats(self):
         days = self.daystatement_set.count()
         if days:
@@ -166,7 +165,6 @@ class WeekStatement(models.Model):
             self.rate_per_hour = aggs['rate_per_hour__avg']
             self.rate_per_day = self.total_earned / days
             self.save()
-
 
 
 class MonthStatement(models.Model):
@@ -188,8 +186,8 @@ class MonthStatement(models.Model):
         days = self.daystatement_set.count()
         if days:
             aggs = self.daystatement_set.aggregate(Sum('total_earned'),
-                                                    Sum('total_rides'),
-                                                    Avg('rate_per_hour'))
+                                                   Sum('total_rides'),
+                                                   Avg('rate_per_hour'))
             self.total_earned = aggs['total_earned__sum']
             self.total_rides = aggs['total_rides__sum']
             self.rate_per_ride = self.total_earned / self.total_rides
@@ -253,7 +251,6 @@ class Driver(models.Model):
         last_name = re.search(last_name_pattern, login_response.text).group(1)
         self.last_name = last_name
 
-
     @staticmethod
     def get_statement_ids(login_response):
         cream_id_pattern = '"cream_invoice_uuid":"([a-zA-Z0-9\-]+)","'
@@ -272,7 +269,7 @@ class Driver(models.Model):
             data = Driver.get_statement(session, statement_id)
             print('retreived statement data for: ', statement_id)
 
-            time_zone = dateutil.tz.gettz(data['body']['city']['timezone'])
+            time_zone = gettz(data['body']['city']['timezone'])
             trip_earnings = data['body']['driver'].get('trip_earnings', None)
 
             starting_at = dateutil.parser.parse(

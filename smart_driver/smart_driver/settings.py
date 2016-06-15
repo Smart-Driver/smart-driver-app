@@ -1,14 +1,3 @@
-"""
-Django settings for smart_driver project on Heroku. Fore more info, see:
-https://github.com/heroku/heroku-django-template
-
-For more information on this file, see
-https://docs.djangoproject.com/en/1.9/topics/settings/
-
-For the full list of settings and their values, see
-https://docs.djangoproject.com/en/1.9/ref/settings/
-"""
-
 import os
 import dj_database_url
 
@@ -17,10 +6,6 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
-
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SD_SECRET_KEY')
@@ -43,7 +28,8 @@ INSTALLED_APPS = (
 )
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',),
 }
 
 MIDDLEWARE_CLASSES = (
@@ -51,17 +37,11 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
-    #'django.contrib.auth.middleware.RemoteUserMiddleware',
-    #'django.contrib.auth.middleware.PersistentRemoteUserMiddleware',
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django.middleware.security.SecurityMiddleware',
 )
-
-# AUTHENTICATION_BACKENDS = [
-#     'django.contrib.auth.backends.RemoteUserBackend',
-# ]
 
 ROOT_URLCONF = 'smart_driver.urls'
 
@@ -141,4 +121,4 @@ STATICFILES_DIRS = [
 # https://warehouse.python.org/project/whitenoise/
 STATICFILES_STORAGE = 'whitenoise.django.GzipManifestStaticFilesStorage'
 
-DATABASES['default'] =  dj_database_url.config()
+DATABASES['default'] = dj_database_url.config()

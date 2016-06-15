@@ -45,105 +45,111 @@
 	<!-- *****************************************************************************************************************
 	 HEADERWRAP
 	 ***************************************************************************************************************** -->
-	<div id="headerwrap">
-	  <div class="container">
-	    <div class="row">
-		    <div class="col-lg-8 col-lg-offset-2">
-          <img src="static/driver_app/assets/img/smart_driver_logo.png" alt="Smart Driver" />
-            <h2>
-              Welcome to <span style="color:white;">Smart Driver</span>
-              - the only app that helps Uber drivers maximize efficiency
-              with state-of-the-art data analysis.
-            </h2>
+	  <div id="headerwrap">
+	    <div class="container">
+  	    <div class="row">
+  		    <div class="col-lg-8 col-lg-offset-2">
+            <img src="static/driver_app/assets/img/smart_driver_logo.png" alt="Smart Driver" />
+              <h2>
+                Welcome to <span style="color:white;">Smart Driver</span>
+                - the only app that helps Uber drivers maximize efficiency
+                with state-of-the-art data analysis.
+              </h2>
         {% if not user.is_authenticated %}
-            </br>
-            {% if fail %}
-            <h3>
-              {login_request}}, {{login_cookies}}, {{fail}}
-            <br>
-              Uber rejected your request. Make sure you are using the
-              same email and password you use to log in to Uber.
-            </h3>
-            {% else %}
-		        <h3>Please log in below with your Uber credentials.</h3>
-            {% endif %}
-	      </div><!-- col-lg-8 col-lg-offset-2 -->
+              </br>
+              {% if fail %}
+              <h3>
+                Error: {{fail}}
+              <br>
+                Uber rejected your request. Make sure you are using the
+                same email and password you use to log in to Uber.
+              </h3>
+              {% else %}
+  		        <h3>Please log in below with your Uber credentials.</h3>
+              {% endif %}
+	        </div><!-- col-lg-8 col-lg-offset-2 -->
   <!-- *****************************************************************************************************************
   LOG-IN FORM
   ************************************************************************************************************** -->
           <form class="form-login" method="post" action="">{% csrf_token %}
             <div class="form-log-in-with-email">
               <div class="form-white-background">
+
                 <div class="form-title-row">
                 </div>
-                 <div class="form-row">
+
+                <div class="form-row">
                   <label><span>Email</span></label>
                   <input type="email" name="email">
                 </div><!-- form-row -->
+
                 <div class="form-row">
                   <label><span>Password</span></label>
                   <input type="password" name="password">
                 </div><!-- form-row -->
+
                 <div class="form-row">
                   <button type="submit">Log in</button>
                 </div><!-- form-row -->
+
               </div><!-- form-white-background -->
             </div><!-- form-log-in-with-email -->
           </form><!-- form-login -->
-    {% else %}<!-- user.is_authenticated -->
-          <br>
-          <br>
-          <br>
-          <br>
-          <a href="{% url 'driver_app:profile' %}"><h1>Return to your profile</h1></a>
-    {% endif %}
-		 </div><!-- /row -->
-	  </div>
-    </div>
-	</div><!-- /headerwrap -->
+        {% else %}<!-- user.is_authenticated -->
+            <br>
+            <br>
+            <br>
+            <br>
+            <a href="{% url 'driver_app:profile' %}"><h1>Return to your profile</h1></a>
+          </div><!-- col-lg-8 col-lg-offset-2 -->
+        {% endif %}
+		    </div><!-- /row -->
+      </div>
+	  </div><!-- /headerwrap -->
 <!-- *****************************************************************************************************************
  FOOTER
 ***************************************************************************************************************** -->
-	<div id="footerwrap">
-	  <div class="container">
-		<div class="row">
+	  <div id="footerwrap">
+	    <div class="container">
+		    <div class="row">
 
-      <div class="col-lg-4">
-        <h4>About</h4>
-    			<div class="hline-w"></div>
-    			<p>Smart Driver is a dynamic app that helps Uber drivers maximize effiency via cutting-edge data analysis.</p>
+          <div class="col-lg-4">
+            <h4>About</h4>
+    			  <div class="hline-w"></div>
+    			  <p>Smart Driver is a dynamic app that helps Uber drivers maximize effiency via cutting-edge data analysis.</p>
     		  </div><!-- col-lg-4 -->
 
           <div class="col-lg-4">
-    			<h4>Project GitHub</h4>
-    			<div class="hline-w"></div>
-    			<p>
-    			<a target="_blank" href="https://github.com/Smart-Driver/smart-driver-app"><i class="fa fa-github"></i></a>
-    			</p>
+      			<h4>Project GitHub</h4>
+      			<div class="hline-w"></div>
+      			<p>
+      			<a target="_blank" href="https://github.com/Smart-Driver/smart-driver-app"><i class="fa fa-github"></i></a>
+      			</p>
           </div><!-- col-lg-4 -->
 
     		  <div class="col-lg-4">
-    			<h4>Smart Driver Team</h4>
-    			<div class="hline-w"></div>
-    			<p>
-    			  Julio Cardoza<br>
-    			  Kathryn Jackson<br>
-            Ryan Oakes<b>
-    			</p>
-        </div><!-- col-lg-4 -->
-		  </div><!--/row -->
-	  </div><!--/container -->
-	</div><!--/footerwrap -->
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
+      			<h4>Smart Driver Team</h4>
+      			<div class="hline-w"></div>
+      			<p>
+      			  Julio Cardoza<br>
+      			  Kathryn Jackson<br>
+              Ryan Oakes<b>
+      			</p>
+          </div><!-- col-lg-4 -->
+
+		    </div><!--/row -->
+	    </div><!--/container -->
+	  </div><!--/footerwrap -->
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="static/driver_app/assets/js/bootstrap.min.js"></script>
-	<script src="static/driver_app/assets/js/retina-1.1.0.js"></script>
+	  <script src="static/driver_app/assets/js/retina-1.1.0.js"></script>
     <script src="static/driver_app/assets/js/jquery.hoverdir.js"></script>
-	<script src="static/driver_app/assets/js/jquery.hoverex.min.js"></script>
-	<script src="static/driver_app/assets/js/jquery.prettyPhoto.js"></script>
-	<script src="static/driver_app/assets/js/custom.js"></script>
+	  <script src="static/driver_app/assets/js/jquery.hoverex.min.js"></script>
+	  <script src="static/driver_app/assets/js/jquery.prettyPhoto.js"></script>
+	  <script src="static/driver_app/assets/js/custom.js"></script>
 
   </body>
 </html>
