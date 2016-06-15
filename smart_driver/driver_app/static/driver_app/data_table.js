@@ -62,6 +62,7 @@ function drawDayTable(month = m, weekday) {
             ],
             aaSorting: [[0, 'desc']]
         });
+        console.log(data)
         getStats(dataTable.data());
         $('#avg_per_hour p').html(avgPerHour);
         $('#avg_per_unit h3').html('Avg Daily Rate');
@@ -69,7 +70,7 @@ function drawDayTable(month = m, weekday) {
         $('#total_earned p').html(sumTotalEarned);
 
         if (weekday == null) {
-            drawWeekGraph(formatGraphData(dataTable.data()));
+            drawWeekGraph(formatGraphData(data));
         };
     });
     $("#time_worked").qtip({
@@ -87,9 +88,11 @@ function destroyTable() {
 // CREATE DATATABLE USING API CALL TO GET WEEKSTATEMENTS
 function drawWeekTable(month = m) {
     m = month
-    var url = '/api/week_statements/?driver=' + driverID
+    var week_url = '/api/week_statements/?driver=' + driverID
+    var day_url = '/api/day_statements/?driver=' + driverID
+    var query = ''
     if (month) {
-        url += '&month=' + month
+        query += '&month=' + month
     }
     tableHeader.append(
         $('<th>').text('Starting'),
@@ -100,7 +103,7 @@ function drawWeekTable(month = m) {
         $('<th>').text('Total Rides'),
         $('<th>').text('Rate/Ride')
     );
-    $.get(url, function(data) {
+    $.get(week_url + query, function(data) {
         window.dataTable = $('#table_id').DataTable({
             "pageLength": 30,
             "bLengthChange": false,
@@ -123,6 +126,9 @@ function drawWeekTable(month = m) {
         $('#avg_per_unit p').html(avgPerUnit);
         $('#total_earned p').html(sumTotalEarned);
     });
+    $.get(day_url + query, function(data) {
+        drawWeekGraph(formatGraphData(data));
+    })
 };
 
 // FIND DAILY/WEEKLY OPTION SELECTED IN DROPDOWN (0=DAILY, 1=WEEKLY)
