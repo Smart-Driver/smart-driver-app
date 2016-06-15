@@ -1,3 +1,4 @@
+import json
 import datetime
 from django.test import TestCase, Client, RequestFactory
 from rest_framework.test import force_authenticate
@@ -18,10 +19,18 @@ class DriverTestCase(TestCase):
             first_name='WINONA',
             last_name='RYDER'
             )
+        self.statement_file_path = '/Users/kathrynjackson/Code/smart_driver_notes/54d1a166-8755-f64f-3e37-a3f4b53a08f4.json'
+
+        with open(
+                '/Users/kathrynjackson/Code/smart_driver_notes/54d1a166-8755-f64f-3e37-a3f4b53a08f4.json', 'r'
+                ) as f:
+            self.data = json.loads(f.read())
 
     def test_get_driver_name(self):
         winona = Driver.objects.get(email='wr@g.com')
         self.assertEqual(winona.get_name(), 'Winona Ryder')
+
+    def test_
 
 
 class APITestCase(TestCase):
