@@ -1,12 +1,10 @@
 import json
 import requests
-import datetime
 from django.shortcuts import render
 from rest_framework import viewsets
 from django.http import HttpResponseRedirect
 from django.db.models import Avg
-from django.views.generic.base import TemplateView
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import login, logout
 from django.contrib.auth.models import User
 from .serializers import RideSerializer, DayStatementSerializer
 from .serializers import WeekStatementSerializer, MonthStatementSerializer
@@ -24,14 +22,16 @@ class DayStatementViewSet(viewsets.ModelViewSet):
     serializer_class = DayStatementSerializer
 
     def get_queryset(self):
-        queryset = DayStatement.objects.filter(total_earned__gt=0).order_by('-date')
+        queryset = DayStatement.objects.filter(
+            total_earned__gt=0).order_by('-date')
         driver_id = self.request.query_params.get('driver', None)
         month = self.request.query_params.get('month', None)
         weekday = self.request.query_params.get('weekday', None)
         if driver_id:
             queryset = queryset.filter(driver=Driver.objects.get(id=driver_id))
         if month:
-            queryset = queryset.filter(month_statement=MonthStatement.objects.get(month_name=month))
+            queryset = queryset.filter(
+                month_statement=MonthStatement.objects.get(month_name=month))
         if weekday:
             for tup in DayStatement.WEEKDAY_CHOICES:
                 if tup[1] == weekday:
@@ -44,13 +44,15 @@ class WeekStatementViewSet(viewsets.ModelViewSet):
     serializer_class = WeekStatementSerializer
 
     def get_queryset(self):
-        queryset = WeekStatement.objects.filter(total_earned__gt=0).order_by('-starting_at')
+        queryset = WeekStatement.objects.filter(
+            total_earned__gt=0).order_by('-starting_at')
         driver_id = self.request.query_params.get('driver', None)
         month = self.request.query_params.get('month', None)
         if driver_id:
             queryset = queryset.filter(driver=Driver.objects.get(id=driver_id))
         if month:
-            queryset = queryset.filter(month_statement=MonthStatement.objects.get(month_name=month))
+            queryset = queryset.filter(
+                month_statement=MonthStatement.objects.get(month_name=month))
         return queryset
 
 
@@ -60,7 +62,8 @@ class DriverViewSet(viewsets.ModelViewSet):
 
 
 class MonthStatementViewSet(viewsets.ModelViewSet):
-    queryset = MonthStatement.objects.filter(total_earned__gt=0).order_by('-starting_at')
+    queryset = MonthStatement.objects.filter(
+        total_earned__gt=0).order_by('-starting_at')
     serializer_class = MonthStatementSerializer
 
 
@@ -77,13 +80,9 @@ def home(request):
     context = {}
     if request.POST:
         username = request.POST['email']
-        password = request.POST['password']
 
         session = requests.Session()
         login_response = Driver.login(session, request)
-
-        context['login_request'] = pretty_print_POST(login_response.request)
-        context['login_cookies'] = session.cookies
 
         if login_response.status_code == 200:
             user, created = User.objects.get_or_create(username=username)
@@ -109,7 +108,8 @@ def home(request):
 
         else:
             print('login_failed')
-            context['fail'] = (login_response.status_code, login_response.text)
+            context = {
+                'fail': (login_response.status_code, login_response.reason)}
 
     return render(request, "driver_app/home.html", context)
 
@@ -119,16 +119,16 @@ def profile(request):
     day_statements = DayStatement.objects.filter(
         driver=driver).filter(total_earned__gt=0)
 
-    hourly_rate_by_weekday = {'key':"Hourly Rate By Weekday", 'values':[]}
+    hourly_rate_by_weekday = {'key': "Hourly Rate By Weekday", 'values': []}
 
-    rate_avgs = day_statements.values('weekday').annotate(avg=Avg('rate_per_hour'))
+    rate_avgs = day_statements.values('weekday').annotate(
+        avg=Avg('rate_per_hour'))
     rate_avgs = sorted(rate_avgs, key=lambda lil_dict: lil_dict['weekday'])
     max_avg = max(rate_avgs, key=lambda lil_dict: lil_dict['avg'])['avg']
     hourly_rate_by_weekday['values'] = [{
         "label": dict(DayStatement.WEEKDAY_CHOICES)[day_dict['weekday']],
         "value": round(day_dict['avg'], 2)
         } for day_dict in rate_avgs]
-
 
     context = {'weekday_graph_data': json.dumps(hourly_rate_by_weekday),
                'hourly_max': round(max_avg)}

@@ -1,4 +1,3 @@
-import datetime
 from rest_framework import serializers
 from .models import Ride, DayStatement, WeekStatement, Driver, MonthStatement
 
@@ -74,8 +73,9 @@ class DriverSerializer(serializers.HyperlinkedModelSerializer):
         model = Driver
         exclude = 'u_user_id', 'email', 'user'
 
+
 class MonthStatementSerializer(serializers.HyperlinkedModelSerializer):
     class Meta:
         model = MonthStatement
         fields = ('month_name', 'total_earned', 'rate_per_day',
-                  'rate_per_hour', 'total_rides','rate_per_ride')
+                  'rate_per_hour', 'total_rides', 'rate_per_ride')

@@ -6,6 +6,7 @@ from .models import Driver, Ride, DayStatement, WeekStatement, MonthStatement
 from .views import DriverViewSet, RideViewSet, DayStatementViewSet
 from .views import WeekStatementViewSet, MonthStatementViewSet
 
+
 class DriverTestCase(TestCase):
     def setUp(self):
         self.client = Client()
@@ -21,6 +22,7 @@ class DriverTestCase(TestCase):
     def test_get_driver_name(self):
         winona = Driver.objects.get(email='wr@g.com')
         self.assertEqual(winona.get_name(), 'Winona Ryder')
+
 
 class APITestCase(TestCase):
     def setUp(self):
@@ -89,9 +91,12 @@ class APITestCase(TestCase):
         self.factory = RequestFactory()
         self.driver_endpoint = DriverViewSet.as_view({'get': 'retrieve'})
         self.ride_endpoint = RideViewSet.as_view({'get': 'retrieve'})
-        self.day_statement_endpoint = DayStatementViewSet.as_view({'get': 'retrieve'})
-        self.week_statement_endpoint = WeekStatementViewSet.as_view({'get': 'retrieve'})
-        self.month_statement_endpoint = MonthStatementViewSet.as_view({'get': 'retrieve'})
+        self.day_statement_endpoint = DayStatementViewSet.as_view(
+            {'get': 'retrieve'})
+        self.week_statement_endpoint = WeekStatementViewSet.as_view(
+            {'get': 'retrieve'})
+        self.month_statement_endpoint = MonthStatementViewSet.as_view(
+            {'get': 'retrieve'})
 
     def test_driver_endpoint_status_ok(self):
         request = self.factory.get('/api/drivers/')
