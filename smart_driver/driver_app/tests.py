@@ -1,6 +1,7 @@
 import json
 import datetime
 import requests
+from decimal import Decimal
 from unittest.mock import patch
 from django.test import TestCase, Client, RequestFactory
 from rest_framework.test import force_authenticate
@@ -56,14 +57,176 @@ class DriverTestCase(TestCase):
         ids = Driver.get_statement_ids(sample_response)
         self.assertIs(len(ids), 41)
 
+    ''' the grab_data() function calls 8 other functions in all classes to save
+    related objects from one json into to the relational database. It is
+    tested further in other test classes '''
     def test_grab_data(self):
-        ids = ['54d1a166-8755-f64f-3e37-a3f4b53a08f4']
         winona = Driver.objects.get(email='wr@g.com')
         with patch(
                 'driver_app.models.Driver.get_statement',
                 return_value=self.data):
-            winona.grab_data(self.session, ids)
-            assert (winona.ride_set.count() > 0)
+            winona.grab_data(self.session,
+                             ['54d1a166-8755-f64f-3e37-a3f4b53a08f4'])
+        self.assertTrue(winona.ride_set.count() > 0)
+
+    def test_get_new_statements(self):
+        ids = ['54d1a166-8755-f64f-3e37-a3f4b53a08f4', 'new_id']
+        winona = Driver.objects.get(email='wr@g.com')
+        with patch(
+                'driver_app.models.Driver.get_statement',
+                return_value=self.data):
+            winona.grab_data(self.session,
+                             ['54d1a166-8755-f64f-3e37-a3f4b53a08f4'])
+        new_statement_id = winona.get_new_statement_ids(ids)
+        self.assertEqual(new_statement_id, ['new_id'])
+
+
+class RideTestCase(TestCase):
+    def setUp(self):
+        winona = Driver.objects.create(
+            u_user_id='123abc',
+            user=User.objects.create(username='wr@g.com'),
+            email='wr@g.com',
+            first_name='WINONA',
+            last_name='RYDER'
+            )
+        with open(
+            '/Users/kathrynjackson/Code/smart_driver_notes/54d1a166-8755-f64f-3e37-a3f4b53a08f4.json',
+                'r'
+                ) as f:
+            self.data = json.loads(f.read())
+        self.session = requests.Session()
+        with patch(
+                'driver_app.models.Driver.get_statement',
+                return_value=self.data):
+            winona.grab_data(self.session,
+                             ['54d1a166-8755-f64f-3e37-a3f4b53a08f4'])
+        self.ride = winona.ride_set.get(
+            trip_id='33d66c37-2b7b-4fc5-8622-4944f3068125')
+
+    def test_get_stats_in_grab_data(self):
+        self.assertEqual(self.ride.date, datetime.date(2015, 11, 16))
+        self.assertEqual(self.ride.status, 'completed')
+        self.assertEqual(self.ride.begintrip_at, datetime.datetime(
+                2015, 11, 16, 19, 50, 22, tzinfo=datetime.timezone.utc))
+        self.assertEqual(self.ride.dropoff_at, datetime.datetime(
+                2015, 11, 16, 20, 11, 57, tzinfo=datetime.timezone.utc))
+        self.assertEqual(self.ride.total_earned, Decimal('26.40'))
+        self.assertEqual(self.ride.distance, Decimal('14.86'))
+        self.assertEqual(self.ride.request_at, datetime.datetime(
+                2015, 11, 16, 19, 43, 46, tzinfo=datetime.timezone.utc))
+        self.assertEqual(self.ride.duration, datetime.timedelta(0, 1294))
+
+    def test_assign_month_in_grab_data(self):
+        self.assertEqual(self.ride.month_statement,
+                         MonthStatement.objects.get(month_name="November '15"))
+
+    def test_assign_week_in_grab_data(self):
+        self.assertEqual(self.ride.week_statement, WeekStatement.objects.get(
+            starting_at=datetime.date(2015, 11, 16)))
+
+    def test_assign_day_in_grab_data(self):
+        self.assertEqual(self.ride.day_statement, DayStatement.objects.get(
+            date=datetime.date(2015, 11, 16)))
+
+
+class DayStatementTestCase(TestCase):
+    def setUp(self):
+        winona = Driver.objects.create(
+            u_user_id='123abc',
+            user=User.objects.create(username='wr@g.com'),
+            email='wr@g.com',
+            first_name='WINONA',
+            last_name='RYDER'
+            )
+        with open(
+            '/Users/kathrynjackson/Code/smart_driver_notes/54d1a166-8755-f64f-3e37-a3f4b53a08f4.json',
+                'r'
+                ) as f:
+            self.data = json.loads(f.read())
+        self.session = requests.Session()
+        with patch(
+                'driver_app.models.Driver.get_statement',
+                return_value=self.data):
+            winona.grab_data(self.session,
+                             ['54d1a166-8755-f64f-3e37-a3f4b53a08f4'])
+        self.day_statement = winona.daystatement_set.get(
+            date=datetime.date(2015, 11, 16))
+
+    def test_calculate_day_stats(self):
+        self.assertEqual(self.day_statement.total_rides, 10)
+        self.assertEqual(self.day_statement.total_earned, Decimal('181.93'))
+        self.assertEqual(self.day_statement.rate_per_ride, Decimal('18.19'))
+        self.assertEqual(self.day_statement.time_worked,
+                         datetime.timedelta(0, 31398))
+        self.assertEqual(self.day_statement.rate_per_hour, Decimal('20.86'))
+
+
+class WeekStatementTestCase(TestCase):
+    def setUp(self):
+        winona = Driver.objects.create(
+            u_user_id='123abc',
+            user=User.objects.create(username='wr@g.com'),
+            email='wr@g.com',
+            first_name='WINONA',
+            last_name='RYDER'
+            )
+        with open(
+            '/Users/kathrynjackson/Code/smart_driver_notes/54d1a166-8755-f64f-3e37-a3f4b53a08f4.json',
+                'r'
+                ) as f:
+            self.data = json.loads(f.read())
+        self.session = requests.Session()
+        with patch(
+                'driver_app.models.Driver.get_statement',
+                return_value=self.data):
+            winona.grab_data(self.session,
+                             ['54d1a166-8755-f64f-3e37-a3f4b53a08f4'])
+        self.week_statement = winona.weekstatement_set.get(
+            starting_at=datetime.date(2015, 11, 16))
+
+    def test_calculate_week_stats(self):
+        self.assertEqual(self.week_statement.total_earned, Decimal('455.10'))
+        self.assertEqual(self.week_statement.total_rides, 37)
+        self.assertEqual(self.week_statement.rate_per_ride, Decimal('12.30'))
+        self.assertEqual(self.week_statement.rate_per_hour, Decimal('13.54'))
+        self.assertEqual(self.week_statement.rate_per_day, Decimal('113.78'))
+
+    def test_associate_months(self):
+        self.assertEqual(
+            self.week_statement.month_statement.first().month_name,
+            "November '15")
+
+
+class MonthStatementTestCase(TestCase):
+    def setUp(self):
+        winona = Driver.objects.create(
+            u_user_id='123abc',
+            user=User.objects.create(username='wr@g.com'),
+            email='wr@g.com',
+            first_name='WINONA',
+            last_name='RYDER'
+            )
+        with open(
+            '/Users/kathrynjackson/Code/smart_driver_notes/54d1a166-8755-f64f-3e37-a3f4b53a08f4.json',
+                'r'
+                ) as f:
+            self.data = json.loads(f.read())
+        self.session = requests.Session()
+        with patch(
+                'driver_app.models.Driver.get_statement',
+                return_value=self.data):
+            winona.grab_data(self.session,
+                             ['54d1a166-8755-f64f-3e37-a3f4b53a08f4'])
+        self.month_statement = winona.monthstatement_set.get(
+            starting_at=datetime.date(2015, 11, 1))
+
+    def test_calculate_month_stats_total_earned(self):
+        self.assertEqual(self.month_statement.total_earned, Decimal('455.10'))
+        self.assertEqual(self.month_statement.total_rides, 37)
+        self.assertEqual(self.month_statement.rate_per_ride, Decimal('12.30'))
+        self.assertEqual(self.month_statement.rate_per_hour, Decimal('13.54'))
+        self.assertEqual(self.month_statement.rate_per_day, Decimal('113.78'))
 
 
 class APITestCase(TestCase):
