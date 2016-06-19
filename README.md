@@ -27,9 +27,22 @@
 
 ###Setup
 
+#####Install Virtual Environment/Requirements
 ```python
-s = "Python syntax highlighting"
-print s
+echo layout python3 > .envrc
+pip install -r requirements
+```
+
+#####Create Django Project/App
+```python
+django-admin startproject project_name
+django-admin startapp app_name
+```
+
+#####Run migrations to substantiate models and populate database
+```python
+python manage.py makemigrations
+python manage.py migrate
 ```
 
 ***
