@@ -25,9 +25,7 @@
 
 ***
 
-![logo](smart_driver/driver_app/static/driver_app/assets/img/smartdriver_readme.gif)
-
-***
+![logo](smart_driver/driver_app/static/driver_app/assets/img/readme_screen.png)
 
 ###Setup
 
