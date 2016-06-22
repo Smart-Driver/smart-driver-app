@@ -25,6 +25,10 @@
 
 ***
 
+![logo](smart_driver/driver_app/static/driver_app/assets/img/smartdriver_readme.gif)
+
+***
+
 ###Setup
 
 #####Install Virtual Environment/Requirements
